@@ -40,6 +40,16 @@ namespace jswf {
       
     };
     
+    struct ColorTransform {
+      // r,g,b,a = color channels
+      // M = multiplication, A = addition
+      
+      sb_t rM = 256, rA = 0;
+      sb_t gM = 256, gA = 0;
+      sb_t bM = 256, bA = 0;
+      sb_t aM = 256, aA = 0;
+    };
+    
     struct Matrix {
       fb_t sx = 1, sy = 1; // scale
       fb_t r0 = 0, r1 = 0; // skew

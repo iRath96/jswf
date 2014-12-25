@@ -11,6 +11,8 @@
 
 #include "Header.h"
 
+#include <vector>
+
 namespace jswf {
   namespace flash {
     namespace styles {
@@ -19,6 +21,8 @@ namespace jswf {
       
       class FillStyle {
       public:
+        uint32_t id;
+        
         virtual ~FillStyle() {};
       };
       
@@ -27,10 +31,18 @@ namespace jswf {
         RGBA color;
       };
       
+      struct GradientStop {
+        uint8_t ratio;
+        RGBA color;
+      };
+      
       class GradientFillStyle : public FillStyle {
       public:
+        uint8_t spreadMode, interpolationMode;
         Matrix matrix;
-        Gradient gradient;
+        
+        bool isRadial = false;
+        std::vector<GradientStop> stops;
       };
       
       class FocalGradientFillStyle : public GradientFillStyle {

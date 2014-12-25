@@ -17,45 +17,120 @@
 #include "Tags.h"
 #include "Render.h"
 
-#include "SDL/SDL.h"
+#include <SDL2/SDL.h>
+#include <OpenGL/gl.h>
 
 using namespace jswf;
 
-int main(int argc, char *argv[]) {
-  std::cout << "Loading file." << std::endl;
-  
-  std::ifstream file("test.swf");
+uint16_t currentFrame = 0;
+flash::Document *document = NULL;
+render::Context ctx;
+
+void clearScreen() {
+  memset(ctx.buffer, 0xff, ctx.w * ctx.h * 4);
+}
+
+void renderCurrentFrame() {
+  clearScreen();
+  render::renderFrame(document->frames[currentFrame], ctx);
+}
+
+#define PENGUIN_FILENAME "/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/penguin.swf"
+void renderSWF(std::string filename) {
+  std::ifstream file(filename);
   std::stringstream s;
   s << file.rdbuf();
   
-  std::cout << s.str() << std::endl;
+  if(document != NULL) delete document;
   
   io::StringReader *reader = new io::StringReader(s.str());
-  flash::Document document(reader);
+  document = new flash::Document(reader);
+  ctx.document = document;
   
+  if(filename == PENGUIN_FILENAME) {
+    flash::ColorTransform &ct = document->frames[0].displayList[1].colorTransform;
+    ct.rM = ct.gM = ct.bM = 0;
+    ct.rA = 0xff;
+    ct.gA = 0xcc;
+    ct.bA = 0x00;
+  }
+  
+  renderCurrentFrame();
+}
+
+int main(int argc, char *argv[]) {
 #pragma mark Render
   
   SDL_Init(SDL_INIT_EVERYTHING);
-  SDL_Surface *screen = SDL_SetVideoMode(640, 480, 32, SDL_SWSURFACE);
+  SDL_Window *window = SDL_CreateWindow(
+                                        "jswf",
+                                        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                                        550, 400,
+                                        SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI);
   
-  render::Context ctx;
+  int width, height;
+  char title[128];
   
-  ctx.document = &document;
-  ctx.w = screen->w;
-  ctx.h = screen->h;
-  ctx.buffer = (uint32_t *)screen->pixels;
+  SDL_GL_GetDrawableSize(window, &width, &height);
+  sprintf(title, "jswf [%d x %d]", width, height);
+  SDL_SetWindowTitle(window, title);
   
-  render::renderFrame(document.frames[0], ctx);
+  // Create an OpenGL context associated with the window.
+  SDL_GLContext glcontext = SDL_GL_CreateContext(window);
   
-  SDL_Flip(screen);
+  // now you can make GL calls.
+  glClearColor(1,1,1,1);
+  glClear(GL_COLOR_BUFFER_BIT);
   
-  SDL_Event event;
-  while(SDL_WaitEvent(&event)) {
-    if(event.type == SDL_QUIT) break;
-    if(event.type == SDL_KEYDOWN)
-      if(event.key.keysym.sym == SDLK_ESCAPE) break;
+  uint32_t *pixels = new uint32_t[width * height];
+  
+  ctx.w = width;
+  ctx.h = height;
+  ctx.buffer = (uint32_t *)pixels;
+  
+  ctx.matrix.sx = ctx.matrix.sy = 4;
+  ctx.matrix.tx = 100 * 20 * ctx.matrix.sx; // 85
+  ctx.matrix.ty = 100 * 20 * ctx.matrix.sy; // 125
+  
+  if(true & 0) {
+    ctx.matrix.sx = ctx.matrix.sy = 2;
+    ctx.matrix.tx = ctx.matrix.ty = 0;
   }
   
+  //renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/character.swf");
+  
+  renderSWF("test.swf");
+  /*renderSWF(PENGUIN_FILENAME);
+  renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/2129.swf"); // face
+  renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/1025.swf"); // hair
+  renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/839.swf");
+  renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/728.swf");
+  renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/3222.swf"); // scarf
+  renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/6237.swf");*/
+  
+  glDrawPixels(width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+  
+  SDL_GL_SwapWindow(window);
+  
+  SDL_Event event;
+  while(true) {
+    while(SDL_PollEvent(&event)) {
+      printf("%d vs %d vs %d\n", event.type, SDL_QUIT, SDL_KEYDOWN);
+      printf("%d\n", event.key.keysym.sym);
+      if(event.type == 16842757) goto exitMainLoop;
+      if(event.type == 65538)
+        ++currentFrame;
+    }
+    
+    renderCurrentFrame();
+    glDrawPixels(width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+    SDL_GL_SwapWindow(window);
+    
+    SDL_Delay(1000/24);
+  }
+  
+exitMainLoop:
+  SDL_GL_DeleteContext(glcontext);
   SDL_Quit();
   
   return 0;

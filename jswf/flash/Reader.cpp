@@ -140,6 +140,29 @@ void Reader::readMatrix(Matrix &matrix) {
   matrix.ty = reader->readSB(nbits);
 }
 
+void Reader::readColorTransform(ColorTransform &transform, bool withAlpha) {
+  reader->align(1);
+  
+  bool hasAdd = reader->readUB(1),
+       hasMult = reader->readUB(1);
+  
+  uint8_t nbits = reader->readUB(4);
+  
+  if(hasMult) {
+    transform.rM = reader->readSB(nbits);
+    transform.gM = reader->readSB(nbits);
+    transform.bM = reader->readSB(nbits);
+    if(withAlpha) transform.aM = reader->readSB(nbits);
+  }
+  
+  if(hasAdd) {
+    transform.rA = reader->readSB(nbits);
+    transform.gA = reader->readSB(nbits);
+    transform.bA = reader->readSB(nbits);
+    if(withAlpha) transform.aA = reader->readSB(nbits);
+  }
+}
+
 #pragma mark Read colors
 
 void Reader::readRGB(RGBA &rgba) {

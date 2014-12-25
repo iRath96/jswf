@@ -22,6 +22,7 @@ namespace jswf {
     struct Rect;
     struct RGBA;
     struct Matrix;
+    struct ColorTransform;
     
     class Reader {
     public:
@@ -34,6 +35,7 @@ namespace jswf {
       
       void readRect(Rect &);
       void readMatrix(Matrix &);
+      void readColorTransform(ColorTransform &, bool withAlpha);
       
       // Colors
       

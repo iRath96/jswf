@@ -19,6 +19,8 @@ namespace jswf {
       
       class LineStyle {
       public:
+        uint32_t id;
+        
         uint16_t width;
         RGBA color;
       };

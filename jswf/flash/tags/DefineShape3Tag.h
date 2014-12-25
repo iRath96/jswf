@@ -9,18 +9,21 @@
 #ifndef jswf_DefineShape3Tag_h
 #define jswf_DefineShape3Tag_h
 
-#include "DefineShapeTag.h"
+#include "DefineShape2Tag.h"
 
 namespace jswf {
   namespace flash {
     namespace tags {
-      class DefineShape3Tag : public DefineShapeTag {
+      class DefineShape3Tag : public DefineShape2Tag {
+      protected:
+        virtual void readBetween() {}
         virtual void readColor(RGBA &rgba) {
           printf("readRGBA\n");
           flashReader.readRGBA(rgba);
         }
       public:
-        DefineShape3Tag(tag_type_t t, std::string &p) : DefineShapeTag(t, p, false) { read(); }
+        DefineShape3Tag(tag_type_t t, std::string &p) : DefineShape2Tag(t, p, false) { read(); }
+        DefineShape3Tag(tag_type_t t, std::string &p, bool) : DefineShape2Tag(t, p, false) {}
       };
     }
   }

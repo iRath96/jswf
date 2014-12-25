@@ -21,6 +21,9 @@ void Document::read() {
     if(dynamic_cast<tags::TagWithDictionaryElement *>(tag)) {
       tags::TagWithDictionaryElement *twde = (tags::TagWithDictionaryElement *)tag;
       dictionary[twde->element->id] = twde->element;
+      
+      if(dynamic_cast<Shape *>(twde->element.get()))
+        ((Shape *)twde->element.get())->polygonize();
     }
     
     if(dynamic_cast<tags::PlaceObject2Tag *>(tag)) {
@@ -28,6 +31,10 @@ void Document::read() {
       printf("PlaceObject2\n");
       po2t->applyToFrame(frame);
     }
+    
+    // TODO:2014-12-25:alex:Superclass this with PlaceObject2
+    if(dynamic_cast<tags::RemoveObject2Tag *>(tag))
+      ((tags::RemoveObject2Tag *)tag)->applyToFrame(frame);
     
     if(dynamic_cast<tags::ShowFrameTag *>(tag)) {
       printf("ShowFrame\n");

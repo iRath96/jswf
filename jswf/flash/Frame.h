@@ -22,7 +22,10 @@ namespace jswf {
       bool doesClip = false;
       uint16_t clipDepth;
       
+      bool setsColorTransform = false;
+      
       Matrix matrix;
+      ColorTransform colorTransform;
     };
     
     class Frame {

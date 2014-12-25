@@ -27,10 +27,16 @@ namespace jswf {
         uint16_t ratio; // if hasRatio
         std::string name; // if hasName
         uint16_t clipDepth; // if hasClipDepth
+        ColorTransform colorTransform; // if hasColorTransform
         
         void applyToFrame(Frame &frame) {
           if(hasCharacter) frame.displayList[depth].characterId = characterId;
           if(doesMove || hasCharacter) frame.displayList[depth].matrix = matrix;
+          if(hasColorTransform) {
+            frame.displayList[depth].setsColorTransform = true;
+            frame.displayList[depth].colorTransform = colorTransform;
+          }
+          
           if(hasClipDepth) {
             frame.displayList[depth].doesClip = true;
             frame.displayList[depth].clipDepth = clipDepth;
@@ -51,11 +57,11 @@ namespace jswf {
           
           if(hasCharacter) characterId = reader->readU16();
           if(hasMatrix) flashReader.readMatrix(matrix);
-          if(hasColorTransform) throw "ColorTransform not supported.";
+          if(hasColorTransform) flashReader.readColorTransform(colorTransform, true);
           if(hasRatio) ratio = reader->readU16();
           if(hasName) name = reader->readString();
           if(hasClipDepth) clipDepth = reader->readU16();
-          if(hasClipActions) throw "ClipActions not supported.";
+          if(hasClipActions) throw "ClipActions not supported yet.";
         }
       };
     }

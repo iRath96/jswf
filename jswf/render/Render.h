@@ -27,6 +27,8 @@ namespace jswf {
       uint32_t *clip = NULL;
       
       flash::Matrix matrix;
+      flash::ColorTransform colorTransform;
+      
       flash::Document *document;
     };
     

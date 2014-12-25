@@ -11,8 +11,8 @@
 
 #include <stdio.h>
 #include "TagWithDictionaryElement.h"
-#include "Sprite.h"
 #include "Tags.h"
+#include "Sprite.h"
 
 namespace jswf {
   namespace flash {
@@ -37,12 +37,13 @@ namespace jswf {
             
             if(dynamic_cast<tags::PlaceObject2Tag *>(tag)) {
               tags::PlaceObject2Tag *po2t = (tags::PlaceObject2Tag *)tag;
-              printf("PlaceObject2\n");
               po2t->applyToFrame(frame);
             }
             
+            if(dynamic_cast<tags::RemoveObject2Tag *>(tag))
+              ((tags::RemoveObject2Tag *)tag)->applyToFrame(frame);
+            
             if(dynamic_cast<tags::ShowFrameTag *>(tag)) {
-              printf("ShowFrame\n");
               sprite->frames.push_back(frame);
             }
           }

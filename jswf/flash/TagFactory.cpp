@@ -19,10 +19,15 @@ case type: return new klass(type, payload);
     __( 0, EndTag);
     __( 1, ShowFrameTag);
     __( 2, DefineShapeTag);
+    __( 7, DefineButtonTag);
     __( 9, SetBackgroundColorTag);
+    __(22, DefineShape2Tag);
     __(26, PlaceObject2Tag);
+    __(28, RemoveObject2Tag);
     __(32, DefineShape3Tag);
+    __(34, DefineButton2Tag);
     __(39, DefineSpriteTag);
     __(69, FileAttributesTag);
+    __(83, DefineShape4Tag);
   } return new tags::Tag(type, payload);
 }

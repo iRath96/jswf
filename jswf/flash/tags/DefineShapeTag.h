@@ -22,11 +22,19 @@ namespace jswf {
         std::vector<styles::FillStylePtr> fillStyles;
         std::vector<styles::LineStylePtr> lineStyles;
         
+        uint32_t fillCounter = 0, lineCounter = 0;
+        
+      protected:
         virtual void readColor(RGBA &rgba) {
-          printf("read RGB\n");
           flashReader.readRGB(rgba);
         }
-      private:
+        
+        virtual uint16_t readArrayCount() {
+          uint8_t count = reader->readU8();
+          if(count == 0xff) throw "Array overflow (count=0xff)";
+          return count;
+        }
+        
         /**
          * Reads a FillStyle from our payload stream.
          * @return A pointer to a newly created FillStyle on the heap.
@@ -42,7 +50,7 @@ namespace jswf {
          * Reads a LineStyle from our payload stream.
          * @return A pointer to a newly created LineStyle on the heap.
          */
-        styles::LineStyle *readLineStyle();
+        virtual styles::LineStyle *readLineStyle();
         
         /**
          * Reads the LineStyle-array used by the following drawing operations into our lineStyles-member.
@@ -63,15 +71,22 @@ namespace jswf {
         bool readShapeRecord(uint8_t &fbits, uint8_t &lbits);
         
       protected:
+        virtual void readBetween() { // TODO:2014-12-15:alex:Find a better name.
+          printf("nothing.");
+        }
+        
         void read() {
           shape = new Shape();
           element.reset(shape);
           
           shape->id = reader->readU16();
-          printf("%d vs %d\n", shape->id, element->id);
+          printf("DefineShape id=%d\n", shape->id);
           
           flashReader.readRect(shape->bounds);
           shape->edgeBounds = shape->bounds; // Since this is DefineShape version 1
+          
+          printf("Now readbetween\n");
+          this->readBetween();
           
           // Read SHAPEWITHSTYLE
           
@@ -79,7 +94,7 @@ namespace jswf {
           readLineStyleArray();
           
           uint8_t fbits = reader->readUB(4),
-          lbits = reader->readUB(4);
+                  lbits = reader->readUB(4);
           
           while(readShapeRecord(fbits, lbits));
         }
