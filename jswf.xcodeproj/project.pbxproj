@@ -22,10 +22,14 @@
 		FAACBCD51A3DC5E500D5F9F5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAACBCD41A3DC5E500D5F9F5 /* Cocoa.framework */; };
 		FAACBCD71A3DD7ED00D5F9F5 /* DefineShapeTag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAACBCD61A3DD7ED00D5F9F5 /* DefineShapeTag.cpp */; };
 		FAACBCDA1A3DE1CE00D5F9F5 /* PlaceObject2Tag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAACBCD81A3DE1CE00D5F9F5 /* PlaceObject2Tag.cpp */; };
+		FAC913AC1A4C1B700056AAB8 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAC913AA1A4C1B700056AAB8 /* Button.cpp */; };
+		FAD922851A3F3EDF00D92EDD /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD922841A3F3EDF00D92EDD /* OpenGL.framework */; };
 		FAF1B1111A3DF469007BBA1E /* Frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAF1B10F1A3DF469007BBA1E /* Frame.cpp */; };
 		FAF1B1151A3DF8A7007BBA1E /* Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAF1B1131A3DF8A7007BBA1E /* Render.cpp */; };
 		FAF1B1181A3E0539007BBA1E /* DefineSpriteTag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAF1B1161A3E0539007BBA1E /* DefineSpriteTag.cpp */; };
 		FAF1B11B1A3E05A0007BBA1E /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAF1B1191A3E05A0007BBA1E /* Sprite.cpp */; };
+		FAF1B11E1A3E9F5A007BBA1E /* test2.swf in CopyFiles */ = {isa = PBXBuildFile; fileRef = FAF1B11D1A3E9F4C007BBA1E /* test2.swf */; };
+		FAF1B1221A3F37AA007BBA1E /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF1B1211A3F37AA007BBA1E /* SDL2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +39,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				FAF1B11E1A3E9F5A007BBA1E /* test2.swf in CopyFiles */,
 				FAACBCCF1A3DB96A00D5F9F5 /* test.swf in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -42,6 +47,59 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FA9126731A4C2B4D00D6E970 /* RemoveObjectTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoveObjectTag.h; sourceTree = "<group>"; };
+		FA9126741A4C2B5400D6E970 /* RemoveObject2Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoveObject2Tag.h; sourceTree = "<group>"; };
+		FA9126751A4C611C00D6E970 /* PlaceObjectTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceObjectTag.h; sourceTree = "<group>"; };
+		FA9126761A4C612400D6E970 /* PlaceObject3Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceObject3Tag.h; sourceTree = "<group>"; };
+		FA91267C1A4C61A500D6E970 /* DefineBitsTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineBitsTag.h; sourceTree = "<group>"; };
+		FA91267D1A4C61B400D6E970 /* JPEGTablesTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JPEGTablesTag.h; sourceTree = "<group>"; };
+		FA91267E1A4C61C600D6E970 /* DefineFontTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineFontTag.h; sourceTree = "<group>"; };
+		FA91267F1A4C61CB00D6E970 /* DefineTextTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineTextTag.h; sourceTree = "<group>"; };
+		FA9126801A4C61D500D6E970 /* DoActionTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DoActionTag.h; sourceTree = "<group>"; };
+		FA9126811A4C61DE00D6E970 /* DefineFontInfoTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineFontInfoTag.h; sourceTree = "<group>"; };
+		FA9126821A4C61E700D6E970 /* DefineSoundTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineSoundTag.h; sourceTree = "<group>"; };
+		FA9126831A4C61FA00D6E970 /* StartSoundTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StartSoundTag.h; sourceTree = "<group>"; };
+		FA9126841A4C620300D6E970 /* DefineButtonSoundTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineButtonSoundTag.h; sourceTree = "<group>"; };
+		FA9126851A4C620F00D6E970 /* SoundStreamHeadTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoundStreamHeadTag.h; sourceTree = "<group>"; };
+		FA9126861A4C621B00D6E970 /* SoundStreamBlockTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoundStreamBlockTag.h; sourceTree = "<group>"; };
+		FA9126871A4C622800D6E970 /* DefineBitsLosslessTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineBitsLosslessTag.h; sourceTree = "<group>"; };
+		FA9126881A4C623200D6E970 /* DefineBitsJPEG2Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineBitsJPEG2Tag.h; sourceTree = "<group>"; };
+		FA9126891A4C624300D6E970 /* DefineButtonCxformTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineButtonCxformTag.h; sourceTree = "<group>"; };
+		FA91268A1A4C624B00D6E970 /* ProtectTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProtectTag.h; sourceTree = "<group>"; };
+		FA91268B1A4C625A00D6E970 /* DefineText2Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineText2Tag.h; sourceTree = "<group>"; };
+		FA91268C1A4C626300D6E970 /* DefineBitsJPEG3Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineBitsJPEG3Tag.h; sourceTree = "<group>"; };
+		FA91268D1A4C626E00D6E970 /* DefineBitsLossless2Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineBitsLossless2Tag.h; sourceTree = "<group>"; };
+		FA91268E1A4C627E00D6E970 /* DefineEditTextTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineEditTextTag.h; sourceTree = "<group>"; };
+		FA91268F1A4C628900D6E970 /* FrameLabelTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FrameLabelTag.h; sourceTree = "<group>"; };
+		FA9126901A4C629400D6E970 /* SoundStreamHead2Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoundStreamHead2Tag.h; sourceTree = "<group>"; };
+		FA9126911A4C62A000D6E970 /* DefineMorphShapeTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineMorphShapeTag.h; sourceTree = "<group>"; };
+		FA9126921A4C62AB00D6E970 /* DefineFont2Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineFont2Tag.h; sourceTree = "<group>"; };
+		FA9126931A4C62B800D6E970 /* ExportAssetsTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExportAssetsTag.h; sourceTree = "<group>"; };
+		FA9126941A4C62BE00D6E970 /* ImportAssetsTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImportAssetsTag.h; sourceTree = "<group>"; };
+		FA9126951A4C62C700D6E970 /* EnableDebuggerTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnableDebuggerTag.h; sourceTree = "<group>"; };
+		FA9126961A4C62D000D6E970 /* DoInitActionTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DoInitActionTag.h; sourceTree = "<group>"; };
+		FA9126971A4C62DA00D6E970 /* DefineVideoStreamTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineVideoStreamTag.h; sourceTree = "<group>"; };
+		FA9126981A4C62E500D6E970 /* VideoFrameTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoFrameTag.h; sourceTree = "<group>"; };
+		FA9126991A4C62EE00D6E970 /* DefineFontInfo2Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineFontInfo2Tag.h; sourceTree = "<group>"; };
+		FA91269A1A4C62FF00D6E970 /* EnableDebugger2Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnableDebugger2Tag.h; sourceTree = "<group>"; };
+		FA91269B1A4C630A00D6E970 /* ScriptLimitsTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScriptLimitsTag.h; sourceTree = "<group>"; };
+		FA91269C1A4C631100D6E970 /* SetTabIndexTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetTabIndexTag.h; sourceTree = "<group>"; };
+		FA91269D1A4C632C00D6E970 /* ImportAssets2Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImportAssets2Tag.h; sourceTree = "<group>"; };
+		FA91269E1A4C633600D6E970 /* DefineFontAlignZonesTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineFontAlignZonesTag.h; sourceTree = "<group>"; };
+		FA91269F1A4C634700D6E970 /* CSMTextSettingsTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSMTextSettingsTag.h; sourceTree = "<group>"; };
+		FA9126A01A4C634F00D6E970 /* DefineFont3Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineFont3Tag.h; sourceTree = "<group>"; };
+		FA9126A11A4C635700D6E970 /* SymbolClassTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SymbolClassTag.h; sourceTree = "<group>"; };
+		FA9126A21A4C636100D6E970 /* MetadataTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MetadataTag.h; sourceTree = "<group>"; };
+		FA9126A31A4C636900D6E970 /* DefineScalingGridTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineScalingGridTag.h; sourceTree = "<group>"; };
+		FA9126A41A4C636F00D6E970 /* DoABCTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DoABCTag.h; sourceTree = "<group>"; };
+		FA9126A51A4C637900D6E970 /* DefineMorphShape2Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineMorphShape2Tag.h; sourceTree = "<group>"; };
+		FA9126A61A4C638B00D6E970 /* DefineSceneAndFrameLabelDataTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineSceneAndFrameLabelDataTag.h; sourceTree = "<group>"; };
+		FA9126A71A4C639400D6E970 /* DefineBinaryDataTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineBinaryDataTag.h; sourceTree = "<group>"; };
+		FA9126A81A4C639C00D6E970 /* DefineFontNameTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineFontNameTag.h; sourceTree = "<group>"; };
+		FA9126A91A4C63AB00D6E970 /* StartSound2Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StartSound2Tag.h; sourceTree = "<group>"; };
+		FA9126AA1A4C63B400D6E970 /* DefineBitsJPEG4Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineBitsJPEG4Tag.h; sourceTree = "<group>"; };
+		FA9126AB1A4C63BB00D6E970 /* DefineFont4Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineFont4Tag.h; sourceTree = "<group>"; };
+		FA9126AC1A4C63C300D6E970 /* EnableTelementryTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnableTelementryTag.h; sourceTree = "<group>"; };
 		FAACBC991A3BE83C00D5F9F5 /* jswf */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = jswf; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAACBC9C1A3BE83C00D5F9F5 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		FAACBCA31A3BE86100D5F9F5 /* Document.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Document.cpp; sourceTree = "<group>"; };
@@ -79,6 +137,11 @@
 		FAACBCD91A3DE1CE00D5F9F5 /* PlaceObject2Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceObject2Tag.h; sourceTree = "<group>"; };
 		FAACBCDB1A3DE46400D5F9F5 /* DictionaryElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DictionaryElement.h; sourceTree = "<group>"; };
 		FAACBCDC1A3DE50600D5F9F5 /* TagWithDictionaryElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TagWithDictionaryElement.h; sourceTree = "<group>"; };
+		FAC913A91A4C1B010056AAB8 /* DefineButtonTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineButtonTag.h; sourceTree = "<group>"; };
+		FAC913AA1A4C1B700056AAB8 /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
+		FAC913AB1A4C1B700056AAB8 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
+		FAC913AD1A4C1C070056AAB8 /* DefineButton2Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineButton2Tag.h; sourceTree = "<group>"; };
+		FAD922841A3F3EDF00D92EDD /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenGL.framework; sourceTree = "<group>"; };
 		FAF1B10F1A3DF469007BBA1E /* Frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Frame.cpp; sourceTree = "<group>"; };
 		FAF1B1101A3DF469007BBA1E /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
 		FAF1B1131A3DF8A7007BBA1E /* Render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Render.cpp; sourceTree = "<group>"; };
@@ -88,6 +151,10 @@
 		FAF1B1191A3E05A0007BBA1E /* Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sprite.cpp; sourceTree = "<group>"; };
 		FAF1B11A1A3E05A0007BBA1E /* Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprite.h; sourceTree = "<group>"; };
 		FAF1B11C1A3E073F007BBA1E /* DefineShape3Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineShape3Tag.h; sourceTree = "<group>"; };
+		FAF1B11D1A3E9F4C007BBA1E /* test2.swf */ = {isa = PBXFileReference; lastKnownFileType = file; path = test2.swf; sourceTree = SOURCE_ROOT; };
+		FAF1B11F1A3EB3AB007BBA1E /* DefineShape4Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineShape4Tag.h; sourceTree = "<group>"; };
+		FAF1B1201A3EEEF9007BBA1E /* DefineShape2Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineShape2Tag.h; sourceTree = "<group>"; };
+		FAF1B1211A3F37AA007BBA1E /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +162,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAF1B1221A3F37AA007BBA1E /* SDL2.framework in Frameworks */,
+				FAD922851A3F3EDF00D92EDD /* OpenGL.framework in Frameworks */,
 				FAACBCD51A3DC5E500D5F9F5 /* Cocoa.framework in Frameworks */,
 				FAACBCD31A3DC5BD00D5F9F5 /* CoreFoundation.framework in Frameworks */,
 			);
@@ -103,9 +172,275 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA9126771A4C613600D6E970 /* PlaceObject */ = {
+			isa = PBXGroup;
+			children = (
+				FA9126751A4C611C00D6E970 /* PlaceObjectTag.h */,
+				FAACBCD81A3DE1CE00D5F9F5 /* PlaceObject2Tag.cpp */,
+				FAACBCD91A3DE1CE00D5F9F5 /* PlaceObject2Tag.h */,
+				FA9126761A4C612400D6E970 /* PlaceObject3Tag.h */,
+			);
+			name = PlaceObject;
+			sourceTree = "<group>";
+		};
+		FA9126781A4C614400D6E970 /* Shape */ = {
+			isa = PBXGroup;
+			children = (
+				FAACBCD61A3DD7ED00D5F9F5 /* DefineShapeTag.cpp */,
+				FAACBCC31A3C556400D5F9F5 /* DefineShapeTag.h */,
+				FAF1B1201A3EEEF9007BBA1E /* DefineShape2Tag.h */,
+				FAF1B11C1A3E073F007BBA1E /* DefineShape3Tag.h */,
+				FAF1B11F1A3EB3AB007BBA1E /* DefineShape4Tag.h */,
+				FA9126B91A4C64F200D6E970 /* Morph */,
+			);
+			name = Shape;
+			sourceTree = "<group>";
+		};
+		FA9126791A4C615200D6E970 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				FAC913A91A4C1B010056AAB8 /* DefineButtonTag.h */,
+				FAC913AD1A4C1C070056AAB8 /* DefineButton2Tag.h */,
+				FA9126891A4C624300D6E970 /* DefineButtonCxformTag.h */,
+			);
+			name = Button;
+			sourceTree = "<group>";
+		};
+		FA91267A1A4C615B00D6E970 /* RemoveObject */ = {
+			isa = PBXGroup;
+			children = (
+				FA9126731A4C2B4D00D6E970 /* RemoveObjectTag.h */,
+				FA9126741A4C2B5400D6E970 /* RemoveObject2Tag.h */,
+			);
+			name = RemoveObject;
+			sourceTree = "<group>";
+		};
+		FA91267B1A4C616400D6E970 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				FAACBCC71A3C590E00D5F9F5 /* Tags.h */,
+				FAACBCBA1A3C4A0900D5F9F5 /* Tag.h */,
+				FAACBCB91A3C4A0900D5F9F5 /* Tag.cpp */,
+				FAACBCBF1A3C4E0D00D5F9F5 /* TagWithReader.cpp */,
+				FAACBCC01A3C4E0D00D5F9F5 /* TagWithReader.h */,
+				FAACBCDC1A3DE50600D5F9F5 /* TagWithDictionaryElement.h */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		FA9126AD1A4C63D900D6E970 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				FA91269E1A4C633600D6E970 /* DefineFontAlignZonesTag.h */,
+				FA9126A81A4C639C00D6E970 /* DefineFontNameTag.h */,
+				FA91267E1A4C61C600D6E970 /* DefineFontTag.h */,
+				FA9126921A4C62AB00D6E970 /* DefineFont2Tag.h */,
+				FA9126A01A4C634F00D6E970 /* DefineFont3Tag.h */,
+				FA9126AB1A4C63BB00D6E970 /* DefineFont4Tag.h */,
+				FA9126B21A4C643500D6E970 /* Info */,
+			);
+			name = Font;
+			sourceTree = "<group>";
+		};
+		FA9126AE1A4C63EE00D6E970 /* JPEG */ = {
+			isa = PBXGroup;
+			children = (
+				FA9126881A4C623200D6E970 /* DefineBitsJPEG2Tag.h */,
+				FA91268C1A4C626300D6E970 /* DefineBitsJPEG3Tag.h */,
+				FA9126AA1A4C63B400D6E970 /* DefineBitsJPEG4Tag.h */,
+			);
+			name = JPEG;
+			sourceTree = "<group>";
+		};
+		FA9126AF1A4C63FA00D6E970 /* Lossless */ = {
+			isa = PBXGroup;
+			children = (
+				FA9126871A4C622800D6E970 /* DefineBitsLosslessTag.h */,
+				FA91268D1A4C626E00D6E970 /* DefineBitsLossless2Tag.h */,
+			);
+			name = Lossless;
+			sourceTree = "<group>";
+		};
+		FA9126B01A4C641100D6E970 /* Bits */ = {
+			isa = PBXGroup;
+			children = (
+				FA91267C1A4C61A500D6E970 /* DefineBitsTag.h */,
+				FA9126AF1A4C63FA00D6E970 /* Lossless */,
+				FA9126AE1A4C63EE00D6E970 /* JPEG */,
+			);
+			name = Bits;
+			sourceTree = "<group>";
+		};
+		FA9126B11A4C642700D6E970 /* Import */ = {
+			isa = PBXGroup;
+			children = (
+				FA9126941A4C62BE00D6E970 /* ImportAssetsTag.h */,
+				FA91269D1A4C632C00D6E970 /* ImportAssets2Tag.h */,
+			);
+			name = Import;
+			sourceTree = "<group>";
+		};
+		FA9126B21A4C643500D6E970 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				FA9126811A4C61DE00D6E970 /* DefineFontInfoTag.h */,
+				FA9126991A4C62EE00D6E970 /* DefineFontInfo2Tag.h */,
+			);
+			name = Info;
+			sourceTree = "<group>";
+		};
+		FA9126B31A4C644100D6E970 /* Define */ = {
+			isa = PBXGroup;
+			children = (
+				FA9126A31A4C636900D6E970 /* DefineScalingGridTag.h */,
+				FA9126A61A4C638B00D6E970 /* DefineSceneAndFrameLabelDataTag.h */,
+				FA9126A71A4C639400D6E970 /* DefineBinaryDataTag.h */,
+				FA9126B41A4C647E00D6E970 /* Text */,
+				FA9126791A4C615200D6E970 /* Button */,
+				FA9126781A4C614400D6E970 /* Shape */,
+				FA9126B01A4C641100D6E970 /* Bits */,
+				FA9126AD1A4C63D900D6E970 /* Font */,
+				FA9126BD1A4C656600D6E970 /* Sprite */,
+				FA9126B81A4C64D800D6E970 /* Sound */,
+			);
+			name = Define;
+			sourceTree = "<group>";
+		};
+		FA9126B41A4C647E00D6E970 /* Text */ = {
+			isa = PBXGroup;
+			children = (
+				FA91267F1A4C61CB00D6E970 /* DefineTextTag.h */,
+				FA91268B1A4C625A00D6E970 /* DefineText2Tag.h */,
+				FA91268E1A4C627E00D6E970 /* DefineEditTextTag.h */,
+			);
+			name = Text;
+			sourceTree = "<group>";
+		};
+		FA9126B51A4C64AA00D6E970 /* Do */ = {
+			isa = PBXGroup;
+			children = (
+				FA9126801A4C61D500D6E970 /* DoActionTag.h */,
+				FA9126961A4C62D000D6E970 /* DoInitActionTag.h */,
+				FA9126A41A4C636F00D6E970 /* DoABCTag.h */,
+			);
+			name = Do;
+			sourceTree = "<group>";
+		};
+		FA9126B61A4C64B900D6E970 /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				FA9126831A4C61FA00D6E970 /* StartSoundTag.h */,
+				FA9126A91A4C63AB00D6E970 /* StartSound2Tag.h */,
+				FA9126851A4C620F00D6E970 /* SoundStreamHeadTag.h */,
+				FA9126861A4C621B00D6E970 /* SoundStreamBlockTag.h */,
+				FA9126901A4C629400D6E970 /* SoundStreamHead2Tag.h */,
+			);
+			name = Sound;
+			sourceTree = "<group>";
+		};
+		FA9126B71A4C64C400D6E970 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				FA9126971A4C62DA00D6E970 /* DefineVideoStreamTag.h */,
+				FA9126981A4C62E500D6E970 /* VideoFrameTag.h */,
+			);
+			name = Video;
+			sourceTree = "<group>";
+		};
+		FA9126B81A4C64D800D6E970 /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				FA9126821A4C61E700D6E970 /* DefineSoundTag.h */,
+				FA9126841A4C620300D6E970 /* DefineButtonSoundTag.h */,
+			);
+			name = Sound;
+			sourceTree = "<group>";
+		};
+		FA9126B91A4C64F200D6E970 /* Morph */ = {
+			isa = PBXGroup;
+			children = (
+				FA9126911A4C62A000D6E970 /* DefineMorphShapeTag.h */,
+				FA9126A51A4C637900D6E970 /* DefineMorphShape2Tag.h */,
+			);
+			name = Morph;
+			sourceTree = "<group>";
+		};
+		FA9126BA1A4C650A00D6E970 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				FA91267D1A4C61B400D6E970 /* JPEGTablesTag.h */,
+				FAACBCBC1A3C4AEB00D5F9F5 /* EndTag.h */,
+				FA91269B1A4C630A00D6E970 /* ScriptLimitsTag.h */,
+				FA91269C1A4C631100D6E970 /* SetTabIndexTag.h */,
+				FA91269F1A4C634700D6E970 /* CSMTextSettingsTag.h */,
+				FA9126A11A4C635700D6E970 /* SymbolClassTag.h */,
+				FA9126AC1A4C63C300D6E970 /* EnableTelementryTag.h */,
+				FAACBCC21A3C4FD700D5F9F5 /* SetBackgroundColorTag.h */,
+				FAACBCBE1A3C4D5F00D5F9F5 /* FileAttributesTag.h */,
+				FA9126A21A4C636100D6E970 /* MetadataTag.h */,
+			);
+			name = Misc;
+			sourceTree = "<group>";
+		};
+		FA9126BB1A4C651400D6E970 /* EnableDebugger */ = {
+			isa = PBXGroup;
+			children = (
+				FA9126951A4C62C700D6E970 /* EnableDebuggerTag.h */,
+				FA91269A1A4C62FF00D6E970 /* EnableDebugger2Tag.h */,
+			);
+			name = EnableDebugger;
+			sourceTree = "<group>";
+		};
+		FA9126BC1A4C651D00D6E970 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				FA9126931A4C62B800D6E970 /* ExportAssetsTag.h */,
+				FA9126B11A4C642700D6E970 /* Import */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		FA9126BD1A4C656600D6E970 /* Sprite */ = {
+			isa = PBXGroup;
+			children = (
+				FAF1B1161A3E0539007BBA1E /* DefineSpriteTag.cpp */,
+				FAF1B1171A3E0539007BBA1E /* DefineSpriteTag.h */,
+			);
+			name = Sprite;
+			sourceTree = "<group>";
+		};
+		FA9126BF1A4C6B2300D6E970 /* avm2 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = avm2;
+			sourceTree = "<group>";
+		};
+		FA9126C01A4C6DF300D6E970 /* Frame */ = {
+			isa = PBXGroup;
+			children = (
+				FAACBCBD1A3C4C9200D5F9F5 /* ShowFrameTag.h */,
+				FA91268F1A4C628900D6E970 /* FrameLabelTag.h */,
+				FA9126771A4C613600D6E970 /* PlaceObject */,
+				FA91267A1A4C615B00D6E970 /* RemoveObject */,
+			);
+			name = Frame;
+			sourceTree = "<group>";
+		};
+		FA9126C11A4C6ED500D6E970 /* Protection */ = {
+			isa = PBXGroup;
+			children = (
+				FA91268A1A4C624B00D6E970 /* ProtectTag.h */,
+				FA9126BB1A4C651400D6E970 /* EnableDebugger */,
+			);
+			name = Protection;
+			sourceTree = "<group>";
+		};
 		FAACBC901A3BE83C00D5F9F5 = {
 			isa = PBXGroup;
 			children = (
+				FAD922841A3F3EDF00D92EDD /* OpenGL.framework */,
+				FAF1B1211A3F37AA007BBA1E /* SDL2.framework */,
 				FAACBCD41A3DC5E500D5F9F5 /* Cocoa.framework */,
 				FAACBCD21A3DC5BD00D5F9F5 /* CoreFoundation.framework */,
 				FAACBC9B1A3BE83C00D5F9F5 /* jswf */,
@@ -126,9 +461,11 @@
 			children = (
 				FAACBCB31A3BF1A000D5F9F5 /* io */,
 				FAACBCA61A3BE86700D5F9F5 /* flash */,
+				FA9126BF1A4C6B2300D6E970 /* avm2 */,
 				FAF1B1121A3DF88B007BBA1E /* render */,
 				FAACBC9C1A3BE83C00D5F9F5 /* main.cpp */,
 				FAACBCCE1A3DB94F00D5F9F5 /* test.swf */,
+				FAF1B11D1A3E9F4C007BBA1E /* test2.swf */,
 			);
 			path = jswf;
 			sourceTree = "<group>";
@@ -136,19 +473,21 @@
 		FAACBCA61A3BE86700D5F9F5 /* flash */ = {
 			isa = PBXGroup;
 			children = (
+				FAACBCB81A3C49FF00D5F9F5 /* tags */,
 				FAACBCC81A3D93C300D5F9F5 /* styles */,
 				FAACBCB01A3BF17300D5F9F5 /* TagFactory.cpp */,
 				FAACBCB11A3BF17300D5F9F5 /* TagFactory.h */,
-				FAACBCB81A3C49FF00D5F9F5 /* tags */,
 				FAACBCAD1A3BF13200D5F9F5 /* Reader.cpp */,
 				FAACBCAE1A3BF13200D5F9F5 /* Reader.h */,
+				FAACBCB41A3BF70F00D5F9F5 /* Header.cpp */,
+				FAACBCB51A3BF70F00D5F9F5 /* Header.h */,
 				FAACBCA31A3BE86100D5F9F5 /* Document.cpp */,
 				FAACBCA41A3BE86100D5F9F5 /* Document.h */,
 				FAACBCDB1A3DE46400D5F9F5 /* DictionaryElement.h */,
-				FAACBCB41A3BF70F00D5F9F5 /* Header.cpp */,
-				FAACBCB51A3BF70F00D5F9F5 /* Header.h */,
 				FAACBCC41A3C577900D5F9F5 /* Shape.cpp */,
 				FAACBCC51A3C577900D5F9F5 /* Shape.h */,
+				FAC913AA1A4C1B700056AAB8 /* Button.cpp */,
+				FAC913AB1A4C1B700056AAB8 /* Button.h */,
 				FAF1B10F1A3DF469007BBA1E /* Frame.cpp */,
 				FAF1B1101A3DF469007BBA1E /* Frame.h */,
 				FAF1B1191A3E05A0007BBA1E /* Sprite.cpp */,
@@ -171,23 +510,15 @@
 		FAACBCB81A3C49FF00D5F9F5 /* tags */ = {
 			isa = PBXGroup;
 			children = (
-				FAACBCC71A3C590E00D5F9F5 /* Tags.h */,
-				FAACBCBA1A3C4A0900D5F9F5 /* Tag.h */,
-				FAACBCBF1A3C4E0D00D5F9F5 /* TagWithReader.cpp */,
-				FAACBCC01A3C4E0D00D5F9F5 /* TagWithReader.h */,
-				FAACBCDC1A3DE50600D5F9F5 /* TagWithDictionaryElement.h */,
-				FAACBCB91A3C4A0900D5F9F5 /* Tag.cpp */,
-				FAACBCBC1A3C4AEB00D5F9F5 /* EndTag.h */,
-				FAACBCBD1A3C4C9200D5F9F5 /* ShowFrameTag.h */,
-				FAACBCD61A3DD7ED00D5F9F5 /* DefineShapeTag.cpp */,
-				FAACBCC31A3C556400D5F9F5 /* DefineShapeTag.h */,
-				FAF1B11C1A3E073F007BBA1E /* DefineShape3Tag.h */,
-				FAACBCD81A3DE1CE00D5F9F5 /* PlaceObject2Tag.cpp */,
-				FAACBCD91A3DE1CE00D5F9F5 /* PlaceObject2Tag.h */,
-				FAF1B1161A3E0539007BBA1E /* DefineSpriteTag.cpp */,
-				FAF1B1171A3E0539007BBA1E /* DefineSpriteTag.h */,
-				FAACBCC21A3C4FD700D5F9F5 /* SetBackgroundColorTag.h */,
-				FAACBCBE1A3C4D5F00D5F9F5 /* FileAttributesTag.h */,
+				FA91267B1A4C616400D6E970 /* Base */,
+				FA9126B31A4C644100D6E970 /* Define */,
+				FA9126C01A4C6DF300D6E970 /* Frame */,
+				FA9126B51A4C64AA00D6E970 /* Do */,
+				FA9126B61A4C64B900D6E970 /* Sound */,
+				FA9126BC1A4C651D00D6E970 /* Assets */,
+				FA9126C11A4C6ED500D6E970 /* Protection */,
+				FA9126B71A4C64C400D6E970 /* Video */,
+				FA9126BA1A4C650A00D6E970 /* Misc */,
 			);
 			path = tags;
 			sourceTree = "<group>";
@@ -269,6 +600,7 @@
 			files = (
 				FAF1B1181A3E0539007BBA1E /* DefineSpriteTag.cpp in Sources */,
 				FAACBCD71A3DD7ED00D5F9F5 /* DefineShapeTag.cpp in Sources */,
+				FAC913AC1A4C1B700056AAB8 /* Button.cpp in Sources */,
 				FAF1B11B1A3E05A0007BBA1E /* Sprite.cpp in Sources */,
 				FAACBCBB1A3C4A0900D5F9F5 /* Tag.cpp in Sources */,
 				FAACBCB21A3BF17300D5F9F5 /* TagFactory.cpp in Sources */,
@@ -382,6 +714,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_OPTIMIZATION_LEVEL = 0;
 				LIBRARY_SEARCH_PATHS = "/usr/local/lib/**";
 				OTHER_LDFLAGS = (
 					"-lz",
@@ -399,6 +732,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_OPTIMIZATION_LEVEL = s;
 				LIBRARY_SEARCH_PATHS = "/usr/local/lib/**";
 				OTHER_LDFLAGS = (
 					"-lz",

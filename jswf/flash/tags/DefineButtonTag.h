@@ -14,6 +14,7 @@
 #include "Frame.h"
 
 #include <vector>
+#include <assert.h>
 
 namespace jswf {
   namespace flash {
@@ -21,7 +22,8 @@ namespace jswf {
       class DefineButtonTag : public TagWithDictionaryElement {
       protected:
         bool readButtonRecord() {
-          reader->readUB(2); // reserved, always 0
+          uint8_t reserved = reader->readUB(2);
+          assert(reserved == 0);
           
           bool hasBlendMode = reader->readUB(1);
           bool hasFilterList = reader->readUB(1);

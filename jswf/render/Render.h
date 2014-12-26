@@ -32,8 +32,8 @@ namespace jswf {
       flash::Document *document;
     };
     
-    void renderShape(flash::Shape &shape, Context &ctx);
-    void renderFrame(flash::Frame &frame, Context &ctx);
+    void renderShape(const flash::Shape &shape, const Context &ctx);
+    void renderFrame(const flash::Frame &frame, const Context &ctx);
   }
 }
 

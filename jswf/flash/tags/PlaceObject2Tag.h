@@ -31,7 +31,7 @@ namespace jswf {
         
         void applyToFrame(Frame &frame) {
           if(hasCharacter) frame.displayList[depth].characterId = characterId;
-          if(doesMove || hasCharacter) frame.displayList[depth].matrix = matrix;
+          if(hasMatrix) frame.displayList[depth].matrix = matrix;
           if(hasColorTransform) {
             frame.displayList[depth].setsColorTransform = true;
             frame.displayList[depth].colorTransform = colorTransform;
@@ -52,6 +52,8 @@ namespace jswf {
           hasMatrix = reader->readUB(1);
           hasCharacter = reader->readUB(1);
           doesMove = reader->readUB(1);
+          
+          // TODO:2014-12-25:alex:What does doesMove do?!
           
           depth = reader->readU16();
           

@@ -133,11 +133,11 @@ void DefineShapeTag::readEdgeRecord() {
   } else { // CurvedEdgeRecord (quadratic bezier)
     // control point
     sb_t cx = reader->readSB(nbits),
-    cy = reader->readSB(nbits);
+         cy = reader->readSB(nbits);
     
     // anchor point
     sb_t ax = reader->readSB(nbits),
-    ay = reader->readSB(nbits);
+         ay = reader->readSB(nbits);
     
     //printf("  to %lld, %lld | %lld, %lld\n", cx, cy, ax, ay);
     shape->qlineTo(cx, cy, ax, ay);

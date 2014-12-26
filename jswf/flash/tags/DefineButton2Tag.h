@@ -17,7 +17,9 @@ namespace jswf {
       class DefineButton2Tag : public DefineButtonTag {
       protected:
         virtual void readBetween() {
-          reader->readUB(7); // reserved, = 0
+          uint8_t reserved = reader->readUB(7);
+          assert(reserved == 0);
+          
           button->trackAsMenu = reader->readUB(1);
           
           reader->readU16(); // action offset, not needed.

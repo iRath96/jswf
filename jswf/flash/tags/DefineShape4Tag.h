@@ -28,10 +28,7 @@ namespace jswf {
           bool pixelHinting = reader->readUB(1);
           
           uint8_t reserved = reader->readUB(5);
-          if(reserved != 0) {
-            printf("reserved(LineStyle) != 0, = %d", reserved);
-            throw "Reserved(LineStyle) != 0";
-          }
+          assert(reserved == 0);
           
           bool noClose = reader->readUB(1);
           uint8_t endCapStyle = reader->readUB(2);
@@ -54,11 +51,8 @@ namespace jswf {
           flashReader.readRect(shape->edgeBounds);
           
           reader->align(1);
-          uint8_t reserved = reader->readUB(5); // reserved
-          if(reserved != 0) {
-            printf("Reserved != 0, = 0x%02x\n", reserved);
-            throw "Reserved != 0\n";
-          }
+          uint8_t reserved = reader->readUB(5);
+          assert(reserved == 0);
           
           shape->usesFillWindingRule   = reader->readUB(1);
           shape->usesNonScalingStrokes = reader->readUB(1);

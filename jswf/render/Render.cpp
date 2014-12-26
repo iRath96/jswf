@@ -9,19 +9,27 @@
 #include "Render.h"
 #include "Document.h"
 
-#define FSAA 1
+#define FSAA 4
 #define FSAA2 (FSAA * FSAA)
 
 #include <math.h>
 
 using namespace jswf;
 
-void render::renderFrame(flash::Frame &frame, Context &context) {
-  uint32_t *clip = new uint32_t[context.w * context.h];
+void render::renderFrame(const flash::Frame &frame, const Context &context) {
+  bool needsClipLayer = false;
+  for(auto it = frame.displayList.begin(); it != frame.displayList.end(); ++it)
+    if(it->second.doesClip) {
+      needsClipLayer = true;
+      break;
+    }
+  
+  // TODO:2014-12-25:alex:Clipping is calculated incorrectly.
+  uint32_t *clip = needsClipLayer ? new uint32_t[context.w * context.h] : NULL;
   uint16_t clipDepth = 0;
   
   for(auto it = frame.displayList.begin(); it != frame.displayList.end(); ++it) {
-    flash::DisplayObject &obj = it->second;
+    const flash::DisplayObject &obj = it->second;
     if(context.document->dictionary.find(obj.characterId) == context.document->dictionary.end()) {
       printf("Cannot find character %d\n", obj.characterId);
       throw "Cannot find character.";
@@ -30,7 +38,7 @@ void render::renderFrame(flash::Frame &frame, Context &context) {
     bool isClipped = clipDepth > it->first;
     
     Context c = context;
-    c.clip = isClipped ? clip : NULL;
+    if(isClipped) c.clip = clip;
     if(obj.setsColorTransform) c.colorTransform = obj.colorTransform;
     
     if(obj.doesClip) {
@@ -83,29 +91,52 @@ void render::renderFrame(flash::Frame &frame, Context &context) {
   delete[] clip;
 }
 
-inline void reverseTransformPoint(flash::Matrix &m, sb_t &x, sb_t &y) {
+inline void reverseTransformPoint(const flash::Matrix &m, sb_t &x, sb_t &y) {
   // mainly used for gradients.
+  
+  sb_t xOld = x, yOld = y;
+  if(m.sx == 0 && m.sy == 0) {
+    // x' = y * r1 + tx => y = (x' - tx) / r1
+    // y' = x * r0 + ty => x = (y' - ty) / r0
+    
+    x = (yOld - m.ty) / m.r0;
+    y = (xOld - m.tx) / m.r1;
+    
+    return;
+  }
+  
+  if(m.sx == 0) {
+    // x' = y * r1 + tx => y = (x' - tx) / r1
+    // y' = y * sy + x * r0 + ty => x = (y' - y * sy - ty) / r0
+    
+    y = (xOld - m.tx) / m.r1;
+    x = (yOld - y * m.sy - m.ty) / m.r0;
+    
+    return;
+  }
+  
+  if(m.sy == 0) {
+    // y' = x * r0 + ty => x = (y' - ty) / r0
+    // x' = x * sx + y * r1 + tx => y = (x' - x * sx - tx) / r1
+    
+    x = (yOld - m.ty) / m.r0;
+    y = (xOld - x * m.sx - m.tx) / m.r1;
+    
+    return;
+  }
+  
+  // x' = x * sx + y * r1 + tx
   
   // x = (x' - (y' - ty) / sy * r1 - tx) / sx / (1 - r0 / sy * r1 / sx)
   // y = (y' - (x' - tx) / sx * r0 - ty) / sy / (1 - r1 / sx * r0 / sy)
   
-  // or otherwise
-  // y = (x' - tx) / r1   for sx = 0
-  // x = (y' - ty) / r0   for sy = 0
+  x = (xOld - (yOld - m.ty) / m.sy * m.r1 - m.tx) / m.sx / (1 - m.r0 / m.sy * m.r1 / m.sx);
+  y = (yOld - (xOld - m.tx) / m.sx * m.r0 - m.ty) / m.sy / (1 - m.r1 / m.sx * m.r0 / m.sy);
   
-  sb_t xOld = x, yOld = y;
-  if(m.sy == 0)
-    x = (yOld - m.ty) / m.r0;
-  else
-    x = (xOld - (yOld - m.ty) / m.sy * m.r1 - m.tx) / m.sx / (1 - m.r0 / m.sy * m.r1 / m.sx);
-  
-  if(m.sx == 0)
-    y = (xOld - m.tx) / m.r1;
-  else
-    y = (yOld - (xOld - m.tx) / m.sx * m.r0 - m.ty) / m.sy / (1 - m.r1 / m.sx * m.r0 / m.sy);
+  return;
 }
 
-inline void transformPoint(flash::Matrix &matrix, sb_t &x, sb_t &y) {
+inline void transformPoint(const flash::Matrix &matrix, sb_t &x, sb_t &y) {
   sb_t xOld = x, yOld = y;
   x = xOld * matrix.sx + yOld * matrix.r1 + matrix.tx;
   y = yOld * matrix.sy + xOld * matrix.r0 + matrix.ty;
@@ -115,7 +146,7 @@ inline uint8_t clamp(sb_t min, sb_t v, sb_t max) {
   return v < min ? min : (v > max ? max : v);
 }
 
-inline void transformColor(flash::ColorTransform &ct, flash::RGBA &color) {
+inline void transformColor(const flash::ColorTransform &ct, flash::RGBA &color) {
   // TODO:2014-12-24:alex:Use a macro.
   
   color.r = clamp(0, (color.r * ct.rM / 256) + ct.rA, 255);
@@ -130,62 +161,7 @@ inline void reverseSegment(flash::Segment &segment) {
   std::swap(segment.fillStyle0, segment.fillStyle1);
 }
 
-struct Intersection {
-  flash::Segment *debug;
-  double twipsX;
-  sb_t xSum;
-  flash::styles::FillStylePtr fill, fillLeft;
-  bool operator<(const Intersection &rhs) const { return twipsX == rhs.twipsX ? xSum < rhs.xSum : (twipsX < rhs.twipsX); }
-};
-
-void calculateIntersections(sb_t twipsY, std::vector<Intersection> &intersections, std::vector<flash::Segment> &segments) {
-  for(auto seg = segments.begin(); seg != segments.end(); ++seg) {
-    if(seg->y0 == seg->y1) continue; // No horizontal lines needed.
-    
-    if(seg->y0 > seg->y1) { // normalize this
-      sb_t tmp = seg->y0;
-      seg->y0 = seg->y1;
-      seg->y1 = tmp;
-      
-      tmp = seg->x0;
-      seg->x0 = seg->x1;
-      seg->x1 = tmp;
-      
-      flash::styles::FillStylePtr tmp2 = seg->fillStyle0;
-      seg->fillStyle0 = seg->fillStyle1;
-      seg->fillStyle1 = tmp2;
-    }
-    
-    if(twipsY < seg->y0 || twipsY >= seg->y1) continue;
-    
-    Intersection i;
-    i.debug = &*seg;
-    i.twipsX = (twipsY - seg->y0) * (seg->x1 - seg->x0) / (double)(seg->y1 - seg->y0) + seg->x0;
-    i.xSum = seg->x0 + seg->x1;
-    i.fill = seg->fillStyle0;
-    i.fillLeft = seg->fillStyle1;
-    
-    intersections.push_back(i);
-  }
-  
-  std::sort(intersections.begin(), intersections.end());
-  
-  if(intersections.size() > 0 && intersections[0].twipsX > 0) {
-    Intersection transparent;
-    transparent.twipsX = 0;
-    transparent.xSum = 0;
-    transparent.fill = NULL;
-    intersections.insert(intersections.begin(), transparent);
-  }
-}
-
-struct Intersection2 {
-  double twipsX;
-  sb_t xSum;
-  bool operator<(const Intersection2 &rhs) const { return twipsX == rhs.twipsX ? xSum < rhs.xSum : (twipsX < rhs.twipsX); }
-};
-
-void calculateIntersections2(sb_t twipsY, std::vector<Intersection2> &intersections, std::vector<flash::Edge> &edges) {
+void calculateIntersections2(sb_t twipsY, std::vector<sb_t> &intersections, const std::vector<flash::Edge> &edges) {
   for(auto edge = edges.begin(); edge != edges.end(); ++edge) {
     if(edge->a.y == edge->b.y) continue; // No horizontal lines needed.
     
@@ -193,17 +169,16 @@ void calculateIntersections2(sb_t twipsY, std::vector<Intersection2> &intersecti
        (twipsY < edge->b.y || twipsY >= edge->a.y))
       continue;
     
-    Intersection2 i;
-    i.twipsX = (twipsY - edge->a.y) * (edge->b.x - edge->a.x) / (double)(edge->b.y - edge->a.y) + edge->a.x;
-    i.xSum = edge->a.x + edge->b.x;
-    
-    intersections.push_back(i);
+    sb_t twipsX = (twipsY - edge->a.y) * (edge->b.x - edge->a.x) / (edge->b.y - edge->a.y) + edge->a.x;
+    intersections.push_back(twipsX);
   }
   
   std::sort(intersections.begin(), intersections.end());
 }
 
-void render::renderShape(flash::Shape &shape, Context &context) {
+void render::renderShape(const flash::Shape &shape, const Context &context) {
+  //printf("shape => %d\n", shape.id);
+  
   std::vector<flash::styles::FillStylePtr> fills;
   for(auto it = shape.polygons.begin(); it != shape.polygons.end(); ++it) fills.push_back(it->first);
   
@@ -213,46 +188,93 @@ void render::renderShape(flash::Shape &shape, Context &context) {
   
   for(auto it = fills.begin(); it != fills.end(); ++it) {
     flash::styles::FillStylePtr fill = *it;
-    std::vector<flash::Polygon> &polygons = shape.polygons[*it];
+    const std::vector<flash::Polygon> &polygons = shape.polygons.at(*it);
     
     std::vector<flash::Edge> edges;
     for(auto polygon = polygons.begin(); polygon != polygons.end(); ++polygon) {
       for(auto edge = polygon->edges.begin(); edge != polygon->edges.end(); ++edge) {
         flash::Edge e = *edge;
+        
         transformPoint(context.matrix, e.a.x, e.a.y);
         transformPoint(context.matrix, e.b.x, e.b.y);
+        
         edges.push_back(e);
       }
     }
     
+    // TODO:2014-12-25:alex:Write some nice comments on how this moving x-boundary and subEdges work!
+    
+    int subHeight = context.h / 256;
+    int lastSubY = -subHeight;
+    
+    std::vector<flash::Edge> subEdges;
+    sb_t minX = 0, maxX = 0;
+    
+    uint16_t row[context.w];
+    
     for(int y = 0; y < context.h; ++y) {
-      uint16_t row[context.w];
-      memset(row, 0, sizeof(row));
+      if(y >= lastSubY + subHeight) {
+        minX = context.w * 20;
+        maxX = 0;
+        
+        sb_t twipsYLow = y * 20;
+        sb_t twipsYHigh = (y + subHeight) * 20;
+        
+        subEdges.clear();
+        for(auto edge = edges.begin(); edge != edges.end(); ++edge) {
+          if(edge->a.y == edge->b.y) continue; // No horizontal lines needed.
+          
+          if((twipsYHigh < edge->a.y || twipsYLow >= edge->b.y) &&
+             (twipsYHigh < edge->b.y || twipsYLow >= edge->a.y))
+            continue;
+          
+          if(edge->a.x > maxX) maxX = edge->a.x;
+          if(edge->a.x < minX) minX = edge->a.x;
+          
+          if(edge->b.x > maxX) maxX = edge->b.x;
+          if(edge->b.x < minX) minX = edge->b.x;
+          
+          subEdges.push_back(*edge);
+        }
+        
+        maxX /= 20; maxX += 1; if(maxX > context.w) maxX = context.w;
+        minX /= 20; if(minX < 0) minX = 0;
+      }
+      
+      if(minX >= maxX) continue; // Nothing to draw in this whole sub segment.
+      
+      //memset(row, 0, sizeof(row));
+      memset(row+minX, 0, 2*(maxX-minX));
       
       for(int sy = 0; sy < FSAA; ++sy) {
-        std::vector<Intersection2> intersections;
-        calculateIntersections2(y * 20 + sy * 20 / FSAA, intersections, edges);
+        std::vector<sb_t> intersections;
+        calculateIntersections2(y * 20 + sy * 20 / FSAA, intersections, subEdges);
         
         if(intersections.size() == 0) continue;
         
-        uint32_t i = 0;
-        sb_t maxTwipsX = context.w * 20;
-        while(intersections[i+1].twipsX < 0 && i+1 < intersections.size()) ++i;
+        // TODO:2014-12-25:alex:Rounding errors because I could multiply with FSAA when calculateIntersections already.
         
-        sb_t fromX = intersections[i].twipsX * FSAA / 20;
-        while(intersections[i].twipsX < maxTwipsX && i+1 < intersections.size()) {
-          sb_t toX = intersections[i+1].twipsX * FSAA / 20;
-          if(toX >= maxTwipsX) toX = maxTwipsX-1;
+        uint32_t i = 0;
+        while(intersections[i+1] < 0 && i+1 < intersections.size()) ++i;
+        
+        sb_t endX = context.w * FSAA;
+        sb_t endTwipsX = endX * 20;
+        
+        sb_t fromX = intersections[i] * FSAA / 20;
+        while(intersections[i] < endTwipsX && i+1 < intersections.size()) {
+          sb_t toX = intersections[i+1] * FSAA / 20;
           
-          if((i & 1) == 0) // Even-odd winding rule
+          if((i & 1) == 0) { // Even-odd winding rule
+            if(toX >= endX) toX = endX;
             for(sb_t x = fromX; x < toX; ++x) row[x/FSAA] += 1;
+          }
           
           fromX = toX;
           ++i;
         }
       }
       
-      for(int x = 0; x < context.w; ++x) {
+      for(uint16_t x = minX; x < maxX; ++x) {
         uint8_t r = 0, g = 0, b = 0, a = 0;
         
         if(row[x] == 0) continue; // Transparent.
@@ -305,10 +327,11 @@ void render::renderShape(flash::Shape &shape, Context &context) {
         
         uint32_t bufferIndex = context.w * (context.h - y - 1) + x;
         
-        if(a == 0) continue; // transparent.
-        
 #define p8(a, i) *((uint8_t *)(&a)+i)
-        if(context.clip) a = a * p8(context.clip[bufferIndex], 3) / 255.0;
+        if(context.clip)
+          a = a * p8(context.clip[bufferIndex], 3) / 255.0;
+        
+        if(a == 0) continue; // transparent.
         
         uint32_t colorBefore = context.buffer[bufferIndex];
         uint8_t alphaBefore = p8(colorBefore, 3);
@@ -331,6 +354,55 @@ void render::renderShape(flash::Shape &shape, Context &context) {
 }
 
 /*
+struct Intersection {
+  flash::Segment *debug;
+  double twipsX;
+  sb_t xSum;
+  flash::styles::FillStylePtr fill, fillLeft;
+  bool operator<(const Intersection &rhs) const { return twipsX == rhs.twipsX ? xSum < rhs.xSum : (twipsX < rhs.twipsX); }
+};
+
+void calculateIntersections(sb_t twipsY, std::vector<Intersection> &intersections, std::vector<flash::Segment> &segments) {
+  for(auto seg = segments.begin(); seg != segments.end(); ++seg) {
+    if(seg->y0 == seg->y1) continue; // No horizontal lines needed.
+    
+    if(seg->y0 > seg->y1) { // normalize this
+      sb_t tmp = seg->y0;
+      seg->y0 = seg->y1;
+      seg->y1 = tmp;
+      
+      tmp = seg->x0;
+      seg->x0 = seg->x1;
+      seg->x1 = tmp;
+      
+      flash::styles::FillStylePtr tmp2 = seg->fillStyle0;
+      seg->fillStyle0 = seg->fillStyle1;
+      seg->fillStyle1 = tmp2;
+    }
+    
+    if(twipsY < seg->y0 || twipsY >= seg->y1) continue;
+    
+    Intersection i;
+    i.debug = &*seg;
+    i.twipsX = (twipsY - seg->y0) * (seg->x1 - seg->x0) / (double)(seg->y1 - seg->y0) + seg->x0;
+    i.xSum = seg->x0 + seg->x1;
+    i.fill = seg->fillStyle0;
+    i.fillLeft = seg->fillStyle1;
+    
+    intersections.push_back(i);
+  }
+  
+  std::sort(intersections.begin(), intersections.end());
+  
+  if(intersections.size() > 0 && intersections[0].twipsX > 0) {
+    Intersection transparent;
+    transparent.twipsX = 0;
+    transparent.xSum = 0;
+    transparent.fill = NULL;
+    intersections.insert(intersections.begin(), transparent);
+  }
+}
+
 #define SUBBEZIER 8
 void render::renderShape(flash::Shape &shape, Context &context) {
   std::map<uint32_t, std::vector<flash::Segment>> segments;
