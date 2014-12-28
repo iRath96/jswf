@@ -16,6 +16,9 @@
 namespace jswf {
   namespace flash {
     namespace tags {
+      /**
+       * Defines the background color of a SWF.
+       */
       class SetBackgroundColorTag : public TagWithReader {
       public:
         RGBA color;

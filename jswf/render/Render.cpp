@@ -24,7 +24,6 @@ void render::renderFrame(const flash::Frame &frame, const Context &context) {
       break;
     }
   
-  // TODO:2014-12-25:alex:Clipping is calculated incorrectly.
   uint32_t *clip = needsClipLayer ? new uint32_t[context.w * context.h] : NULL;
   uint16_t clipDepth = 0;
   
@@ -68,7 +67,7 @@ void render::renderFrame(const flash::Frame &frame, const Context &context) {
     c.matrix.tx = obj.matrix.tx * context.matrix.sx + obj.matrix.ty * context.matrix.r1 + context.matrix.tx;
     c.matrix.ty = obj.matrix.ty * context.matrix.sy + obj.matrix.tx * context.matrix.r0 + context.matrix.ty;
     
-    flash::DictionaryElement *character = context.document->dictionary[obj.characterId].get();
+    flash::Character *character = context.document->dictionary[obj.characterId].get();
     if(dynamic_cast<flash::Shape *>(character)) { // Shape
       flash::Shape *shape = (flash::Shape *)character;
       //printf("Drawing shape: %d\n", shape->id);

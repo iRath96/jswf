@@ -14,9 +14,13 @@
 namespace jswf {
   namespace flash {
     namespace tags {
+      /**
+       * Used to remove a `Character` at a given depth from the `DisplayList`.
+       * @todo Implement `RemoveObject`
+       */
       class RemoveObject2Tag : public TagWithReader {
       public:
-        uint16_t depth;
+        uint16_t depth; //!< The depth at which to delete at.
         
         void applyToFrame(Frame &frame) {
           frame.displayList.erase(depth);

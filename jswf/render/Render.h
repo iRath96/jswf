@@ -21,6 +21,9 @@ namespace jswf {
   }
   
   namespace render {
+    /**
+     * @bug Lines not rendering.
+     */
     struct Context {
       uint16_t w, h;
       uint32_t *buffer;

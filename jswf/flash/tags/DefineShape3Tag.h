@@ -14,11 +14,14 @@
 namespace jswf {
   namespace flash {
     namespace tags {
+      /**
+       * Extends \ref DefineShape2Tag with support for
+       * transparency in colors by using \ref Reader::readRGBA instead of \ref Reader::readRGB .
+       */
       class DefineShape3Tag : public DefineShape2Tag {
       protected:
         virtual void readBetween() {}
         virtual void readColor(RGBA &rgba) {
-          printf("readRGBA\n");
           flashReader.readRGBA(rgba);
         }
       public:

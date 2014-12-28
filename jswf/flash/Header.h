@@ -23,23 +23,31 @@ namespace jswf {
       };
     };
     
+    /**
+     * Represents `RECT` records.
+     */
     struct Rect {
-      sb_t x0, y0;
-      sb_t x1, y1;
+      sb_t x0, //!< The low x-coordinate.
+           y0; //!< The low y-coordinate.
+      sb_t x1, //!< The high x-coordinate.
+           y1; //!< The high y-coordinate.
     };
     
+    /**
+     * Represents `RGB`, `RGBA` and `ARGB` color records.
+     */
     struct RGBA {
-      uint8_t r, g, b, a;
+      uint8_t r, //!< Red channel.
+              g, //!< Green channel.
+              b, //!< Blue channel.
+              a; //!< Alpha channel.
     };
     
-    struct Gradient {
-      
-    };
-    
-    struct FocalGradient : public Gradient {
-      
-    };
-    
+    /**
+     * Represents `CXFORM` and `CXFORMWITHALPHA` records.
+     * For each channel `v` from `{r,g,b,a}`, the transformed value `v'` can be computed as follows:
+     * `v' = max(0, min((v * vM / 256) + vA, 255))`
+     */
     struct ColorTransform {
       // r,g,b,a = color channels
       // M = multiplication, A = addition
@@ -50,20 +58,29 @@ namespace jswf {
       sb_t aM = 256, aA = 0;
     };
     
+    /**
+     * Represents `MATRIX` records.
+     * `x' = x * sx + y * r1 + tx`
+     * `y' = y * sy + x * r0 + ty`
+     * @todo The documentation for this and ColorTransform could look better.
+     */
     struct Matrix {
       fb_t sx = 1, sy = 1; // scale
       fb_t r0 = 0, r1 = 0; // skew
       sb_t tx = 0, ty = 0; // translate
     };
     
-    class Header {
+    /**
+     * Represents the `HEADER` record.
+     */
+    struct Header {
     public:
-      Compression::Enum compression;
-      version_t version;
-      uint32_t fileSize;
-      uint16_t frameRate, // in 1/256 FPS
-               frameCount;
-      Rect rect;
+      Compression::Enum compression; //!< The compression used for the file.
+      version_t version; //!< The Flash version that this file targets.
+      uint32_t fileSize; //!< The total file size (including header) after decompression.
+      uint16_t frameRate, //!< The frame rate of this file in 1/256 FPS
+               frameCount; //!< The count of frames for the main timeline
+      Rect rect; //!< The dimensions of the file in `twips`
     };
   }
 }

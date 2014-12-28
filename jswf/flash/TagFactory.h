@@ -16,8 +16,17 @@
 
 namespace jswf {
   namespace flash {
+    /**
+     * Provides methods to create a polymorphistic \ref Tag by a given type identifier.
+     */
     class TagFactory {
     public:
+      /**
+       * Creates a Tag using the specified type identifier and payload.
+       * @param [in] type    Type identifier to determine the class to be instantiated for the Tag.
+       * @param [in] payload The Tag's payload.
+       * @return The constructed Tag.
+       */
       static tags::Tag *create(tags::tag_type_t, std::string &);
     };
   }

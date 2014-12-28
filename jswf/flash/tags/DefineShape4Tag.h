@@ -14,9 +14,11 @@
 namespace jswf {
   namespace flash {
     namespace tags {
+      /**
+       * Extends \ref DefineShape3Tag with support for `LINESTYLE2`.
+       */
       class DefineShape4Tag : public DefineShape3Tag {
         virtual styles::LineStyle *readLineStyle() {
-          printf("Read new LineStyle (DS4)\n");
           styles::LineStyle *style = new styles::LineStyle();
           style->width = reader->readU16();
           

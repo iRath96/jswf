@@ -9,7 +9,7 @@
 #ifndef jswf_DefineButtonTag_h
 #define jswf_DefineButtonTag_h
 
-#include "TagWithDictionaryElement.h"
+#include "TagWithCharacter.h"
 #include "Button.h"
 #include "Frame.h"
 
@@ -19,8 +19,17 @@
 namespace jswf {
   namespace flash {
     namespace tags {
-      class DefineButtonTag : public TagWithDictionaryElement {
+      /**
+       * Parses a `BUTTON` record that is to be added to the document's `DICTIONARY`.
+       */
+      class DefineButtonTag : public TagWithCharacter {
       protected:
+        /**
+         * Reads a 'BUTTONRECORD'. The changes to the frame are applied to \ref button .
+         * @return 'true' if further records follow, 'false' if this was the last record.
+         * @throw (TODO) if the reserved field was non-zero.
+         * @see read
+         */
         bool readButtonRecord() {
           uint8_t reserved = reader->readUB(2);
           assert(reserved == 0);
@@ -58,8 +67,16 @@ namespace jswf {
           return true;
         }
         
+        /**
+         * @see DefineShapeTag::readBetween
+         */
         virtual void readBetween() {} // TODO:2014-12-15:alex:Find a better name.
         
+        /**
+         * Instantiates \ref button and parses the payload.
+         * @see readBetween
+         * @see readButtonRecord
+         */
         void read() {
           button = new Button();
           element.reset(button);
@@ -72,10 +89,10 @@ namespace jswf {
           while(readButtonRecord());
         }
       public:
-        Button *button;
+        Button *button; //!< The button described by this tag.
         
-        DefineButtonTag(tag_type_t t, std::string &p) : TagWithDictionaryElement(t, p) { read(); }
-        DefineButtonTag(tag_type_t t, std::string &p, bool) : TagWithDictionaryElement(t, p) {}
+        DefineButtonTag(tag_type_t t, std::string &p) : TagWithCharacter(t, p) { read(); }
+        DefineButtonTag(tag_type_t t, std::string &p, bool) : TagWithCharacter(t, p) {}
       };
     }
   }

@@ -10,7 +10,7 @@
 #define __jswf__Sprite__
 
 #include <stdio.h>
-#include "DictionaryElement.h"
+#include "Character.h"
 #include "Frame.h"
 #include "Tag.h"
 
@@ -18,7 +18,10 @@
 
 namespace jswf {
   namespace flash {
-    class Sprite : public DictionaryElement {
+    /**
+     * Represents a `SPRITE` character.
+     */
+    class Sprite : public Character {
     public:
       std::vector<std::shared_ptr<tags::Tag>> tags;
       std::vector<Frame> frames;

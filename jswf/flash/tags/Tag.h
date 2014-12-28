@@ -18,10 +18,13 @@ namespace jswf {
     namespace tags {
       typedef uint16_t tag_type_t;
       
+      /**
+       * Serves as super-class for all `TAG`s.
+       */
       class Tag {
       public:
-        tag_type_t type;
-        std::string payload;
+        tag_type_t type; //!< The tag-type as integer. \todo Make this an enum!
+        std::string payload; //!< The payload of this tag as string.
         
         Tag(tag_type_t type, std::string &payload) : type(type), payload(payload) {}
         virtual ~Tag() {};

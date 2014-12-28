@@ -13,9 +13,12 @@
 
 namespace jswf {
   namespace io {
+    /**
+     * Implements io::GenericReader using a string as stream.
+     */
     class StringReader : public GenericReader {
     public:
-      std::string string;
+      std::string string; //!< The string we are reading from.
       
       StringReader(std::string string = "") : string(string) {}
       
@@ -23,19 +26,29 @@ namespace jswf {
       uint16_t readU16();
       uint32_t readU32();
       
-      std::string readString(); // Terminated by NUL byte
-      std::string readString(size_t); // A given number of characters
+      std::string readString();
+      std::string readString(size_t);
       
       void align(uint8_t bytes);
       uint64_t readUB(uint8_t nbits);
       
-      std::string readMatching() {
+      std::string readRemaining() {
         align(1);
         
         size_t start = pos;
         pos = string.length();
         return string.substr(start);
       }
+      
+      bool eof() { return pos >= string.length(); } // TODO:2014-12-27:alex >= is stupid. Should be ==.
+      
+#pragma mark AVM2
+      
+      s32_t readS24();
+      u32_t readVU30();
+      u32_t readVU32();
+      s32_t readVS32();
+      d64_t readD64();
     };
   }
 }

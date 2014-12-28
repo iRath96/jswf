@@ -78,7 +78,7 @@ void Reader::readHeader(Header &header) {
   header.fileSize = reader->readU32();
   
   if(header.compression == Compression::ZLib) {
-    std::string buffer = zlibInflate(reader->readMatching());
+    std::string buffer = zlibInflate(reader.get()->readRemaining()); // TODO:2014-12-28:alex:.get() should not be required.
     reader.reset(new io::StringReader(buffer));
     
     if(buffer.length() + 8 != header.fileSize)

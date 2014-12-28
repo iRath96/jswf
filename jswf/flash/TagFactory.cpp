@@ -28,6 +28,7 @@ case type: return new klass(type, payload);
     __(34, DefineButton2Tag);
     __(39, DefineSpriteTag);
     __(69, FileAttributesTag);
+    __(82, DoABCTag);
     __(83, DefineShape4Tag);
   } return new tags::Tag(type, payload);
 }

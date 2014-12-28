@@ -11,9 +11,14 @@
 
 #include "TagWithReader.h"
 
+// TODO:2014-12-28:alex:There are a lot of "Used to [...]" in the documentation. I don't like that.
+
 namespace jswf {
   namespace flash {
     namespace tags {
+      /**
+       * Represents `FileAttribute` tags.
+       */
       class FileAttributesTag : public TagWithReader {
       public:
         bool use_direct_blit, use_gpu, has_metadata, is_as3, use_network;

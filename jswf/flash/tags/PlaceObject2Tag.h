@@ -17,9 +17,21 @@
 namespace jswf {
   namespace flash {
     namespace tags {
+      /**
+       * Used to add a `Character` to the `DisplayList` or to modify an existing `Character` in the `DisplayList`
+       * @todo Implement `PlaceObject`
+       * @todo Create a super-class for `TAG`s that modify the display list.
+       */
       class PlaceObject2Tag : public TagWithReader {
       public:
-        bool hasClipActions, hasClipDepth, hasName, hasRatio, hasColorTransform, hasMatrix, hasCharacter, doesMove;
+        bool hasClipActions,
+             hasClipDepth,
+             hasName,
+             hasRatio,
+             hasColorTransform,
+             hasMatrix,
+             hasCharacter,
+             doesMove;
         uint16_t depth;
         
         uint16_t characterId; // if hasCharacter
@@ -29,6 +41,10 @@ namespace jswf {
         uint16_t clipDepth; // if hasClipDepth
         ColorTransform colorTransform; // if hasColorTransform
         
+        /**
+         * Applies the changes as described by this tag to the displayList of a given frame.
+         * @param [in,out] frame The frame, the displayList of which is being altered by this operation.
+         */
         void applyToFrame(Frame &frame) {
           if(hasCharacter) frame.displayList[depth].characterId = characterId;
           if(hasMatrix) frame.displayList[depth].matrix = matrix;

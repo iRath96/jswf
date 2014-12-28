@@ -18,8 +18,8 @@ void Document::read() {
     
     if(dynamic_cast<tags::EndTag *>(tag)) break;
     
-    if(dynamic_cast<tags::TagWithDictionaryElement *>(tag)) {
-      tags::TagWithDictionaryElement *twde = (tags::TagWithDictionaryElement *)tag;
+    if(dynamic_cast<tags::TagWithCharacter *>(tag)) {
+      tags::TagWithCharacter *twde = (tags::TagWithCharacter *)tag;
       dictionary[twde->element->id] = twde->element;
       
       if(dynamic_cast<Shape *>(twde->element.get()))

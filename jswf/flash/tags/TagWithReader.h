@@ -16,17 +16,22 @@
 namespace jswf {
   namespace flash {
     namespace tags {
+      /**
+       * Serves as super-class for all `TAG`s that use
+       * an io::StringReader and/or a flash::Reader to parse their
+       * payload.
+       */
       class TagWithReader : public Tag {
       public:
         tag_type_t type;
         std::string payload;
         
-        io::StringReader *reader;
-        flash::Reader flashReader;
+        std::shared_ptr<io::StringReader> reader; //!< The io::StringReader that operates on \ref payload
+        flash::Reader flashReader; //!< The flash::Reader that operates on \ref reader
         
         TagWithReader(tag_type_t type, std::string &payload) : Tag(type, payload),
           reader(new io::StringReader(payload)),
-          flashReader(*reader) {}
+          flashReader(std::shared_ptr<io::GenericReader>(reader)) {}
       };
     }
   }

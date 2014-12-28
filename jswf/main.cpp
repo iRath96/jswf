@@ -20,6 +20,8 @@
 #include <SDL2/SDL.h>
 #include <OpenGL/gl.h>
 
+#include "ABCFile.h"
+
 using namespace jswf;
 
 uint16_t minFrameCount = 0;
@@ -45,7 +47,7 @@ void renderSWF(std::string filename) {
   std::stringstream s;
   s << file.rdbuf();
   
-  io::StringReader *reader = new io::StringReader(s.str());
+  std::shared_ptr<io::StringReader> reader = std::make_shared<io::StringReader>(s.str());
   flash::Document *document = new flash::Document(reader);
   
 #define MIN(a, b) ((a) > (b) ? (b) : (a))
@@ -139,14 +141,17 @@ int main(int argc, char *argv[]) {
   
   //renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/room-swfs/town.swf");
   
-  //renderSWF("test.swf");
-  renderSWF(PENGUIN_FILENAME);
-  renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/2129.swf"); // face
-  renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/1025.swf"); // hair
-  renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/839.swf");
-  renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/728.swf");
-  renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/3222.swf"); // scarf
-  renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/6237.swf");
+  renderSWF("test.swf");
+  
+  if(false) {
+    renderSWF(PENGUIN_FILENAME);
+    renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/2129.swf"); // face
+    renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/1025.swf"); // hair
+    renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/839.swf");
+    renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/728.swf");
+    renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/3222.swf"); // scarf
+    renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/6237.swf");
+  }
   
   glDrawPixels(width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
   SDL_GL_SwapWindow(window);

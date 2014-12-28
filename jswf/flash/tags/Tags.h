@@ -6,6 +6,12 @@
 //  Copyright (c) 2014 Alexander Rath. All rights reserved.
 //
 
+
+/**
+ * @file Tags.h
+ * Includes all tag headers.
+ */
+
 #include "EndTag.h"
 #include "ShowFrameTag.h"
 #include "DefineShapeTag.h"
@@ -24,3 +30,5 @@
 #include "PlaceObject2Tag.h"
 
 #include "SetBackgroundColorTag.h"
+
+#include "DoABCTag.h"

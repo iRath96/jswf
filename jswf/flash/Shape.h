@@ -14,7 +14,7 @@
 #include "Header.h"
 
 #include "Styles.h"
-#include "DictionaryElement.h"
+#include "Character.h"
 
 #include <vector>
 #include <map>
@@ -22,6 +22,10 @@
 
 namespace jswf {
   namespace flash {
+    /**
+     * Represents a segment as drawn by a `SHAPEWITHSTYLE` record `line`/`qline` action.
+     * @todo Use \ref Point "Points" for the coordinates.
+     */
     struct Segment {
       sb_t x0, y0;
       sb_t x1, y1;
@@ -33,21 +37,38 @@ namespace jswf {
       styles::FillStylePtr fillStyle0, fillStyle1;
     };
     
+    /**
+     * Represents a two-dimensional point.
+     */
     struct Point {
-      sb_t x, y;
+      sb_t x, //!< The x-coordinate
+           y; //!< The y-coordinate
+      
+      //! Tests two \ref Point "Points" for equality.
       bool operator ==(const Point &rhs) { return x == rhs.x && y == rhs.y; };
+      //! Tests two \ref Point "Points" for inequality.
       bool operator !=(const Point &rhs) { return x != rhs.x || y != rhs.y; };
     };
     
+    /**
+     * Represents an edge between two \ref Point "Points" .
+     */
     struct Edge {
-      Point a, b;
+      Point a, //!< Starting point of the edge
+            b; //!< End point of the edge
     };
     
+    /**
+     * Represents a collection of \ref Edge "Edges" that form a closed polygon.
+     */
     struct Polygon {
-      std::vector<Edge> edges;
+      std::vector<Edge> edges; //!< The `vector` of \ref Edge "Edges"
     };
     
-    class Shape : public DictionaryElement {
+    /**
+     * Represents a `SHAPE` character.
+     */
+    class Shape : public Character {
       sb_t x = 0, y = 0; // current drawing position
       styles::LineStylePtr lineStyle;
       styles::FillStylePtr fillStyle0, fillStyle1;

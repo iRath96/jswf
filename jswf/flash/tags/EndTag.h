@@ -14,6 +14,11 @@
 namespace jswf {
   namespace flash {
     namespace tags {
+      /**
+       * Marks the end of a tag array and thereby the end of a \ref Document or \ref Sprite.
+       * @see flash::Document
+       * @see flash::tags::DefineSpriteTag
+       */
       class EndTag : public Tag {
       public:
         EndTag(tag_type_t t, std::string &p) : Tag(t, p) {}

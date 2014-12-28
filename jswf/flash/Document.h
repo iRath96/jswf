@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "Reader.h"
 #include "Header.h"
-#include "DictionaryElement.h"
+#include "Character.h"
 #include "Tags.h"
 
 #include "Frame.h"
@@ -22,18 +22,21 @@
 
 namespace jswf {
   namespace flash {
+    /**
+     * Parses and represents a `SWF file`.
+     */
     class Document {
+    protected:
+      Frame frame; //!< The temporary frame that \ref PlaceObjectTag , \ref RemoveObjectTag , etc. operate on
+      Reader reader; //!< The flash::Reader used by this document.
     public:
-      Header header;
-      Frame frame;
+      Header header; //!< The `HEADER` record for this document.
       
-      std::vector<std::shared_ptr<tags::Tag>> tags;
-      std::map<uint16_t, std::shared_ptr<DictionaryElement>> dictionary;
-      std::vector<Frame> frames;
+      std::vector<std::shared_ptr<tags::Tag>> tags; //!< A `vector` of `shared_ptr`s to the tags this document contains.
+      std::map<uint16_t, std::shared_ptr<Character>> dictionary; //!< The `DICTIONARY` of this document.
+      std::vector<Frame> frames; //!< The frames of this document.
       
-      Reader reader;
       Document(std::shared_ptr<jswf::io::GenericReader> reader) : reader(reader) { read(); }
-      Document(jswf::io::GenericReader *reader) : reader(*reader) { read(); }
     private:
       void read();
     };

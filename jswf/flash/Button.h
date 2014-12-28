@@ -10,12 +10,15 @@
 #define __jswf__Button__
 
 #include <stdio.h>
-#include "DictionaryElement.h"
+#include "Character.h"
 #include "Frame.h"
 
 namespace jswf {
   namespace flash {
-    class Button : public DictionaryElement {
+    /**
+     * Represents a `BUTTON` character.
+     */
+    class Button : public Character {
     public:
       enum StateEnum {
         UpState = 0,

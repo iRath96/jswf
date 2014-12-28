@@ -10,17 +10,20 @@
 #define __jswf__DefineSpriteTag__
 
 #include <stdio.h>
-#include "TagWithDictionaryElement.h"
+#include "TagWithCharacter.h"
 #include "Tags.h"
 #include "Sprite.h"
 
 namespace jswf {
   namespace flash {
     namespace tags {
-      class DefineSpriteTag : public TagWithDictionaryElement {
+      /**
+       * Parses a `SPRITE` record that is to be added to the document's `DICTIONARY`.
+       */
+      class DefineSpriteTag : public TagWithCharacter {
       public:
         Sprite *sprite;
-        DefineSpriteTag(tag_type_t t, std::string &p) : TagWithDictionaryElement(t, p) {
+        DefineSpriteTag(tag_type_t t, std::string &p) : TagWithCharacter(t, p) {
           sprite = new Sprite();
           element.reset(sprite);
           
