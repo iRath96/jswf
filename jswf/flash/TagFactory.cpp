@@ -30,5 +30,8 @@ case type: return new klass(type, payload);
     __(69, FileAttributesTag);
     __(82, DoABCTag);
     __(83, DefineShape4Tag);
+    __(86, DefineSceneAndFrameLabelDataTag);
+    default: printf("  [unrecognized tag:0x%02x/%d]\n", type, type);
   } return new tags::Tag(type, payload);
+#undef __
 }

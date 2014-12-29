@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Alexander Rath. All rights reserved.
 //
 
-
 /**
  * @file Tags.h
  * Includes all tag headers.
@@ -32,3 +31,5 @@
 #include "SetBackgroundColorTag.h"
 
 #include "DoABCTag.h"
+
+#include "DefineSceneAndFrameLabelDataTag.h"

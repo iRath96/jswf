@@ -18,12 +18,12 @@ namespace jswf {
        * Used to remove a `Character` at a given depth from the `DisplayList`.
        * @todo Implement `RemoveObject`
        */
-      class RemoveObject2Tag : public TagWithReader {
+      class RemoveObject2Tag : public TagWithReader, public ITagForSprite {
       public:
         uint16_t depth; //!< The depth at which to delete at.
         
-        void applyToFrame(Frame &frame) {
-          frame.displayList.erase(depth);
+        void applyToSprite(Sprite &sprite) {
+          sprite.temporaryFrame.displayList.erase(depth);
         }
         
         RemoveObject2Tag(tag_type_t t, std::string &p) : TagWithReader(t, p) {

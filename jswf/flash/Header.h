@@ -16,7 +16,13 @@
 namespace jswf {
   namespace flash {
     typedef uint8_t version_t;
+    /**
+     * Provides Compression::Enum
+     */
     struct Compression {
+      /**
+       * Describes the kinds of compressions used by SWF documents.
+       */
       enum Enum {
         Uncompressed,
         ZLib
@@ -45,8 +51,8 @@ namespace jswf {
     
     /**
      * Represents `CXFORM` and `CXFORMWITHALPHA` records.
-     * For each channel `v` from `{r,g,b,a}`, the transformed value `v'` can be computed as follows:
-     * `v' = max(0, min((v * vM / 256) + vA, 255))`
+     * For each channel \f$v\f$ from \f${r,g,b,a}\f$, the transformed value \f$v'\f$ can be computed as follows:\n
+     * \f$v' = max(0, min((v * vM / 256) + vA, 255))\f$
      */
     struct ColorTransform {
       // r,g,b,a = color channels
@@ -60,9 +66,8 @@ namespace jswf {
     
     /**
      * Represents `MATRIX` records.
-     * `x' = x * sx + y * r1 + tx`
-     * `y' = y * sy + x * r0 + ty`
-     * @todo The documentation for this and ColorTransform could look better.
+     * \f$x' = x * sx + y * r1 + tx\f$\n
+     * \f$y' = y * sy + x * r0 + ty\f$
      */
     struct Matrix {
       fb_t sx = 1, sy = 1; // scale

@@ -9,6 +9,8 @@
 #include "Render.h"
 #include "Document.h"
 
+#include "Button.h"
+
 #define FSAA 4
 #define FSAA2 (FSAA * FSAA)
 
@@ -28,7 +30,7 @@ void render::renderFrame(const flash::Frame &frame, const Context &context) {
   uint16_t clipDepth = 0;
   
   for(auto it = frame.displayList.begin(); it != frame.displayList.end(); ++it) {
-    const flash::DisplayObject &obj = it->second;
+    const flash::DisplayListEntry &obj = it->second;
     if(context.document->dictionary.find(obj.characterId) == context.document->dictionary.end()) {
       printf("Cannot find character %d\n", obj.characterId);
       throw "Cannot find character.";

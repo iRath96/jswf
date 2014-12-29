@@ -9,9 +9,12 @@
 #ifndef __jswf__DefineSpriteTag__
 #define __jswf__DefineSpriteTag__
 
-#include <stdio.h>
-#include "TagWithCharacter.h"
-#include "Tags.h"
+#include "TagWithReader.h"
+#include "ITagWithCharacter.h"
+
+#include "ITagForSprite.h"
+#include "EndTag.h"
+
 #include "Sprite.h"
 
 namespace jswf {
@@ -20,35 +23,25 @@ namespace jswf {
       /**
        * Parses a `SPRITE` record that is to be added to the document's `DICTIONARY`.
        */
-      class DefineSpriteTag : public TagWithCharacter {
+      class DefineSpriteTag : public TagWithReader, public ITagWithCharacter {
       public:
         Sprite *sprite;
-        DefineSpriteTag(tag_type_t t, std::string &p) : TagWithCharacter(t, p) {
+        DefineSpriteTag(tag_type_t t, std::string &p) : TagWithReader(t, p) {
           sprite = new Sprite();
-          element.reset(sprite);
+          character.reset(sprite);
           
           sprite->id = reader->readU16();
           sprite->frameCount = reader->readU16();
           
           Frame frame;
           
-          while(true) { // TODO:2014-12-14:alex:Not DRY with flash::Document.
+          while(true) {
             tags::Tag *tag = flashReader.readTag();
             sprite->tags.push_back(std::shared_ptr<tags::Tag>(tag));
             
             if(dynamic_cast<tags::EndTag *>(tag)) break;
-            
-            if(dynamic_cast<tags::PlaceObject2Tag *>(tag)) {
-              tags::PlaceObject2Tag *po2t = (tags::PlaceObject2Tag *)tag;
-              po2t->applyToFrame(frame);
-            }
-            
-            if(dynamic_cast<tags::RemoveObject2Tag *>(tag))
-              ((tags::RemoveObject2Tag *)tag)->applyToFrame(frame);
-            
-            if(dynamic_cast<tags::ShowFrameTag *>(tag)) {
-              sprite->frames.push_back(frame);
-            }
+            if(dynamic_cast<tags::ITagForSprite *>(tag))
+              (dynamic_cast<tags::ITagForSprite *>(tag))->applyToSprite(*sprite);
           }
         }
       };

@@ -16,7 +16,7 @@
 
 namespace jswf {
   namespace flash {
-    struct DisplayObject {
+    struct DisplayListEntry {
       uint16_t characterId;
       
       bool doesClip = false;
@@ -30,7 +30,7 @@ namespace jswf {
     
     class Frame {
     public:
-      std::map<uint16_t, DisplayObject> displayList;
+      std::map<uint16_t, DisplayListEntry> displayList;
     };
   }
 }

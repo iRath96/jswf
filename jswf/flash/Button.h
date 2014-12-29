@@ -9,7 +9,6 @@
 #ifndef __jswf__Button__
 #define __jswf__Button__
 
-#include <stdio.h>
 #include "Character.h"
 #include "Frame.h"
 

@@ -9,7 +9,9 @@
 #ifndef jswf_DefineButtonTag_h
 #define jswf_DefineButtonTag_h
 
-#include "TagWithCharacter.h"
+#include "TagWithReader.h"
+#include "ITagWithCharacter.h"
+
 #include "Button.h"
 #include "Frame.h"
 
@@ -22,7 +24,7 @@ namespace jswf {
       /**
        * Parses a `BUTTON` record that is to be added to the document's `DICTIONARY`.
        */
-      class DefineButtonTag : public TagWithCharacter {
+      class DefineButtonTag : public TagWithReader, public ITagWithCharacter {
       protected:
         /**
          * Reads a 'BUTTONRECORD'. The changes to the frame are applied to \ref button .
@@ -45,19 +47,19 @@ namespace jswf {
           
           if(!continueReading) return false;
           
-          DisplayObject displayObject;
-          displayObject.characterId = reader->readU16();
+          DisplayListEntry dlEntry;
+          dlEntry.characterId = reader->readU16();
           
           uint16_t depth = reader->readU16();
           
-          flashReader.readMatrix(displayObject.matrix);
-          flashReader.readColorTransform(displayObject.colorTransform, true);
-          displayObject.setsColorTransform = true;
+          flashReader.readMatrix(dlEntry.matrix);
+          flashReader.readColorTransform(dlEntry.colorTransform, true);
+          dlEntry.setsColorTransform = true;
           
           if(hasFilterList) throw "Filter-list not supported.";
           if(hasBlendMode) throw "Blend-mode not supported.";
           
-#define appendToFrame(flag) if(state ## flag) button->frames[Button::flag ## State].displayList[depth] = displayObject;
+#define appendToFrame(flag) if(state ## flag) button->frames[Button::flag ## State].displayList[depth] = dlEntry;
           appendToFrame(HitTest);
           appendToFrame(Down);
           appendToFrame(Over);
@@ -79,7 +81,7 @@ namespace jswf {
          */
         void read() {
           button = new Button();
-          element.reset(button);
+          character.reset(button);
           
           button->id = reader->readU16();
           printf("DefineButton id=%d\n", button->id);
@@ -91,8 +93,8 @@ namespace jswf {
       public:
         Button *button; //!< The button described by this tag.
         
-        DefineButtonTag(tag_type_t t, std::string &p) : TagWithCharacter(t, p) { read(); }
-        DefineButtonTag(tag_type_t t, std::string &p, bool) : TagWithCharacter(t, p) {}
+        DefineButtonTag(tag_type_t t, std::string &p) : TagWithReader(t, p) { read(); }
+        DefineButtonTag(tag_type_t t, std::string &p, bool) : TagWithReader(t, p) {}
       };
     }
   }

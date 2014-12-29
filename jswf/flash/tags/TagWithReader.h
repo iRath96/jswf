@@ -23,12 +23,12 @@ namespace jswf {
        */
       class TagWithReader : public Tag {
       public:
-        tag_type_t type;
-        std::string payload;
-        
         std::shared_ptr<io::StringReader> reader; //!< The io::StringReader that operates on \ref payload
         flash::Reader flashReader; //!< The flash::Reader that operates on \ref reader
         
+        /**
+         * Constructs a TagWithReader by initializing the \ref reader and \ref flashReader .
+         */
         TagWithReader(tag_type_t type, std::string &payload) : Tag(type, payload),
           reader(new io::StringReader(payload)),
           flashReader(std::shared_ptr<io::GenericReader>(reader)) {}

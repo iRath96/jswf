@@ -162,18 +162,24 @@ namespace jswf {
     };
     
     struct TraitInfo {
+      /**
+       * Describes kinds of \ref TraitInfo .
+       */
       enum Kind : u8_t {
-        SlotKind = 0,
-        MethodKind = 1,
-        GetterKind = 2,
-        SetterKind = 3,
-        ClassKind = 4,
-        FunctionKind = 5,
-        ConstKind = 6
+        SlotKind     = 0, //!< Member definition, use \ref SlotTraitInfo
+        MethodKind   = 1, //!< Method definition, use \ref MethodTraitInfo
+        GetterKind   = 2, //!< Getter definition, use \ref MethodTraitInfo
+        SetterKind   = 3, //!< Setter definition, use \ref MethodTraitInfo
+        ClassKind    = 4, //!< Class definition, use \ref ClassTraitInfo
+        FunctionKind = 5, //!< Function definition, use \ref FunctionTraitInfo
+        ConstKind    = 6  //!< Constant member definition, use \ref SlotTraitInfo
       };
       
+      /**
+       * Describes attributes of \ref TraitInfo .
+       */
       enum Attributes : u8_t {
-        FinalAttribute = 0x1,
+        FinalAttribute    = 0x1,
         OverrideAttribute = 0x2,
         MetadataAttribute = 0x4
       };
@@ -262,7 +268,10 @@ namespace jswf {
     
     // Hallelujah.
     
-    class CompoundNode;
+    namespace ast {
+      class CompoundNode;
+    }
+    
     class ABCFile {
     public:
       u16_t majorVersion, minorVersion;
@@ -457,7 +466,7 @@ namespace jswf {
       }
       
       void decompile(MethodInfo &info, std::string name);
-      void decompile(MethodInfo &info, std::string name, CompoundNode *compound);
+      void decompile(MethodInfo &info, std::string name, ast::CompoundNode *compound);
       
 #define _multiname(u) u->nameString().c_str()
       
@@ -618,7 +627,6 @@ namespace jswf {
           printf("}\n");
         }
         
-        exit(1);
 #undef read_array
 #undef value
       }

@@ -20,6 +20,10 @@ namespace jswf {
     public:
       std::string string; //!< The string we are reading from.
       
+      /**
+       * Constructs a StringReader with a given string.
+       * @param [in] string The string to be used as data source
+       */
       StringReader(std::string string = "") : string(string) {}
       
       uint8_t  readU8();

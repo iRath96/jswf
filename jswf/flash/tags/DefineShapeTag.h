@@ -9,7 +9,9 @@
 #ifndef jswf_DefineShapeTag_h
 #define jswf_DefineShapeTag_h
 
-#include "TagWithCharacter.h"
+#include "TagWithReader.h"
+#include "ITagWithCharacter.h"
+
 #include "Shape.h"
 
 #include <vector>
@@ -21,7 +23,7 @@ namespace jswf {
       /**
        * Parses a `SHAPE` record that is to be added to the document's `DICTIONARY`.
        */
-      class DefineShapeTag : public TagWithCharacter {
+      class DefineShapeTag : public TagWithReader, public ITagWithCharacter {
       protected:
         std::vector<styles::FillStylePtr> fillStyles; //!< FillStyleArray used for drawing operations.
         std::vector<styles::LineStylePtr> lineStyles; //!< LineStyleArray used for drawing operations.
@@ -107,7 +109,7 @@ namespace jswf {
          */
         void read() {
           shape = new Shape();
-          element.reset(shape);
+          character.reset(shape);
           
           shape->id = reader->readU16();
           printf("DefineShape id=%d\n", shape->id);
@@ -126,6 +128,8 @@ namespace jswf {
                   lbits = reader->readUB(4);
           
           while(readShapeRecord(fbits, lbits));
+          
+          shape->polygonize();
         }
       public:
         Shape *shape; //!< The shape we are projecting the 'SHAPERECORD's we read upon.
@@ -134,14 +138,14 @@ namespace jswf {
          * Constructs a DefineShapeTag and parses the payload using 'read'
          * @see read
          */
-        DefineShapeTag(tag_type_t t, std::string &p) : TagWithCharacter(t, p) { read(); }
+        DefineShapeTag(tag_type_t t, std::string &p) : TagWithReader(t, p) { read(); }
         
         /**
          * Constructs a DefineShapeTag without parsing the payload.
          * Used by subclasses so they can call \ref read with the polymorphistic \ref readBetween .
          * @param [in] bool ignored
          */
-        DefineShapeTag(tag_type_t t, std::string &p, bool) : TagWithCharacter(t, p) {}
+        DefineShapeTag(tag_type_t t, std::string &p, bool) : TagWithReader(t, p) {}
       };
     }
   }

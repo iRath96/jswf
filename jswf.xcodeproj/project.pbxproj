@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA6D73F81A50AA3C00486BFA /* VM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA6D73F61A50AA3C00486BFA /* VM.cpp */; };
+		FA6D73FB1A50AA6800486BFA /* Compiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA6D73F91A50AA6800486BFA /* Compiler.cpp */; };
+		FA6D73FE1A50AA6F00486BFA /* Decompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA6D73FC1A50AA6F00486BFA /* Decompiler.cpp */; };
 		FA9126C41A4ECCAF00D6E970 /* ABCFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA9126C21A4ECCAF00D6E970 /* ABCFile.cpp */; };
 		FAACBC9D1A3BE83C00D5F9F5 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAACBC9C1A3BE83C00D5F9F5 /* main.cpp */; };
 		FAACBCA51A3BE86100D5F9F5 /* Document.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAACBCA31A3BE86100D5F9F5 /* Document.cpp */; };
@@ -48,6 +51,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FA6D73F51A50A37000486BFA /* Node.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
+		FA6D73F61A50AA3C00486BFA /* VM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VM.cpp; sourceTree = "<group>"; };
+		FA6D73F71A50AA3C00486BFA /* VM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VM.h; sourceTree = "<group>"; };
+		FA6D73F91A50AA6800486BFA /* Compiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Compiler.cpp; sourceTree = "<group>"; };
+		FA6D73FA1A50AA6800486BFA /* Compiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Compiler.h; sourceTree = "<group>"; };
+		FA6D73FC1A50AA6F00486BFA /* Decompiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Decompiler.cpp; sourceTree = "<group>"; };
+		FA6D73FD1A50AA6F00486BFA /* Decompiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Decompiler.h; sourceTree = "<group>"; };
+		FA6D74001A50AB4900486BFA /* MovieClip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MovieClip.h; sourceTree = "<group>"; };
+		FA6D74011A50AB4D00486BFA /* Sprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sprite.h; sourceTree = "<group>"; };
+		FA6D74051A51661F00486BFA /* macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
+		FA6D74061A51665A00486BFA /* undef-macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "undef-macros.h"; sourceTree = "<group>"; };
+		FA6D74071A5168C900486BFA /* ITagForSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ITagForSprite.h; sourceTree = "<group>"; };
+		FA6D74081A51697200486BFA /* ITagForDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ITagForDocument.h; sourceTree = "<group>"; };
 		FA9126731A4C2B4D00D6E970 /* RemoveObjectTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoveObjectTag.h; sourceTree = "<group>"; };
 		FA9126741A4C2B5400D6E970 /* RemoveObject2Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoveObject2Tag.h; sourceTree = "<group>"; };
 		FA9126751A4C611C00D6E970 /* PlaceObjectTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceObjectTag.h; sourceTree = "<group>"; };
@@ -140,7 +156,7 @@
 		FAACBCD81A3DE1CE00D5F9F5 /* PlaceObject2Tag.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlaceObject2Tag.cpp; sourceTree = "<group>"; };
 		FAACBCD91A3DE1CE00D5F9F5 /* PlaceObject2Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceObject2Tag.h; sourceTree = "<group>"; };
 		FAACBCDB1A3DE46400D5F9F5 /* Character.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Character.h; sourceTree = "<group>"; };
-		FAACBCDC1A3DE50600D5F9F5 /* TagWithCharacter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TagWithCharacter.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FAACBCDC1A3DE50600D5F9F5 /* ITagWithCharacter.h */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ITagWithCharacter.h; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FAC913A91A4C1B010056AAB8 /* DefineButtonTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DefineButtonTag.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FAC913AA1A4C1B700056AAB8 /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
 		FAC913AB1A4C1B700056AAB8 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Button.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -190,6 +206,44 @@
 			name = Characters;
 			sourceTree = "<group>";
 		};
+		FA6D73F41A50A32700486BFA /* ::ast */ = {
+			isa = PBXGroup;
+			children = (
+				FA6D73F51A50A37000486BFA /* Node.h */,
+			);
+			name = "::ast";
+			path = ast;
+			sourceTree = "<group>";
+		};
+		FA6D73FF1A50AAB900486BFA /* ::lib */ = {
+			isa = PBXGroup;
+			children = (
+				FA6D74041A50AB9200486BFA /* ::display */,
+			);
+			name = "::lib";
+			path = lib;
+			sourceTree = "<group>";
+		};
+		FA6D74041A50AB9200486BFA /* ::display */ = {
+			isa = PBXGroup;
+			children = (
+				FA6D74001A50AB4900486BFA /* MovieClip.h */,
+				FA6D74011A50AB4D00486BFA /* Sprite.h */,
+			);
+			name = "::display";
+			path = display;
+			sourceTree = "<group>";
+		};
+		FA6D74091A516A4B00486BFA /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				FAACBCDC1A3DE50600D5F9F5 /* ITagWithCharacter.h */,
+				FA6D74071A5168C900486BFA /* ITagForSprite.h */,
+				FA6D74081A51697200486BFA /* ITagForDocument.h */,
+			);
+			name = Interfaces;
+			sourceTree = "<group>";
+		};
 		FA9126771A4C613600D6E970 /* PlaceObject */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,11 +290,10 @@
 		FA91267B1A4C616400D6E970 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				FAACBCBA1A3C4A0900D5F9F5 /* Tag.h */,
 				FAACBCB91A3C4A0900D5F9F5 /* Tag.cpp */,
+				FAACBCBA1A3C4A0900D5F9F5 /* Tag.h */,
 				FAACBCBF1A3C4E0D00D5F9F5 /* TagWithReader.cpp */,
 				FAACBCC01A3C4E0D00D5F9F5 /* TagWithReader.h */,
-				FAACBCDC1A3DE50600D5F9F5 /* TagWithCharacter.h */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -333,14 +386,15 @@
 			name = Text;
 			sourceTree = "<group>";
 		};
-		FA9126B51A4C64AA00D6E970 /* Do */ = {
+		FA9126B51A4C64AA00D6E970 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
+				FA9126A11A4C635700D6E970 /* SymbolClassTag.h */,
 				FA9126801A4C61D500D6E970 /* DoActionTag.h */,
 				FA9126961A4C62D000D6E970 /* DoInitActionTag.h */,
 				FA9126A41A4C636F00D6E970 /* DoABCTag.h */,
 			);
-			name = Do;
+			name = Actions;
 			sourceTree = "<group>";
 		};
 		FA9126B61A4C64B900D6E970 /* Sound */ = {
@@ -390,7 +444,6 @@
 				FA91269B1A4C630A00D6E970 /* ScriptLimitsTag.h */,
 				FA91269C1A4C631100D6E970 /* SetTabIndexTag.h */,
 				FA91269F1A4C634700D6E970 /* CSMTextSettingsTag.h */,
-				FA9126A11A4C635700D6E970 /* SymbolClassTag.h */,
 				FA9126AC1A4C63C300D6E970 /* EnableTelementryTag.h */,
 				FAACBCC21A3C4FD700D5F9F5 /* SetBackgroundColorTag.h */,
 				FAACBCBE1A3C4D5F00D5F9F5 /* FileAttributesTag.h */,
@@ -429,8 +482,16 @@
 		FA9126BF1A4C6B2300D6E970 /* ::avm2 */ = {
 			isa = PBXGroup;
 			children = (
+				FA6D73F41A50A32700486BFA /* ::ast */,
+				FA6D73FF1A50AAB900486BFA /* ::lib */,
 				FA9126C21A4ECCAF00D6E970 /* ABCFile.cpp */,
 				FA9126C31A4ECCAF00D6E970 /* ABCFile.h */,
+				FA6D73F61A50AA3C00486BFA /* VM.cpp */,
+				FA6D73F71A50AA3C00486BFA /* VM.h */,
+				FA6D73F91A50AA6800486BFA /* Compiler.cpp */,
+				FA6D73FA1A50AA6800486BFA /* Compiler.h */,
+				FA6D73FC1A50AA6F00486BFA /* Decompiler.cpp */,
+				FA6D73FD1A50AA6F00486BFA /* Decompiler.h */,
 			);
 			name = "::avm2";
 			path = avm2;
@@ -480,6 +541,8 @@
 			isa = PBXGroup;
 			children = (
 				FA9126C51A4ECDE700D6E970 /* types.h */,
+				FA6D74051A51661F00486BFA /* macros.h */,
+				FA6D74061A51665A00486BFA /* undef-macros.h */,
 				FAACBCB31A3BF1A000D5F9F5 /* ::io */,
 				FAACBCA61A3BE86700D5F9F5 /* ::flash */,
 				FA9126BF1A4C6B2300D6E970 /* ::avm2 */,
@@ -529,9 +592,10 @@
 			children = (
 				FAACBCC71A3C590E00D5F9F5 /* Tags.h */,
 				FA91267B1A4C616400D6E970 /* Base */,
+				FA6D74091A516A4B00486BFA /* Interfaces */,
 				FA9126B31A4C644100D6E970 /* Define */,
 				FA9126C01A4C6DF300D6E970 /* Frame */,
-				FA9126B51A4C64AA00D6E970 /* Do */,
+				FA9126B51A4C64AA00D6E970 /* Actions */,
 				FA9126B61A4C64B900D6E970 /* Sound */,
 				FA9126BC1A4C651D00D6E970 /* Assets */,
 				FA9126C11A4C6ED500D6E970 /* Protection */,
@@ -627,16 +691,19 @@
 				FAACBCB21A3BF17300D5F9F5 /* TagFactory.cpp in Sources */,
 				FAF1B1111A3DF469007BBA1E /* Frame.cpp in Sources */,
 				FAF1B1151A3DF8A7007BBA1E /* Render.cpp in Sources */,
+				FA6D73FB1A50AA6800486BFA /* Compiler.cpp in Sources */,
 				FA9126C41A4ECCAF00D6E970 /* ABCFile.cpp in Sources */,
 				FAACBCA51A3BE86100D5F9F5 /* Document.cpp in Sources */,
 				FAACBCB71A3C0E0700D5F9F5 /* GenericReader.cpp in Sources */,
 				FAACBC9D1A3BE83C00D5F9F5 /* main.cpp in Sources */,
 				FAACBCC11A3C4E0D00D5F9F5 /* TagWithReader.cpp in Sources */,
 				FAACBCB61A3BF70F00D5F9F5 /* Header.cpp in Sources */,
+				FA6D73F81A50AA3C00486BFA /* VM.cpp in Sources */,
 				FAACBCC61A3C577900D5F9F5 /* Shape.cpp in Sources */,
 				FAACBCAC1A3BEA5E00D5F9F5 /* StringReader.cpp in Sources */,
 				FAACBCDA1A3DE1CE00D5F9F5 /* PlaceObject2Tag.cpp in Sources */,
 				FAACBCAF1A3BF13200D5F9F5 /* Reader.cpp in Sources */,
+				FA6D73FE1A50AA6F00486BFA /* Decompiler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

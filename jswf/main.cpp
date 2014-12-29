@@ -37,7 +37,7 @@ void renderCurrentFrame() {
   clearScreen();
   for(auto document = documents.begin(); document != documents.end(); ++document) {
     ctx.document = *document;
-    render::renderFrame((*document)->frames[currentFrame], ctx);
+    render::renderFrame((*document)->rootSprite.frames[currentFrame], ctx);
   }
 }
 
@@ -57,7 +57,7 @@ void renderSWF(std::string filename) {
   documents.push_back(document);
   
   if(filename == PENGUIN_FILENAME) {
-    flash::ColorTransform &ct = document->frames[0].displayList[1].colorTransform;
+    flash::ColorTransform &ct = document->rootSprite.frames[0].displayList[1].colorTransform;
     ct.rM = ct.gM = ct.bM = 0;
     ct.rA = 0xff;
     ct.gA = 0xcc;
@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
   ctx.matrix.tx = 85 * 20 * ctx.matrix.sx; // 138 for character
   ctx.matrix.ty = 105 * 20 * ctx.matrix.sy; // 111 for character
   
-  if(true & 0) {
+  if(true) {
     ctx.matrix.sx = ctx.matrix.sy = 2;
     ctx.matrix.tx = ctx.matrix.ty = 0;
   }
@@ -169,7 +169,7 @@ int main(int argc, char *argv[]) {
       printf("%d\n", event.key.keysym.sym);
       //if(event.type == 16842757) goto exitMainLoop;
       if(event.type == 65538)
-        currentFrame = (currentFrame + 1) % minFrameCount;
+        ;//currentFrame = (currentFrame + 1) % minFrameCount;
     }
     
     if(minFrameCount > 1) {

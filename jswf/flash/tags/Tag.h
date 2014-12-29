@@ -26,6 +26,9 @@ namespace jswf {
         tag_type_t type; //!< The tag-type as integer. \todo Make this an enum!
         std::string payload; //!< The payload of this tag as string.
         
+        /**
+         * Constructs a Tag.
+         */
         Tag(tag_type_t type, std::string &payload) : type(type), payload(payload) {}
         virtual ~Tag() {};
       };

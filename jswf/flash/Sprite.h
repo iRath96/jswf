@@ -9,7 +9,6 @@
 #ifndef __jswf__Sprite__
 #define __jswf__Sprite__
 
-#include <stdio.h>
 #include "Character.h"
 #include "Frame.h"
 #include "Tag.h"
@@ -22,6 +21,10 @@ namespace jswf {
      * Represents a `SPRITE` character.
      */
     class Sprite : public Character {
+      // Note: This property should be protected, but since "Friendship is neither inherited nor transitive."
+      //       that would cause a lot of trouble (redundancy or insecurity).
+    public:
+      Frame temporaryFrame;
     public:
       std::vector<std::shared_ptr<tags::Tag>> tags;
       std::vector<Frame> frames;
