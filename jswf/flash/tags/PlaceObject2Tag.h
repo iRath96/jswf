@@ -27,7 +27,7 @@ namespace jswf {
       public:
         bool hasClipActions,    //!< Whether `AVM` actions for clip events are specified
              hasClipDepth,      //!< Whether the `Character` is used as mask layer
-             hasName,           //!< Whether a name is specified
+             hasName,           //!< Whether an instance name for the character is specified
              hasRatio,          //!< Whether a morph-ratio is specified
              hasColorTransform, //!< Whether a \ref ColorTransform "\c CXFORMALPHA " is specified
              hasMatrix,         //!< Whether a \ref Matrix "\c MATRIX " for transformation is specified

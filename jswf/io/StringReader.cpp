@@ -77,7 +77,8 @@ uint64_t StringReader::readUB(uint8_t nbits) {
 
 s32_t StringReader::readS24() {
   uint32_t u = read_byte | (read_byte << 8) | (read_byte << 16);
-  if(u & 0x800) u |= 0xf000; // sign extend.
+  if(u & 0x800000)
+    u |= 0xff000000; // sign extend.
   return (s32_t)u;
 }
 

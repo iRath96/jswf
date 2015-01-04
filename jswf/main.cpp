@@ -33,11 +33,25 @@ void clearScreen() {
   memset(ctx.buffer, 0xff, ctx.w * ctx.h * 4);
 }
 
+void updateFrame(flash::Document &document, flash::Frame &frame) {
+  for(auto it = frame.displayList.begin(); it != frame.displayList.end(); ++it) {
+    flash::DisplayListEntry &e = it->second;
+    e.avm2Object = document.avm2.instantiateDisplayClass(document.dictionary.at(e.characterId)->avm2Class, &e);
+  }
+}
+
+void updateCurrentFrame() {
+  for(auto document = documents.begin(); document != documents.end(); ++document)
+    updateFrame(**document, (*document)->rootSprite->frames.at(currentFrame));
+}
+
 void renderCurrentFrame() {
+  updateCurrentFrame();
   clearScreen();
+  
   for(auto document = documents.begin(); document != documents.end(); ++document) {
     ctx.document = *document;
-    render::renderFrame((*document)->rootSprite.frames[currentFrame], ctx);
+    render::renderFrame((*document)->rootSprite->frames.at(currentFrame), ctx);
   }
 }
 
@@ -57,7 +71,7 @@ void renderSWF(std::string filename) {
   documents.push_back(document);
   
   if(filename == PENGUIN_FILENAME) {
-    flash::ColorTransform &ct = document->rootSprite.frames[0].displayList[1].colorTransform;
+    flash::ColorTransform &ct = document->rootSprite->frames[0].displayList[1].colorTransform;
     ct.rM = ct.gM = ct.bM = 0;
     ct.rA = 0xff;
     ct.gA = 0xcc;
@@ -157,11 +171,6 @@ int main(int argc, char *argv[]) {
   SDL_GL_SwapWindow(window);
   //return 0;
   
-  // Efficiency:
-  // TODO:2014-12-25:alex:Shape::polygonize is 91.3% of Document::read, 59.4% of polygonize is vector::erase
-  // TODO:2014-12-25:alex:renderCurrentFrame is 94.7% of renderSWF, Document::Document is 5.1%
-  // TODO:2014-12-25:alex:calculateIntersections2 is 77.5% of render::renderShape.
-  
   SDL_Event event;
   while(true) {
     while(SDL_PollEvent(&event)) {
@@ -172,7 +181,7 @@ int main(int argc, char *argv[]) {
         ;//currentFrame = (currentFrame + 1) % minFrameCount;
     }
     
-    if(minFrameCount > 1) {
+    if(minFrameCount > 1 && false) {
       renderCurrentFrame();
       glDrawPixels(width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
       SDL_GL_SwapWindow(window);

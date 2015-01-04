@@ -17,6 +17,9 @@
 using namespace jswf::flash;
 
 void Document::read() {
+  rootSprite = new Sprite();
+  dictionary[0] = std::shared_ptr<Sprite>(rootSprite);
+  
   reader.readHeader(header);
   while(true) {
     tags::Tag *tag = reader.readTag();
@@ -27,8 +30,9 @@ void Document::read() {
     if(dynamic_cast<tags::ITagForDocument *>(tag))
       (dynamic_cast<tags::ITagForDocument *>(tag))->applyToDocument(*this);
     if(dynamic_cast<tags::ITagForSprite *>(tag))
-      (dynamic_cast<tags::ITagForSprite *>(tag))->applyToSprite(rootSprite);
+      (dynamic_cast<tags::ITagForSprite *>(tag))->applyToSprite(*rootSprite);
+    
+    if(dynamic_cast<tags::ITagWithCharacter *>(tag)) // TODO:2014-12-30:alex:This is a dirty hack.
+      (dynamic_cast<tags::ITagWithCharacter *>(tag))->character->avm2Class = avm2.getClassByName("flash.display.MovieClip");
   }
-  
-  printf("Okay.\n");
 }

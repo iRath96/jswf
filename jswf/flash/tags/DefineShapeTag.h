@@ -91,10 +91,12 @@ namespace jswf {
         void readEdgeRecord();
         
         /**
-         * Reads a 'SHAPERECORD', the actions of which are projected on our shape.
-         * @param [in,out] fbits,lbits nbits for 'FillStyle' and 'LineStyle', changed upon 'StateNewStyles'
+         * Reads a `SHAPERECORD`, the actions of which are projected on our shape.
+         * @param [in,out] fbits,lbits nbits for `FillStyle` and `LineStyle`, changed upon `StateNewStyles`
          * @return Whether other records follow after this record (false means this was the last record)
-         * @see shape
+         * @throws std::out_of_range Thrown if a `FillStyle` or `LineStyle` is referenced that does not exist
+         *         (i. e. if the `SHAPRECORD` is invalid).
+         * @see Shape
          */
         bool readShapeRecord(uint8_t &fbits, uint8_t &lbits);
         
@@ -112,7 +114,6 @@ namespace jswf {
           character.reset(shape);
           
           shape->id = reader->readU16();
-          printf("DefineShape id=%d\n", shape->id);
           
           flashReader.readRect(shape->bounds);
           shape->edgeBounds = shape->bounds; // Since this is DefineShape version 1

@@ -68,6 +68,7 @@ namespace jswf {
      * Represents `MATRIX` records.
      * \f$x' = x * sx + y * r1 + tx\f$\n
      * \f$y' = y * sy + x * r0 + ty\f$
+     * @todo These structures are in the wrong file.
      */
     struct Matrix {
       fb_t sx = 1, sy = 1; // scale

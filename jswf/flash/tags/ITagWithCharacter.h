@@ -16,8 +16,7 @@ namespace jswf {
   namespace flash {
     namespace tags {
       /**
-       * Serves as interface for `TAG`s that
-       * define a character for the document's `DICTIONARY`
+       * Interface for `TAG`s that define a character for the document's `DICTIONARY`
        * (eg \ref DefineShapeTag, \ref DefineButtonTag).
        * @todo It's not nice to implement a function in an interface!
        */

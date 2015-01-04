@@ -31,5 +31,6 @@
 #include "SetBackgroundColorTag.h"
 
 #include "DoABCTag.h"
+#include "SymbolClassTag.h"
 
 #include "DefineSceneAndFrameLabelDataTag.h"

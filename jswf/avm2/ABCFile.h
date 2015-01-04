@@ -17,210 +17,40 @@
 #include "GenericReader.h"
 #include "types.h"
 
+#include "Namespace.h"
+#include "Metadata.h"
+#include "Multiname.h"
+#include "ConstantKind.h"
+#include "TraitInfo.h"
+#include "MethodInfo.h"
+
 namespace jswf {
   namespace avm2 {
-    struct NamespaceKind {
-      enum Enum : u8_t {
-        NormalNamespaceKind = 0x08,
-        PackageNamespaceKind = 0x16,
-        PackageInternalNsKind = 0x17,
-        ProtectedNamespaceKind = 0x18,
-        ExplicitNamespaceKind = 0x19,
-        StaticProtectedNsKind = 0x1a,
-        PrivateNamespaceKind = 0x05
-      };
-    };
-    
-    struct Namespace {
-      NamespaceKind::Enum kind;
-      string *name;
-    };
-    
-    struct NamespaceSet {
-      std::vector<u30_t> namespaces;
-    };
-    
-    struct MultinameBase {
-      enum Kind : u8_t {
-        QNameKind = 0x07,
-        QNameAKind = 0x0D,
-        RTQNameKind = 0x0F,
-        RTQNameAKind = 0x10,
-        RTQNameLKind = 0x11,
-        RTQNameLAKind = 0x12,
-        MultinameKind = 0x09,
-        MultinameAKind = 0x0E,
-        MultinameLKind = 0x1B,
-        MultinameLAKind = 0x1C
-      };
-      
-      Kind kind;
-      bool isAttribute;
-      
-      bool hasNS, hasName;
-      MultinameBase(bool hasNS, bool hasName) : hasNS(hasNS), hasName(hasName) {}
-      
-      virtual string nameString() { return "(late)"; }
-      virtual ~MultinameBase() {}
-    };
-    
-    struct QName : MultinameBase {
-      Namespace *ns;
-      string *name;
-      
-      QName() : MultinameBase(true, true) {}
-      virtual string nameString() { return (ns->name->empty() ? "" : *ns->name + ".") + *name; }
-    };
-    
-    struct RTQName : MultinameBase {
-      string *name;
-      
-      RTQName() : MultinameBase(false, true) {}
-      virtual string nameString() { return name->empty() ? "*" : *name; }
-    };
-    
-    struct RTQNameL : MultinameBase {
-      RTQNameL() : MultinameBase(false, false) {}
-    };
-    
-    struct Multiname : MultinameBase {
-      string *name;
-      NamespaceSet *nsSet;
-      
-      Multiname() : MultinameBase(true, true) {}
-      
-      virtual string nameString() { return *name; }
-    };
-    
-    struct MultinameL : MultinameBase {
-      NamespaceSet *nsSet;
-      MultinameL() : MultinameBase(true, false) {}
-    };
-    
     struct ConstantPool {
       std::vector<s32_t> integers;
       std::vector<u32_t> uintegers;
       std::vector<d64_t> doubles;
       std::vector<string> strings;
-      std::vector<Namespace> namespaces;
-      std::vector<NamespaceSet> namespaceSets;
-      std::vector<std::shared_ptr<MultinameBase>> multinames;
-    };
-    
-    struct ConstantKind : NamespaceKind {
-      enum Enum : u8_t {
-        IntKind = 0x03,
-        UIntKind = 0x04,
-        DoubleKind = 0x06,
-        UTF8Kind = 0x01,
+      std::vector<NamespacePtr> namespaces;
+      std::vector<NamespaceSetPtr> namespaceSets;
+      std::vector<MultinamePtr> multinames;
+      
+      ConstantPool() {
+        integers .resize(1); integers [0] = 0;
+        uintegers.resize(1); uintegers[0] = 0;
+        doubles  .resize(1); doubles  [0] = NAN;
+        strings  .resize(1); strings  [0] = "";
         
-        // constants
+        namespaces.resize(1);
+        namespaces[0] = std::make_shared<Namespace>();
+        namespaces[0]->kind = NamespaceKind::NormalNamespaceKind;
+        namespaces[0]->name = "";
         
-        FalseKind = 0x0a,
-        TrueKind = 0x0b,
-        NullKind = 0x0c,
-        UndefinedKind = 0x00,
-      };
-    };
-    
-    struct OptionDetail {
-      u30_t value;
-      ConstantKind::Enum kind;
-    };
-    
-    struct MethodBody;
-    struct MethodInfo {
-      enum Flags : u8_t {
-        NeedsArgumentsFlag = 0x01,
-        NeedsActivationFlag = 0x02,
-        NeedsRestFlag = 0x04,
-        HasOptionalFlag = 0x08,
-        SetDxnsFlag = 0x40,
-        HasParamNamesFlag = 0x80
-      };
-      
-      u30_t paramCount; // Hey, you can pass up to 1,073,741,823 parameters to a function!
-      MultinameBase *returnType;
-      std::vector<MultinameBase *> paramTypes;
-      
-      string *name;
-      Flags flags;
-      
-      std::vector<OptionDetail> options;
-      std::vector<string *> paramNames;
-      
-      MethodBody *body = NULL;
-    };
-    
-    struct MetadataItem {
-      string *key, *value;
-    };
-    
-    struct Metadata {
-      string *name;
-      std::vector<MetadataItem> items;
-    };
-    
-    struct TraitInfo {
-      /**
-       * Describes kinds of \ref TraitInfo .
-       */
-      enum Kind : u8_t {
-        SlotKind     = 0, //!< Member definition, use \ref SlotTraitInfo
-        MethodKind   = 1, //!< Method definition, use \ref MethodTraitInfo
-        GetterKind   = 2, //!< Getter definition, use \ref MethodTraitInfo
-        SetterKind   = 3, //!< Setter definition, use \ref MethodTraitInfo
-        ClassKind    = 4, //!< Class definition, use \ref ClassTraitInfo
-        FunctionKind = 5, //!< Function definition, use \ref FunctionTraitInfo
-        ConstKind    = 6  //!< Constant member definition, use \ref SlotTraitInfo
-      };
-      
-      /**
-       * Describes attributes of \ref TraitInfo .
-       */
-      enum Attributes : u8_t {
-        FinalAttribute    = 0x1,
-        OverrideAttribute = 0x2,
-        MetadataAttribute = 0x4
-      };
-      
-      MultinameBase *name;
-      
-      Kind kind;
-      Attributes attributes;
-      
-      // u8_t data[]
-      
-      std::vector<u30_t> metadata;
-      
-      virtual ~TraitInfo() {}
-    };
-    
-    struct SlotTraitInfo : TraitInfo { // kind = 0, 6
-      u30_t slotId;
-      MultinameBase *typeName;
-      
-      u30_t vindex;
-      ConstantKind::Enum vkind;
-    };
-    
-    typedef u30_t class_index_t;
-    typedef u30_t method_index_t;
-    
-    struct ClassInfo;
-    struct ClassTraitInfo : TraitInfo { // kind = 4
-      u30_t slotId;
-      ClassInfo *classInfo;
-    };
-    
-    struct FunctionTraitInfo : TraitInfo { // kind = 5
-      u30_t slotId;
-      MethodInfo *methodInfo;
-    };
-    
-    struct MethodTraitInfo : TraitInfo { // kind = 1, 2, 3
-      u30_t dispId;
-      MethodInfo *methodInfo;
+        multinames.resize(1);
+        MultinamePtr any = std::make_shared<Multiname>(Multiname::RTQNameKind);
+        any->name = "";
+        multinames[0] = any;
+      }
     };
     
     struct InstanceInfo {
@@ -231,39 +61,34 @@ namespace jswf {
         ClassProtectedNsFlag = 0x08
       };
       
-      MultinameBase *name, *superName;
+      MultinamePtr name, superName;
+      
       Flags flags;
-      Namespace *protectedNs;
-      std::vector<MultinameBase *> interfaces;
-      u30_t iinit;
+      NamespacePtr protectedNs;
+      std::vector<MultinamePtr> interfaces;
+      
+      MethodInfo *initializer; // known as `iinit`
       std::vector<std::shared_ptr<TraitInfo>> traits;
     };
     
     struct ClassInfo {
-      u30_t cinit;
+      MethodInfo *initializer; // known as `cinit`
       std::vector<std::shared_ptr<TraitInfo>> traits;
     };
     
     struct ScriptInfo {
-      u30_t init;
+      MethodInfo *initializer; // known as `init`
       std::vector<std::shared_ptr<TraitInfo>> traits;
     };
     
-    struct ExceptionInfo {
-      u30_t from, to;
-      u30_t target;
-      u30_t excType;
-      u30_t varName;
-    };
-    
-    struct MethodBody {
-      MethodInfo *method;
+    class VM;
+    class Class {
+    public:
+      Class *parent;
+      VM *vm;
       
-      u30_t maxStack, localCount;
-      u30_t initScopeDepth, maxScopeDepth;
-      string code;
-      std::vector<ExceptionInfo> exceptions;
-      std::vector<std::shared_ptr<TraitInfo>> traits;
+      ClassInfo cinfo;
+      InstanceInfo iinfo;
     };
     
     // Hallelujah.
@@ -276,23 +101,78 @@ namespace jswf {
     public:
       u16_t majorVersion, minorVersion;
       ConstantPool constantPool;
-      std::vector<MethodInfo> methods;
-      std::vector<Metadata> metadata;
-      std::vector<InstanceInfo> instances;
-      std::vector<ClassInfo> classes;
-      std::vector<ScriptInfo> scripts;
-      std::vector<MethodBody> methodBodies;
+      
+      std::vector<std::unique_ptr<MethodInfo>> methods;
+      std::vector<std::unique_ptr<Metadata>> metadata;
+      std::vector<std::unique_ptr<Class>> classes; // contains ClassInfo and InstanceInfo
+      std::vector<std::unique_ptr<ScriptInfo>> scripts;
+      std::vector<std::unique_ptr<MethodBody>> methodBodies;
       
       std::shared_ptr<io::GenericReader> reader;
+      
+    public:
       ABCFile(std::shared_ptr<io::GenericReader> reader) : reader(reader) { read(); }
+      ABCFile() {}
+      
+      std::string makeString(std::string string) {
+        size_t i = 0, j = constantPool.strings.size();
+        for(; i < j; ++i)
+          if(constantPool.strings[i] == string) return constantPool.strings[i];
+        constantPool.strings.push_back(string);
+        return constantPool.strings[i];
+      }
+      
+      NamespacePtr makeNamespace(std::string name, NamespaceKind::Enum kind) {
+        NamespacePtr ns = std::make_shared<Namespace>();
+        ns->name = makeString(name);
+        ns->kind = kind;
+        constantPool.namespaces.push_back(ns);
+        return ns;
+      }
+      
+      MultinamePtr makeMultiname(Multiname::Kind kind) {
+        MultinamePtr ptr = std::make_shared<Multiname>(kind);
+        constantPool.multinames.push_back(ptr);
+        return ptr;
+      }
+      
+      MultinamePtr makeQName(std::string ns, std::string name) {
+        MultinamePtr ptr = makeMultiname(Multiname::QNameKind);
+        ptr->name = makeString(name);
+        ptr->ns = makeNamespace(ns, NamespaceKind::NormalNamespaceKind);
+        return ptr;
+      }
+      
+      Class *makeClass(MultinamePtr qname, Class *parent) {
+        u30_t i = (u30_t)classes.size();
+        classes.resize(i+1);
+        
+        classes[i] = std::unique_ptr<Class>(new Class());
+        classes[i]->parent = parent;
+        
+        classes[i]->iinfo.name = qname;
+        classes[i]->iinfo.initializer = makeMethodInfo();
+        classes[i]->cinfo.initializer = makeMethodInfo();
+        
+        return classes[i].get();
+      }
+      
+      MethodInfo *makeMethodInfo() {
+        u30_t i = (u30_t)methods.size();
+        methods.resize(i+1);
+        methods[i] = std::unique_ptr<MethodInfo>(new MethodInfo());
+        methods[i]->file = this;
+        methods[i]->body = NULL;
+        return methods[i].get();
+      }
       
 #define u30 reader->readVU30()
-#define u30_string &constantPool.strings[u30]
-#define u30_namespace &constantPool.namespaces[u30]
-#define u30_ns_set &constantPool.namespaceSets[u30]
-#define u30_multiname constantPool.multinames[u30].get()
-#define u30_class &classes[u30]
-#define u30_method &methods[u30]
+#define u30_string &constantPool.strings.at(u30)
+#define u30_namespace constantPool.namespaces.at(u30)
+#define u30_ns_set constantPool.namespaceSets.at(u30)
+#define u30_multiname constantPool.multinames.at(u30)
+#define u30_class &classes.at(u30)->cinfo
+#define u30_method methods.at(u30).get()
       
     protected:
       void readConstantPool() {
@@ -309,87 +189,34 @@ namespace jswf {
         read_array(uintegers) value(uintegers) = reader->readVU32();
         read_array(doubles  ) value(doubles  ) = reader->readD64();
         
-        constantPool.integers[0] = 0;
-        constantPool.uintegers[0] = 0;
-        constantPool.doubles[0] = nan("");
-        
         read_array(strings) {
           u30_t length = reader->readVU30();
           value(strings) = reader->readString(length);
         }
         
-        constantPool.strings[0] = "";
-        
         read_array(namespaces) {
-          value(namespaces).kind = (NamespaceKind::Enum)reader->readU8();
-          value(namespaces).name = u30_string;
+          value(namespaces) = std::make_shared<Namespace>();
+          value(namespaces)->kind = (NamespaceKind::Enum)reader->readU8();
+          value(namespaces)->name = *u30_string;
         }
-        
-        constantPool.namespaces[0].kind = NamespaceKind::NormalNamespaceKind;
-        constantPool.namespaces[0].name = 0;
         
         read_array(namespaceSets) {
           u30_t count = u30;
-          value(namespaceSets).namespaces.resize(count);
-          for(uint32_t j = 0; j < count; ++j) // Sadly, read_array cannot be nested.
-            value(namespaceSets).namespaces[j] = reader->readVU30();
+          value(namespaceSets) = std::make_shared<NamespaceSet>();
+          value(namespaceSets)->namespaces.resize(count);
+          for(uint32_t j = 0; j < count; ++j)
+            value(namespaceSets)->namespaces[j] = u30_namespace;
         }
         
         read_array(multinames) {
           u8_t kind = reader->readU8();
-          MultinameBase *m = NULL;
           
-          switch(kind) {
-            case MultinameBase::QNameKind:
-            case MultinameBase::QNameAKind: {
-              QName *r = new QName();
-              r->ns = u30_namespace;
-              r->name = u30_string;
-              r->isAttribute = kind == MultinameBase::QNameAKind;
-              
-              m = r;
-            }; break;
-            case MultinameBase::RTQNameKind:
-            case MultinameBase::RTQNameAKind: {
-              RTQName *r = new RTQName();
-              r->name = u30_string;
-              r->isAttribute = kind == MultinameBase::RTQNameAKind;
-              
-              m = r;
-            }; break;
-            case MultinameBase::RTQNameLKind:
-            case MultinameBase::RTQNameLAKind: {
-              RTQNameL *r = new RTQNameL();
-              r->isAttribute = kind == MultinameBase::RTQNameLAKind;
-              m = r;
-            }; break;
-            case MultinameBase::MultinameKind:
-            case MultinameBase::MultinameAKind: {
-              Multiname *r = new Multiname();
-              r->name = u30_string;
-              r->nsSet = u30_ns_set;
-              r->isAttribute = kind == MultinameBase::MultinameAKind;
-              m = r;
-            }; break;
-            case MultinameBase::MultinameLKind:
-            case MultinameBase::MultinameLAKind: {
-              MultinameL *r = new MultinameL();
-              r->nsSet = u30_ns_set;
-              r->isAttribute = kind == MultinameBase::MultinameLAKind;
-              m = r;
-            }; break;
-            default: {
-              throw "Oh no!";
-            }; break;
-          }
+          Multiname &mn = *(value(multinames) = std::make_shared<Multiname>((Multiname::Kind)kind));
           
-          m->kind = (MultinameBase::Kind)kind;
-          value(multinames) = std::shared_ptr<MultinameBase>(m);
+          if(mn.hasNS) mn.ns = u30_namespace;
+          if(mn.hasName) mn.name = *u30_string;
+          if(mn.hasNSSet) mn.nsSet = u30_ns_set;
         }
-        
-        RTQName *any = new RTQName();
-        any->name = &constantPool.strings[0];
-        constantPool.multinames[0].reset(any);
         
 #undef read_array
 #undef value
@@ -409,7 +236,7 @@ namespace jswf {
         u30_t traitCount = u30;
         traits.resize(traitCount);
         for(uint32_t i = 0; i < traitCount; ++i) {
-          MultinameBase *name = u30_multiname;
+          MultinamePtr name = u30_multiname;
           uint8_t attrAndKind = reader->readU8();
           
           TraitInfo::Kind kind = (TraitInfo::Kind)(attrAndKind & 0x0f);
@@ -452,7 +279,7 @@ namespace jswf {
             };
           }
           
-          trait->name = name;
+          trait->name = name; // TODO:2014-12-28:alex:Assert this is a QName.
           trait->kind = kind;
           trait->attributes = attributes;
           
@@ -470,10 +297,23 @@ namespace jswf {
       
 #define _multiname(u) u->nameString().c_str()
       
-      void printTrait(TraitInfo *trait) {
-        NamespaceKind::Enum kind = dynamic_cast<QName *>(trait->name)->ns->kind;
-        
+      void printConstant(ConstantKind::Enum kind, u30_t index) {
         switch(kind) {
+          case ConstantKind::IntKind: printf("%d", constantPool.integers[index]); break;
+          case ConstantKind::DoubleKind: printf("%lf", constantPool.doubles[index]); break;
+            
+          case ConstantKind::FalseKind: printf("false"); break;
+          case ConstantKind::TrueKind: printf("true"); break;
+          
+          default:
+            printf("?");
+        }
+      }
+      
+      void printTrait(TraitInfo *trait) {
+        NamespaceKind::Enum nsKind = trait->name->ns->kind;
+        
+        switch(nsKind) {
           case NamespaceKind::PackageNamespaceKind: printf("public "); break;
           case NamespaceKind::PackageInternalNsKind: printf(""); break;
           case NamespaceKind::ProtectedNamespaceKind: printf("protected "); break;
@@ -487,7 +327,13 @@ namespace jswf {
           case TraitInfo::SlotKind: {
             printf("var %s", name);
             SlotTraitInfo *t = (SlotTraitInfo *)trait;
-            printf(":%s;\n", _multiname(t->typeName));
+            printf(":%s", _multiname(t->typeName));
+            if(t->vkind != ConstantKind::UndefinedKind) {
+              printf(" = ");
+              printConstant(t->vkind, t->vindex);
+            }
+            
+            printf(";\n");
           }; break;
           case TraitInfo::MethodKind: {
             MethodTraitInfo *t = (MethodTraitInfo *)trait;
@@ -503,7 +349,7 @@ namespace jswf {
         minorVersion = reader->readU16();
         
         readConstantPool(); // TODO:2014-12-27:alex:Use pointers instead of u30's?
-
+        
 #define read_array(afield) \
   count = reader->readVU30(); \
   afield.resize(count); \
@@ -512,7 +358,8 @@ namespace jswf {
         u30_t count;
         
         read_array(methods) {
-          MethodInfo &info = value(methods);
+          MethodInfo &info = *(value(methods) = std::unique_ptr<MethodInfo>(new MethodInfo()));
+          info.file = this;
           info.paramCount = u30;
           info.returnType = u30_multiname;
           
@@ -536,42 +383,41 @@ namespace jswf {
             info.paramNames[j] = u30_string;
         }
         
-        read_array(metadata) readMetadata(value(metadata));
+        read_array(metadata) readMetadata(*(value(metadata) = std::unique_ptr<Metadata>(new Metadata())));
         
-        count = reader->readVU30();
-        instances.resize(count);
-        for(uint32_t i = 0; i < count; ++i) {
-          InstanceInfo &info = instances[i];
-          info.name = u30_multiname;
-          info.superName = u30_multiname;
-          info.flags = (InstanceInfo::Flags)reader->readU8();
-          info.protectedNs = info.flags & InstanceInfo::ClassProtectedNsFlag ? u30_namespace : NULL;
+        read_array(classes) {
+          Class &klass = *(value(classes) = std::unique_ptr<Class>(new Class()));
+          
+          InstanceInfo &iinfo = klass.iinfo;
+          iinfo.name = u30_multiname;
+          iinfo.superName = u30_multiname;
+          iinfo.flags = (InstanceInfo::Flags)reader->readU8();
+          iinfo.protectedNs = iinfo.flags & InstanceInfo::ClassProtectedNsFlag ? u30_namespace : NULL;
           
           u30_t intrfCount = u30;
-          info.interfaces.resize(intrfCount);
+          iinfo.interfaces.resize(intrfCount);
           for(uint32_t j = 0; j < intrfCount; ++j)
-            info.interfaces[j] = u30_multiname;
+            iinfo.interfaces[j] = u30_multiname;
           
-          info.iinit = u30;
+          iinfo.initializer = u30_method;
           
-          readTraits(info.traits);
+          readTraits(iinfo.traits);
         }
         
-        classes.resize(count);
-        for(uint32_t i = 0; i < count; ++i) {
-          ClassInfo &info = classes[i];
-          info.cinit = u30;
-          readTraits(info.traits);
+        for(size_t i = 0, j = classes.size(); i < j; ++i) {
+          ClassInfo &cinfo = classes[i]->cinfo;
+          cinfo.initializer = u30_method;
+          readTraits(cinfo.traits);
         }
         
         read_array(scripts) {
-          ScriptInfo &info = value(scripts);
-          info.init = u30;
+          ScriptInfo &info = *(value(scripts) = std::unique_ptr<ScriptInfo>(new ScriptInfo()));
+          info.initializer = u30_method;
           readTraits(info.traits);
         }
         
         read_array(methodBodies) {
-          MethodBody &body = value(methodBodies);
+          MethodBody &body = *(value(methodBodies) = std::unique_ptr<MethodBody>(new MethodBody()));
           body.method = u30_method;
           body.maxStack = u30;
           body.localCount = u30;
@@ -595,25 +441,21 @@ namespace jswf {
           readTraits(body.traits);
         }
         
-        const char *codes[16];
-        for(uint32_t i = 0; i < methodBodies.size(); ++i)
-          codes[i] = methodBodies[i].code.c_str();
-        
-        for(uint32_t i = 0; i < instances.size(); ++i) {
-          InstanceInfo &klass = instances[i];
+        for(uint32_t i = 0; i < classes.size(); ++i) {
+          InstanceInfo &klass = classes[i]->iinfo;
           printf("dynamic class %s extends %s {\n", _multiname(klass.name), _multiname(klass.superName));
           
-          MethodInfo &staticConstructor = methods[classes[i].cinit];
+          MethodInfo &staticConstructor = *classes[i]->cinfo.initializer;
           printf("  static ");
           decompile(staticConstructor, "");
           printf("\n");
           
-          for(uint32_t j = 0; j < classes[i].traits.size(); ++j) {
+          for(uint32_t j = 0; j < classes[i]->cinfo.traits.size(); ++j) {
             printf("  static ");
-            printTrait(classes[i].traits[j].get());
+            printTrait(classes[i]->cinfo.traits[j].get());
           }
           
-          MethodInfo &constructor = methods[klass.iinit];
+          MethodInfo &constructor = *klass.initializer;
           
           printf("  public ");
           decompile(constructor, klass.name->nameString());

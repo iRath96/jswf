@@ -167,17 +167,17 @@ bool DefineShapeTag::readShapeRecord(uint8_t &fbits, uint8_t &lbits) {
     
     if(stateFillStyle0) {
       ub_t styleId = reader->readUB(fbits);
-      shape->setFillStyle0(fillStyles[styleId]);
+      shape->setFillStyle0(fillStyles.at(styleId));
     }
     
     if(stateFillStyle1) {
       ub_t styleId = reader->readUB(fbits);
-      shape->setFillStyle1(fillStyles[styleId]);
+      shape->setFillStyle1(fillStyles.at(styleId));
     }
     
     if(stateLineStyle) {
       ub_t styleId = reader->readUB(lbits);
-      shape->setLineStyle(lineStyles[styleId]);
+      shape->setLineStyle(lineStyles.at(styleId));
     }
     
     if(stateNewStyles) {

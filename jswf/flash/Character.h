@@ -10,14 +10,21 @@
 #define jswf_Character_h
 
 #include <stdint.h>
+#include <cstddef>
 
 namespace jswf {
+  namespace avm2 {
+    class Class;
+  }
+  
   namespace flash {
     /**
      * Represents a character for the document's `DICTIONARY`.
      */
     class Character {
     public:
+      avm2::Class *avm2Class = NULL;
+      
       uint16_t id;
       virtual ~Character() {}
     };

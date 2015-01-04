@@ -9,6 +9,7 @@
 #ifndef jswf_DoABCTag_h
 #define jswf_DoABCTag_h
 
+#include "ITagForDocument.h"
 #include "TagWithReader.h"
 #include "ABCFile.h"
 
@@ -18,7 +19,7 @@ namespace jswf {
       /**
        * Carries an `ABCFile` to be executed by the \ref avm2::VM .
        */
-      class DoABCTag : public TagWithReader {
+      class DoABCTag : public TagWithReader, public ITagForDocument {
       public:
         uint32_t flags;
         std::string name;
@@ -30,6 +31,10 @@ namespace jswf {
           name = reader->readString();
           
           abc = std::shared_ptr<avm2::ABCFile>(new avm2::ABCFile(reader));
+        }
+        
+        void applyToDocument(Document &document) {
+          document.avm2.loadABCFile(abc);
         }
       };
     }

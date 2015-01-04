@@ -58,6 +58,16 @@ namespace jswf {
         }
       };
       
+      class ConstantNode : public Node {
+      public:
+        std::string value;
+        ConstantNode(const std::string &str) : value(str), Node(0) {}
+        
+        virtual std::string toString() {
+          return value;
+        }
+      };
+      
       /**
        * Describes a node that carries a double literal.
        */
@@ -107,8 +117,8 @@ namespace jswf {
       class PropNode : public Node {
       public:
         NodePtr ns, name;
-        MultinameBase *multiname;
-        PropNode(MultinameBase *mn, NodePtr ns, NodePtr name) : multiname(mn), ns(ns), name(name), Node(0) {}
+        MultinamePtr multiname;
+        PropNode(MultinamePtr mn, NodePtr ns, NodePtr name) : multiname(mn), ns(ns), name(name), Node(0) {}
         
         virtual std::string toString() {
           std::string ns = "(namespace)"; // ???
@@ -140,7 +150,7 @@ namespace jswf {
       class AttrNode : public PropNode {
       public:
         NodePtr obj;
-        AttrNode(NodePtr obj, MultinameBase *mn, NodePtr ns, NodePtr name) : obj(obj), PropNode(mn, ns, name) {}
+        AttrNode(NodePtr obj, MultinamePtr mn, NodePtr ns, NodePtr name) : obj(obj), PropNode(mn, ns, name) {}
         
         virtual std::string toString() {
           std::string ns = "(namespace)"; // ???
@@ -346,7 +356,10 @@ namespace jswf {
             if(k) out += ", ";
             out += "arg" + std::to_string(k+1);
             out += ":" + method->paramTypes[k]->nameString();
-          } out += "):" + method->returnType->nameString() + " {\n";
+          } out += "):" + method->returnType->nameString();
+          return out;
+          
+          out += " {\n";
           out += CompoundNode::toIntendedString(intend + 1);
           return out + "}";
         }
@@ -368,6 +381,22 @@ namespace jswf {
           std::string pre = "";
           for(int i = 0; i < p; ++i) pre += "  ";
           return pre + "with(" + value->toString() + ") {\n" + CompoundNode::toIntendedString(p + 1) + "}";
+        }
+      };
+      
+      class SuperNode : public Node {
+      public:
+        std::vector<NodePtr> arguments;
+        SuperNode(std::vector<NodePtr> args) : arguments(args), Node(0) {}
+        
+        virtual std::string toString() {
+          std::string argString = "";
+          for(uint32_t i = 0; i < arguments.size(); ++i) {
+            if(i) argString += ", ";
+            argString += arguments[i]->toString();
+          }
+          
+          return "super(" + argString + ")";
         }
       };
       

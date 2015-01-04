@@ -39,7 +39,7 @@ namespace jswf {
       std::vector<std::shared_ptr<tags::Tag>> tags; //!< A `vector` of `shared_ptr`s to the tags this document contains.
       std::map<uint16_t, std::shared_ptr<Character>> dictionary; //!< The `DICTIONARY` of this document.
       
-      Sprite rootSprite;
+      Sprite *rootSprite; //!< \todo This is the main_timeline object! It can also be transformed!
       
       Document(std::shared_ptr<jswf::io::GenericReader> reader) : reader(reader) { read(); }
     private:

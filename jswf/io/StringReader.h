@@ -33,6 +33,14 @@ namespace jswf {
       std::string readString();
       std::string readString(size_t);
       
+      /**
+       * Adds an offset to the current reading position, does not change `bitPos`.
+       * @param [in] offset The offset to add to `pos`, can be negative.
+       */
+      void seek(int offset) {
+        pos += offset;
+      }
+      
       void align(uint8_t bytes);
       uint64_t readUB(uint8_t nbits);
       

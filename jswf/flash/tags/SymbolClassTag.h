@@ -9,7 +9,10 @@
 #ifndef jswf_SymbolClassTag_h
 #define jswf_SymbolClassTag_h
 
+#include "ITagForDocument.h"
 #include "TagWithReader.h"
+
+#include "macros.h"
 
 namespace jswf {
   namespace flash {
@@ -19,7 +22,7 @@ namespace jswf {
     };
     
     namespace tags {
-      class SymbolClassTag : public TagWithReader {
+      class SymbolClassTag : public TagWithReader, public ITagForDocument {
       public:
         std::vector<SymbolClass> symbolClasses;
         SymbolClassTag(tag_type_t t, std::string &p) : TagWithReader(t, p) {
@@ -27,6 +30,11 @@ namespace jswf {
             sc.characterId = reader->readU16();
             sc.className = reader->readString();
           });
+        }
+        
+        void applyToDocument(Document &document) {
+          for(auto it = symbolClasses.begin(); it != symbolClasses.end(); ++it)
+            document.dictionary[it->characterId]->avm2Class = document.avm2.getClassByName(it->className);
         }
       };
     }

@@ -28,6 +28,10 @@ void ABCFile::decompile(MethodInfo &info, std::string name, CompoundNode *compou
   CompoundNode *currentCompound = new FunctionNode(&info, name);
   compound->body.push_back(NodePtr(currentCompound));
   
+  return;
+  
+#ifdef STUPID_CODE
+  
 #define __ncast(v) std::shared_ptr<Node>((Node *)v)
 #define __push(v) stack.push(__ncast(v))
 #define __pop (top = stack.top(), stack.pop(), top)
@@ -35,6 +39,8 @@ void ABCFile::decompile(MethodInfo &info, std::string name, CompoundNode *compou
 //  printf("    %s;\n", output[output.size()-1]->toString().c_str());
   
 #define bc_comment(str) if(printByteCode) __output(new CommentNode(str))
+#define bc_force_comment(str) __output(new CommentNode(str))
+  
   bool printByteCode = 0;
   
   NodePtr top;
@@ -63,6 +69,10 @@ void ABCFile::decompile(MethodInfo &info, std::string name, CompoundNode *compou
         u30_t i = codeReader.readVU30();
         bc_comment("kill " + std::to_string(i));
       }; break;
+      case 0x09: {
+        bc_comment("label");
+        // "Do nothing"
+      }; break;
       case 0x1c: {
         WithNode *wn = new WithNode(__pop);
         wn->parent = currentCompound;
@@ -79,11 +89,23 @@ void ABCFile::decompile(MethodInfo &info, std::string name, CompoundNode *compou
         bc_comment("popscope");
         currentCompound = currentCompound->parent;
       }; break;
+      case 0x21: {
+        bc_comment("pushundefined");
+        __push(new ConstantNode("undefined"));
+      }; break;
       case 0x24: {
         uint8_t byte = codeReader.readU8();
         bc_comment("pushbyte " + std::to_string(byte));
         
         __push(new IntNode(byte));
+      }; break;
+      case 0x26: {
+        bc_comment("pushtrue");
+        __push(new ConstantNode("true"));
+      }; break;
+      case 0x27: {
+        bc_comment("pushfalse");
+        __push(new ConstantNode("false"));
       }; break;
       case 0x2a: {
         bc_comment("dup");
@@ -130,6 +152,15 @@ void ABCFile::decompile(MethodInfo &info, std::string name, CompoundNode *compou
       case 0x48: {
         bc_comment("returnvalue");
         __output(new ReturnNode(__pop));
+      }; break;
+      case 0x49: {
+        u30_t argCount = codeReader.readVU30();
+        bc_comment("constructsuper[" + std::to_string(argCount) + "]");
+        
+        std::vector<NodePtr> args;
+        for(uint32_t i = 0; i < argCount; ++i) args.insert(args.begin(), __pop);
+        
+        __output(new SuperNode(args));
       }; break;
       case 0x46:
       case 0x4f: {
@@ -283,7 +314,10 @@ void ABCFile::decompile(MethodInfo &info, std::string name, CompoundNode *compou
           __output(new DiadicNode(value, localNodePtr, "=", 20));
         }
       }; break;
-      default: bc_comment("[unknown] op_" + std::to_string(chr));
+      default:
+        bc_force_comment("[unknown] op_" + std::to_string(chr));
     }
   }
+  
+#endif
 }

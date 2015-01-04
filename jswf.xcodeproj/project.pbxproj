@@ -161,6 +161,12 @@
 		FAC913AA1A4C1B700056AAB8 /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
 		FAC913AB1A4C1B700056AAB8 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Button.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FAC913AD1A4C1C070056AAB8 /* DefineButton2Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineButton2Tag.h; sourceTree = "<group>"; };
+		FAD2C1661A51B8EA00D460C6 /* TraitInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TraitInfo.h; sourceTree = "<group>"; };
+		FAD2C1671A51B90E00D460C6 /* Metadata.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Metadata.h; sourceTree = "<group>"; };
+		FAD2C1681A51B93E00D460C6 /* Multiname.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Multiname.h; sourceTree = "<group>"; };
+		FAD2C1691A51B95600D460C6 /* Namespace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Namespace.h; sourceTree = "<group>"; };
+		FAD2C16A1A51B9C600D460C6 /* ConstantKind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConstantKind.h; sourceTree = "<group>"; };
+		FAD2C16B1A51BA1400D460C6 /* MethodInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MethodInfo.h; sourceTree = "<group>"; };
 		FAD922841A3F3EDF00D92EDD /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenGL.framework; sourceTree = "<group>"; };
 		FAF1B10F1A3DF469007BBA1E /* Frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Frame.cpp; sourceTree = "<group>"; };
 		FAF1B1101A3DF469007BBA1E /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
@@ -484,6 +490,12 @@
 			children = (
 				FA6D73F41A50A32700486BFA /* ::ast */,
 				FA6D73FF1A50AAB900486BFA /* ::lib */,
+				FAD2C1661A51B8EA00D460C6 /* TraitInfo.h */,
+				FAD2C1671A51B90E00D460C6 /* Metadata.h */,
+				FAD2C1681A51B93E00D460C6 /* Multiname.h */,
+				FAD2C1691A51B95600D460C6 /* Namespace.h */,
+				FAD2C16A1A51B9C600D460C6 /* ConstantKind.h */,
+				FAD2C16B1A51BA1400D460C6 /* MethodInfo.h */,
 				FA9126C21A4ECCAF00D6E970 /* ABCFile.cpp */,
 				FA9126C31A4ECCAF00D6E970 /* ABCFile.h */,
 				FA6D73F61A50AA3C00486BFA /* VM.cpp */,

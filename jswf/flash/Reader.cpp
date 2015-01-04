@@ -100,7 +100,7 @@ tags::Tag *Reader::readTag() {
   uint32_t length = u & 0x3f;
   if(length == 0x3f) length = reader->readU32();
   
-  printf("%d, len:%d, pos:%lu\n", type, length, p1);
+  printf("%3d, len:%5d, pos:%5lu\n", type, length, p1);
   
   std::string payload = reader->readString(length);
   return TagFactory::create(type, payload);

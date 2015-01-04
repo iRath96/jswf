@@ -14,6 +14,9 @@
 namespace jswf {
   namespace flash {
     namespace tags {
+      /**
+       * Interface for `TAG`s that implement actions to be performed on \ref Sprite "Sprites".
+       */
       class ITagForSprite {
       public:
         virtual void applyToSprite(Sprite &sprite) = 0;
