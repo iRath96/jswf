@@ -32,6 +32,8 @@ namespace jswf {
       uint16_t characterId;
       
       avm2::ObjectPtr avm2Object = NULL;
+      avm2::ObjectPtr onEnterFrame = NULL;
+      
       bool usePreviousMatrix = false; //!< Set to `true` if \ref matrix was altered by a script and has to be kept.
       
       bool doesClip = false;

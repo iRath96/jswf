@@ -36,7 +36,14 @@ void clearScreen() {
 void updateFrame(flash::Document &document, flash::Frame &frame) {
   for(auto it = frame.displayList.begin(); it != frame.displayList.end(); ++it) {
     flash::DisplayListEntry &e = it->second;
-    e.avm2Object = document.avm2.instantiateDisplayClass(document.dictionary.at(e.characterId)->avm2Class, &e);
+    if(e.avm2Object.get() == NULL)
+      e.avm2Object = document.avm2.instantiateDisplayClass(document.dictionary.at(e.characterId)->avm2Class, &e);
+    
+    avm2::ObjectPtr obj = e.avm2Object;
+    if(e.onEnterFrame.get()) {
+      std::vector<avm2::ObjectPtr> args = { obj };
+      e.onEnterFrame->ecmaCall(*obj->vm, args);
+    }
   }
 }
 
@@ -181,7 +188,7 @@ int main(int argc, char *argv[]) {
         ;//currentFrame = (currentFrame + 1) % minFrameCount;
     }
     
-    if(minFrameCount > 1 && false) {
+    if(minFrameCount >= 1) {
       renderCurrentFrame();
       glDrawPixels(width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
       SDL_GL_SwapWindow(window);

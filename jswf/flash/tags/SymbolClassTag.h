@@ -16,15 +16,21 @@
 
 namespace jswf {
   namespace flash {
+    /**
+     * Describes a (`Character`, class-name) tuple.
+     */
     struct SymbolClass {
       uint16_t characterId;
       string className;
     };
     
     namespace tags {
+      /**
+       * Assigns class-names of AVM2 classes to `Character`s.
+       */
       class SymbolClassTag : public TagWithReader, public ITagForDocument {
       public:
-        std::vector<SymbolClass> symbolClasses;
+        std::vector<SymbolClass> symbolClasses; //!< A list of (`Character`, class-name) tuples.
         SymbolClassTag(tag_type_t t, std::string &p) : TagWithReader(t, p) {
           __read_array(sc, symbolClasses, reader->readU16(), {
             sc.characterId = reader->readU16();

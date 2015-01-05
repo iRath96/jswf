@@ -15,6 +15,13 @@
 
 namespace jswf {
   namespace avm2 {
+    class VM;
+    struct MethodInfo;
+    
+    class Object;
+    typedef std::shared_ptr<Object> ObjectPtr;
+    typedef ObjectPtr builtin_method_t(VM &, MethodInfo *, std::vector<ObjectPtr> &);
+    
     struct OptionDetail {
       u30_t value;
       ConstantKind::Enum kind;
@@ -50,6 +57,7 @@ namespace jswf {
       std::vector<string *> paramNames;
       
       MethodBody *body = NULL;
+      builtin_method_t *nativeImpl = NULL;
       
       ABCFile *file;
     };

@@ -40,14 +40,14 @@ namespace jswf {
         MetadataAttribute = 0x4
       };
       
-      MultinamePtr name;
+      MultinamePtr name; //!< The name of this trait.
       
-      Kind kind;
-      Attributes attributes;
+      Kind kind; //!< The kind of this trait.
+      Attributes attributes; //!< Attributes (flags) of this trait.
       
       // u8_t data[]
       
-      std::vector<u30_t> metadata;
+      std::vector<u30_t> metadata; //!< Metadata for this trait
       
       virtual ~TraitInfo() {}
     };
@@ -58,6 +58,13 @@ namespace jswf {
       
       u30_t vindex;
       ConstantKind::Enum vkind;
+      
+      SlotTraitInfo() { kind = TraitInfo::SlotKind; }
+      SlotTraitInfo(u30_t slotId, const MultinamePtr &name, const MultinamePtr &type, u30_t vindex, ConstantKind::Enum vkind) :
+      slotId(slotId), typeName(type), vindex(vindex), vkind(vkind) {
+        this->name = name;
+        kind = TraitInfo::SlotKind;
+      }
     };
     
     struct ClassInfo;

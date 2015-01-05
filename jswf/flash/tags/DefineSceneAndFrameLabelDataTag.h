@@ -16,21 +16,30 @@
 
 namespace jswf {
   namespace flash {
+    /**
+     * FrameLabels for the main timeline.
+     */
     struct FrameLabel {
-      u32_t frame;
-      string label;
+      u32_t frame; //!< The frame-index, starting at 0
+      string label; //!< The label for the frame
     };
     
+    /**
+     * Scenes for the main timeline.
+     */
     struct Scene {
-      u32_t offset;
-      string name;
+      u32_t offset; //!< The frame-offset of the scene, starting at 0
+      string name; //!< The name for the scene
     };
     
     namespace tags {
+      /**
+       * Carries `Scene`s and `FrameLabel`s.
+       */
       class DefineSceneAndFrameLabelDataTag : public TagWithReader {
       public:
-        std::vector<Scene> scenes;
-        std::vector<FrameLabel> frameLabels;
+        std::vector<Scene> scenes; //!< The \ref Scene "scenes" that are described by this tag.
+        std::vector<FrameLabel> frameLabels; //!< The \ref FrameLabel "frame labels" that are described by this tag.
         
         DefineSceneAndFrameLabelDataTag(tag_type_t t, std::string &p) : TagWithReader(t, p) {
           __read_array(scene, scenes, reader->readVU32(), {

@@ -12,6 +12,7 @@
 #include <vector>
 #include <cmath>
 #include <stack>
+#include <map>
 
 #include "stdlib.h"
 #include "GenericReader.h"
@@ -51,6 +52,15 @@ namespace jswf {
         any->name = "";
         multinames[0] = any;
       }
+      
+      u30_t indexDouble(double d) {
+        size_t i, j;
+        for(i = 0, j = doubles.size(); i < j; ++i) if(doubles[i] == d) return (u30_t)i;
+        doubles.resize(i+1);
+        doubles[i] = d;
+        
+        return (u30_t)i;
+      }
     };
     
     struct InstanceInfo {
@@ -81,14 +91,24 @@ namespace jswf {
       std::vector<std::shared_ptr<TraitInfo>> traits;
     };
     
+    class Object;
+    typedef std::shared_ptr<Object> ObjectPtr;
+    typedef std::map<TraitInfo *, ObjectPtr> TraitMap;
+    typedef std::map<u30_t, ObjectPtr> SlotMap;
+    
     class VM;
     class Class {
     public:
+      ABCFile *file;
+      
       Class *parent;
       VM *vm;
       
       ClassInfo cinfo;
       InstanceInfo iinfo;
+      
+      TraitMap traitMap;
+      SlotMap slotMap;
     };
     
     // Hallelujah.
@@ -114,11 +134,16 @@ namespace jswf {
       ABCFile(std::shared_ptr<io::GenericReader> reader) : reader(reader) { read(); }
       ABCFile() {}
       
-      std::string makeString(std::string string) {
+      std::string makeString(std::string string, u30_t *iOut = NULL) {
         size_t i = 0, j = constantPool.strings.size();
         for(; i < j; ++i)
-          if(constantPool.strings[i] == string) return constantPool.strings[i];
+          if(constantPool.strings[i] == string) {
+            if(iOut) *iOut = (u30_t)i;
+            return constantPool.strings[i];
+          }
+        
         constantPool.strings.push_back(string);
+        if(iOut) *iOut = (u30_t)i;
         return constantPool.strings[i];
       }
       
@@ -137,9 +162,13 @@ namespace jswf {
       }
       
       MultinamePtr makeQName(std::string ns, std::string name) {
+        return makeQName(ns, name, NamespaceKind::NormalNamespaceKind);
+      }
+      
+      MultinamePtr makeQName(std::string ns, std::string name, NamespaceKind::Enum nsKind) {
         MultinamePtr ptr = makeMultiname(Multiname::QNameKind);
         ptr->name = makeString(name);
-        ptr->ns = makeNamespace(ns, NamespaceKind::NormalNamespaceKind);
+        ptr->ns = makeNamespace(ns, nsKind);
         return ptr;
       }
       
@@ -149,6 +178,7 @@ namespace jswf {
         
         classes[i] = std::unique_ptr<Class>(new Class());
         classes[i]->parent = parent;
+        classes[i]->file = this;
         
         classes[i]->iinfo.name = qname;
         classes[i]->iinfo.initializer = makeMethodInfo();
@@ -232,6 +262,10 @@ namespace jswf {
         }
       }
       
+      u30_t assignSlotId(void *ptr) {
+        return (u30_t)(uint64_t)ptr;
+      }
+      
       void readTraits(std::vector<std::shared_ptr<TraitInfo>> &traits) {
         u30_t traitCount = u30;
         traits.resize(traitCount);
@@ -249,6 +283,8 @@ namespace jswf {
             case TraitInfo::ConstKind: {
               SlotTraitInfo *r = new SlotTraitInfo();
               r->slotId = u30;
+              if(r->slotId == 0) r->slotId = assignSlotId(r);
+              
               r->typeName = u30_multiname;
               r->vindex = u30;
               r->vkind = (ConstantKind::Enum)(r->vindex == 0 ? 0 : reader->readU8());
@@ -257,12 +293,16 @@ namespace jswf {
             case TraitInfo::ClassKind: {
               ClassTraitInfo *r = new ClassTraitInfo();
               r->slotId = u30;
+              if(r->slotId == 0) r->slotId = assignSlotId(r);
+              
               r->classInfo = u30_class;
               trait = r;
             }; break;
             case TraitInfo::FunctionKind: {
               FunctionTraitInfo *r = new FunctionTraitInfo();
               r->slotId = u30;
+              if(r->slotId == 0) r->slotId = assignSlotId(r);
+              
               r->methodInfo = u30_method;
               trait = r;
             }; break;
@@ -387,6 +427,7 @@ namespace jswf {
         
         read_array(classes) {
           Class &klass = *(value(classes) = std::unique_ptr<Class>(new Class()));
+          klass.file = this;
           
           InstanceInfo &iinfo = klass.iinfo;
           iinfo.name = u30_multiname;

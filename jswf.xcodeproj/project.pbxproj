@@ -64,6 +64,7 @@
 		FA6D74061A51665A00486BFA /* undef-macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "undef-macros.h"; sourceTree = "<group>"; };
 		FA6D74071A5168C900486BFA /* ITagForSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ITagForSprite.h; sourceTree = "<group>"; };
 		FA6D74081A51697200486BFA /* ITagForDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ITagForDocument.h; sourceTree = "<group>"; };
+		FA7E31C61A5AFE67005E9E7D /* documentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = documentation.h; sourceTree = "<group>"; };
 		FA9126731A4C2B4D00D6E970 /* RemoveObjectTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoveObjectTag.h; sourceTree = "<group>"; };
 		FA9126741A4C2B5400D6E970 /* RemoveObject2Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoveObject2Tag.h; sourceTree = "<group>"; };
 		FA9126751A4C611C00D6E970 /* PlaceObjectTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceObjectTag.h; sourceTree = "<group>"; };
@@ -555,6 +556,7 @@
 				FA9126C51A4ECDE700D6E970 /* types.h */,
 				FA6D74051A51661F00486BFA /* macros.h */,
 				FA6D74061A51665A00486BFA /* undef-macros.h */,
+				FA7E31C61A5AFE67005E9E7D /* documentation.h */,
 				FAACBCB31A3BF1A000D5F9F5 /* ::io */,
 				FAACBCA61A3BE86700D5F9F5 /* ::flash */,
 				FA9126BF1A4C6B2300D6E970 /* ::avm2 */,

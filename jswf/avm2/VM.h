@@ -22,72 +22,124 @@ namespace jswf {
   }
   
   namespace avm2 {
+    #define cast(name, obj) dynamic_cast<name ## Object *>(obj.get())
+    
     class Object;
     typedef std::shared_ptr<Object> ObjectPtr;
     
-    class Object {
+    typedef std::map<u30_t, ObjectPtr> SlotMap;
+    
+    struct TraitMatch {
+      bool isStatic;
+      TraitMap *dataStore;
+      TraitInfo *trait;
+    };
+    
+    struct ECMAHint {
+      enum Enum {
+        NoHint = 0,
+        NumberHint = 1
+      };
+    };
+    
+    class Object : public std::enable_shared_from_this<Object> {
     public:
-      Object(Class *klass) : klass(klass) {}
+      Object(VM *vm, Class *klass) : vm(vm), klass(klass) {}
       
+      VM *vm;
       Class *klass;
+      
       std::map<std::string, ObjectPtr> properties;
-      std::map<u30_t, ObjectPtr> slots;
+      // std::map<u30_t, ObjectPtr> slots;
+      TraitMap traitMap;
+      SlotMap slotMap;
       
       // TODO:2015-01-04:alex:Initialize slots!
       // TODO:2015-01-01:alex:Property chain!
       // TODO:2015-01-04:alex:Slots of parent classes. Ouch.
       
-      virtual ObjectPtr getProperty(const Multiname &property) const {
-        if(hasDeclaredProperty(property))
-          return getSlot(getSlotByName(property)); // TODO:2015-01-04:alex:This will fail for non-slot traits.
-        
-        std::string name = property.nameString();
-        if(properties.find(name) != properties.end()) return properties.at(name);
-        return NULL;
+      TraitMatch getTraitByName(const Multiname &name) {
+        Class *k = klass;
+        while(k != NULL) {
+          // Search instance traits.
+          for(auto it = k->iinfo.traits.begin(); it != k->iinfo.traits.end(); ++it)
+            if(*(*it)->name == name)
+              return { .isStatic = false, .trait = it->get(), .dataStore = &traitMap };
+          
+          // Search class traits.
+          for(auto it = k->cinfo.traits.begin(); it != k->cinfo.traits.end(); ++it)
+            if(*(*it)->name == name)
+              return { .isStatic = true, .trait = it->get(), .dataStore = &klass->traitMap };
+          
+          k = k->parent;
+        } return { .trait = NULL, .dataStore = NULL };
       }
       
-      u30_t getSlotByName(const Multiname &name) const {
-        for(auto it = klass->iinfo.traits.begin(); it != klass->iinfo.traits.end(); ++it)
-          if(*(*it)->name == name && dynamic_cast<SlotTraitInfo *>(it->get()))
-            return dynamic_cast<SlotTraitInfo *>(it->get())->slotId;
-        throw "No such slot.";
+      TraitMatch getTraitBySlotId(u30_t slotId) {
+        Class *k = klass;
+        while(k != NULL) {
+          // Search instance traits.
+          for(auto it = k->iinfo.traits.begin(); it != k->iinfo.traits.end(); ++it)
+            if(dynamic_cast<SlotTraitInfo *>(it->get()) && dynamic_cast<SlotTraitInfo *>(it->get())->slotId == slotId)
+              return { .isStatic = false, .trait = it->get(), .dataStore = &traitMap };
+          
+          // Search class traits.
+          for(auto it = k->cinfo.traits.begin(); it != k->cinfo.traits.end(); ++it)
+            if(dynamic_cast<SlotTraitInfo *>(it->get()) && dynamic_cast<SlotTraitInfo *>(it->get())->slotId == slotId)
+              return { .isStatic = true, .trait = it->get(), .dataStore = &klass->traitMap };
+          
+          k = k->parent;
+        } return { .trait = NULL, .dataStore = NULL };
       }
       
-      virtual void setProperty(const Multiname &property, const ObjectPtr &value) {
-        if(hasDeclaredProperty(property)) {
-          setSlot(getSlotByName(property), value);
-          return;
-        }
-        
-        properties[property.nameString()] = value;
-      }
+      // TODO:2015-01-04:alex:Hardcode class names for native objects??
+      virtual ObjectPtr getProperty(const Multiname &property);
+      virtual void setProperty(const Multiname &property, const ObjectPtr &value);
       
       void setSlot(u30_t slotIndex, const ObjectPtr &value) {
         // TODO:2015-01-04:alex:Check that the type is correct.
-        slots[slotIndex] = value;
+        slotMap[slotIndex] = value;
       }
       
-      ObjectPtr getSlot(u30_t slotIndex) const {
-        if(slots.find(slotIndex) == slots.end()) return NULL;
-        return slots.at(slotIndex);
-      }
+      ObjectPtr getSlot(u30_t slotIndex) const;
       
       virtual ObjectPtr ecmaCall(VM &vm, std::vector<ObjectPtr> &args) const {
-        throw "Could not ecmaCall";
+        throw "TypeError: Error #1006: value is not a function.";
       }
       
-      bool hasDeclaredProperty(const Multiname &property) const {
-        for(auto it = klass->iinfo.traits.begin(); it != klass->iinfo.traits.end(); ++it)
-          if(*(*it)->name == property) return true;
-        return false;
+      // ecmaConstruct
+      // ecmaDescendants
+      // ecmaHasProperty
+      
+      // ecmaGetOwnProperty
+      // ecmaGetProperty
+      // ecmaGet
+      // ecmaCanPut
+      // ecmaPut
+      // ecmaHasProperty
+      // ecmaDelete
+      // ecmaDefaultValue
+      // ecmaDefineOwnProperty
+      
+      // ecmaCall
+      // ecmaConstruct
+      // ecmaThrowTypeError
+      
+      // ecmaClass
+      // ecmaPrototype
+      // ecmaCall
+      // ecmaScope
+      
+      bool hasDeclaredProperty(const Multiname &property) {
+        return getTraitByName(property).trait != NULL;
       }
       
-      bool hasDynamicProperty(const Multiname &property) const {
+      bool hasDynamicProperty(const Multiname &property) {
         std::string name = property.nameString();
         return properties.find(name) != properties.end();
       }
       
-      bool hasProperty(const Multiname &property) const {
+      bool hasProperty(const Multiname &property) {
         return hasDeclaredProperty(property) || hasDynamicProperty(property);
       }
       
@@ -100,6 +152,21 @@ namespace jswf {
         return false;
       }
       
+      virtual ObjectPtr ecmaToPrimitive(ECMAHint::Enum hint = ECMAHint::NoHint) {
+        // TODO:2015-01-05:alex:Implement this?
+        return shared_from_this();
+      }
+      
+      enum AcResult {
+        AcUndefinedResult = 0,
+        AcFalseResult = 1,
+        AcTrueResult = 2
+      };
+      
+      virtual AcResult abstractCompare(Object &rhs, bool leftFirst = true); // ECMA-262, section 11.8.5
+      
+      virtual bool isNaN() const { return false; }
+      
       virtual bool coerce_b() const { return true; } // ECMA-262, section 9.2
       virtual s32_t coerce_i() const { throw "Cannot coerce_i"; }
       virtual std::string coerce_s() const { return "[object " + klass->iinfo.name->nameString() + "]"; }
@@ -107,12 +174,17 @@ namespace jswf {
       virtual Multiname coerce_multiname() const { throw "Cannot coerce_multiname"; }
       virtual double coerce_d() const { throw "Cannot coerce_d"; }
       
-      virtual ObjectPtr coerce(Class *newKlass) const {
+      double ecmaToNumber() const { return this->coerce_d(); }
+      
+      virtual ObjectPtr coerce(Class *newKlass, const ObjectPtr &recv) {
         // TODO:2015-01-01:alex:Implement this!
-        return std::make_shared<Object>(newKlass);
+        klass = newKlass; // `coerce Function` will actually make a `builtin.as$0::MethodClosure` a `Function`.
+        return recv;
       }
       
       std::string getPropertyName(int index) const {
+        if(properties.size() == 0) return "";
+        
         auto it = properties.begin();
         --index;
         while(index) {
@@ -122,6 +194,8 @@ namespace jswf {
       }
       
       bool hasNextProperty(int index) const {
+        if(properties.size() == 0) return false;
+        
         auto it = properties.begin();
         while(index) {
           if(++it == properties.end()) return false;
@@ -130,15 +204,49 @@ namespace jswf {
       }
     };
     
-    typedef ObjectPtr builtin_method_t(VM &, MethodInfo *, std::vector<ObjectPtr> &);
-    
     builtin_method_t builtin_trace;
     builtin_method_t builtin_getQualifiedClassName;
+    builtin_method_t builtin_addEventListener;
     
+    /**
+     * Represents a `function() {}` that was created using `newfunction`.
+     */
+    class FunctionObject : public Object {
+    public:
+      // TODO:2015-01-04:alex:Saved scope.
+      
+      MethodInfo *value;
+      FunctionObject(VM *vm, MethodInfo *value);
+      
+      std::string coerce_s() const { return "function Function() {}"; }
+      
+      ObjectPtr ecmaCall(VM &vm, std::vector<ObjectPtr> &args) const;
+    };
+    
+    /**
+     * Represents a method that was created as a trait of an instance or a class.
+     * Note that executing `[[Call]]` on a \ref MethodObject will always override the
+     * implicit (receiver) argument.
+     */
+    class MethodObject : public Object {
+    public:
+      ObjectPtr receiver;
+      
+      MethodInfo *value;
+      MethodObject(VM *vm, const ObjectPtr &recv, MethodInfo *value);
+      
+      std::string coerce_s() const { return "function Function() {}"; }
+      
+      ObjectPtr ecmaCall(VM &vm, std::vector<ObjectPtr> &args) const;
+    };
+    
+    /**
+     * Represents a method that is provided by the runtime.
+     */
     class BuiltinMethodObject : public Object {
     public:
       builtin_method_t *value;
-      BuiltinMethodObject(Class *klass, builtin_method_t *value) : value(value), Object(klass) {}
+      BuiltinMethodObject(VM *vm, builtin_method_t *value);
       
       std::string coerce_s() const { return "function Function() {}"; }
       
@@ -147,10 +255,13 @@ namespace jswf {
       }
     };
     
+    /**
+     * Represents a class.
+     */
     class ClassObject : public Object {
     public:
       Class *value;
-      ClassObject(Class *klass, Class *value) : value(value), Object(klass) {}
+      ClassObject(VM *vm, Class *value);
       
       std::string coerce_s() const {
         return "[class " + value->iinfo.name->nameString() + "]";
@@ -159,34 +270,43 @@ namespace jswf {
     
     class DisplayObject : public Object {
     public:
-      flash::DisplayListEntry *entry;
-      DisplayObject(Class *klass, flash::DisplayListEntry *entry) : entry(entry), Object(klass) {}
+      double rotation = 1, scaleX = 1, scaleY = 1;
+      
+      flash::DisplayListEntry *value;
+      DisplayObject(VM *vm, Class *klass, flash::DisplayListEntry *value) : value(value), Object(vm, klass) {}
       
       void setProperty(const Multiname &property, const ObjectPtr &value);
     };
     
     class NativeObject : public Object {
     public:
-      NativeObject(Class *klass) : Object(klass) {}
+      NativeObject(VM *vm, Class *klass) : Object(vm, klass) {}
     };
     
-    class VoidObject : public NativeObject { // TODO:2015-01-01:alex:Differentiate null and undefined.
+    class VoidObject : public NativeObject {
     public:
-      VoidObject(Class *klass) : NativeObject(klass) {}
+      enum Kind {
+        NullValue = 0,
+        UndefinedValue
+      };
+      
+      Kind value;
+      
+      VoidObject(VM *vm, const Kind &value);
       bool operator ==(const Object &rhs) {
         return dynamic_cast<const VoidObject *>(&rhs);
       }
       
       bool coerce_b() const { return false; }
-      std::string coerce_s() const { return "undefined"; }
-      double coerce_d() const { return NAN; } // TODO:2015-01-01:alex:+0 for null.
+      std::string coerce_s() const { return value == NullValue ? "null" : "undefined"; }
+      double coerce_d() const { return value == NullValue ? +0 : NAN; } // TODID:2015-01-01:alex:+0 for null.
     };
     
-#define make_native_class(name, value_type, coerce_name, code) \
-  class name : public NativeObject { \
+#define make_native_class(name, parent_class, value_type, coerce_name, code) \
+  class name : public parent_class { \
   public: \
     value_type value; \
-    name(Class *klass, const value_type &value) : value(value), NativeObject(klass) {} \
+    name(VM *vm, const value_type &value); \
     bool operator ==(const Object &rhs) const { \
       const name *casted = dynamic_cast<const name *>(&rhs); \
       return casted && value == casted->value; \
@@ -195,30 +315,37 @@ namespace jswf {
     code \
   };
     
-    make_native_class(NamespaceObject, Namespace, coerce_ns,);
-    make_native_class(MultinameObject, Multiname, coerce_multiname,);
-    make_native_class(ArrayObject, std::vector<ObjectPtr>, coerce_a,);
+    make_native_class(NamespaceObject, NativeObject, Namespace, coerce_ns,);
+    make_native_class(MultinameObject, NativeObject, Multiname, coerce_multiname,);
+    make_native_class(ArrayObject, NativeObject, std::vector<ObjectPtr>, coerce_a,);
     make_native_class
-     (NumberObject, double, coerce_d,
-      bool coerce_b() const { return !isnan(value) && value != 0; }
-    );
-    make_native_class
-     (StringObject, std::string, coerce_s,
+     (StringObject, NativeObject, std::string, coerce_s,
       bool coerce_b() const { return !value.empty(); }
     );
     make_native_class
-     (BooleanObject, bool, coerce_b,
+     (BooleanObject, NativeObject, bool, coerce_b,
       std::string coerce_s() const { return value ? "true" : "false"; }
       double coerce_d() const { return value ? 1 : +0; }
     );
+    
+    class NumberObject : public NativeObject {
+    public:
+      NumberObject(VM *vm, Class *klass) : NativeObject(vm, klass) {}
+    };
+    
+    make_native_class
+    (DoubleObject, NumberObject, double, coerce_d,
+     bool coerce_b() const { return !isnan(value) && value != 0; }
+     std::string coerce_s() const { return std::to_string(value); }
+     );
     make_native_class // TODO:2015-01-04:alex:Not DRY with IntObject
-     (UIntObject, u32_t, coerce_u,
+     (UIntObject, NumberObject, u32_t, coerce_u,
       std::string coerce_s() const { return std::to_string(value); }
       bool coerce_b() const { return value != 0; }
       double coerce_d() const { return value; }
     );
     make_native_class
-     (IntObject, s32_t, coerce_i,
+     (IntObject, NumberObject, s32_t, coerce_i,
       std::string coerce_s() const { return std::to_string(value); }
       bool coerce_b() const { return value != 0; }
       double coerce_d() const { return value; }
@@ -251,16 +378,60 @@ namespace jswf {
       std::vector<std::shared_ptr<ABCFile>> files;
       
       ObjectPtr globalObject;
-      ObjectPtr undefinedObject;
+      ObjectPtr undefinedObject, nullObject;
       
       VM() {
         std::shared_ptr<ABCFile> api = std::make_shared<ABCFile>();
         
         Class *parent = NULL, *object = NULL;
         parent = object = api->makeClass(api->makeQName("", "Object"), parent);
-        parent = api->makeClass(api->makeQName("flash.events", "EventDispatcher"), parent);
+        
+        api->makeClass(api->makeQName("", "Boolean"), object);
+        Class *numberClass = api->makeClass(api->makeQName("", "Number"), object);
+        api->makeClass(api->makeQName("", "int"), object);
+        api->makeClass(api->makeQName("", "uint"), object);
+        api->makeClass(api->makeQName("", "Function"), object);
+        api->makeClass(api->makeQName("", "String"), object);
+        
+        api->makeClass(api->makeQName("", "builtin.as$0::MethodClosure"), NULL);
+        
+        Class *eventClass = api->makeClass(api->makeQName("flash.events", "Event"), object);
+        std::shared_ptr<SlotTraitInfo> enterFrame = std::make_shared<SlotTraitInfo>();
+        enterFrame->kind = TraitInfo::ConstKind;
+        enterFrame->typeName = api->makeQName("", "String");
+        api->makeString("enterFrame", &enterFrame->vindex);
+        enterFrame->vkind = ConstantKind::UTF8Kind;
+        eventClass->iinfo.traits.push_back(enterFrame);
+        
+        Class *eventDispatcherClass = parent = api->makeClass(api->makeQName("flash.events", "EventDispatcher"), parent);
+        MethodInfo *aELMethod = api->makeMethodInfo();
+        aELMethod->nativeImpl = &builtin_addEventListener;
+        
+        std::shared_ptr<MethodTraitInfo> t = std::make_shared<MethodTraitInfo>();
+        t->kind = TraitInfo::MethodKind;
+        t->name = api->makeQName("", "addEventListener", NamespaceKind::PackageNamespaceKind);
+        t->methodInfo = aELMethod;
+        eventDispatcherClass->iinfo.traits.push_back(t);
+        
         parent = api->makeClass(api->makeQName("flash.display", "DisplayObject"), parent);
-        parent = api->makeClass(api->makeQName("flash.displa", "InteractiveObject"), parent);
+        
+        std::vector<std::string> dispObjProps = { "rotation", "x", "y", "xScale", "yScale", "alpha" };
+        // TODO:2015-01-04:alex:Correct default values
+        
+        u30_t nullDblIndex = api->constantPool.indexDouble(0.0);
+        u30_t slotId = 0;
+        for(auto it = dispObjProps.begin(); it != dispObjProps.end(); ++it) {
+          parent->iinfo.traits.push_back(
+            std::make_shared<SlotTraitInfo>(slotId++,
+                                            api->makeQName("", *it, NamespaceKind::PackageNamespaceKind),
+                                            numberClass->iinfo.name,
+                                            nullDblIndex,
+                                            ConstantKind::DoubleKind
+                                            )
+          );
+        }
+        
+        parent = api->makeClass(api->makeQName("flash.display", "InteractiveObject"), parent);
         parent = api->makeClass(api->makeQName("flash.display", "DisplayObjectContainer"), parent);
         parent = api->makeClass(api->makeQName("flash.display", "Sprite"), parent);
         parent = api->makeClass(api->makeQName("flash.display", "MovieClip"), parent);
@@ -268,43 +439,25 @@ namespace jswf {
         api->makeClass(api->makeQName("", "void"), object);
         api->makeClass(api->makeQName("", "null"), object);
         
-        api->makeClass(api->makeQName("", "Boolean"), object);
-        api->makeClass(api->makeQName("", "Number"), object);
-        api->makeClass(api->makeQName("", "int"), object);
-        api->makeClass(api->makeQName("", "uint"), object);
-        api->makeClass(api->makeQName("", "Function"), object);
-        api->makeClass(api->makeQName("", "String"), object);
+        api->makeClass(api->makeQName("", "Class"), object);
         
-        Class *classClass = api->makeClass(api->makeQName("", "Class"), object);
-        ObjectPtr objectClass = std::make_shared<ClassObject>(classClass, object);
-        
-        Class *builtinMethod = api->makeClass(api->makeQName("", "builtin.as$0::MethodClosure"), NULL);
-        ObjectPtr traceMethod = std::make_shared<BuiltinMethodObject>(builtinMethod, &builtin_trace);
-        ObjectPtr gQCNMethod = std::make_shared<BuiltinMethodObject>(builtinMethod, &builtin_getQualifiedClassName);
-        
-        Class *globalClass = api->makeClass(api->makeQName("", "Global"), object);
-        globalObject = std::make_shared<Object>(globalClass);
-        
-        globalObject->setProperty(*api->makeQName("", "trace"), traceMethod);
-        globalObject->setProperty(*api->makeQName("flash.utils", "getQualifiedClassName"), gQCNMethod);
-        
-        globalObject->setProperty(*api->makeQName("", "Object"), objectClass);
+        Class *globalClass = api->makeClass(api->makeQName("", "global"), object);
+        globalObject = std::make_shared<Object>(this, globalClass);
         
         loadABCFile(api);
         
-        undefinedObject = ObjectPtr(makeVoidObject());
+        // ...
+        
+        ObjectPtr traceMethod = std::make_shared<BuiltinMethodObject>(this, &builtin_trace);
+        ObjectPtr gQCNMethod = std::make_shared<BuiltinMethodObject>(this, &builtin_getQualifiedClassName);
+        
+        // TODO:2015-04-04:alex:These should be traits.
+        globalObject->setProperty(*api->makeQName("", "trace"), traceMethod);
+        globalObject->setProperty(*api->makeQName("flash.utils", "getQualifiedClassName"), gQCNMethod);
+        
+        undefinedObject = ObjectPtr(new VoidObject(this, VoidObject::UndefinedValue));
+        nullObject = ObjectPtr(new VoidObject(this, VoidObject::NullValue));
       }
-      
-#define maker(klass, flashKlass) \
-  klass *make ## klass(typeof(IntObject::value) value) { return new klass(getClassByName(flashKlass), value); }
-      maker(IntObject    , "int");
-      maker(UIntObject   , "uint");
-      maker(BooleanObject, "Boolean");
-      maker(NumberObject , "Number");
-      
-      StringObject *makeStringObject(std::string value) { return new StringObject(getClassByName("String"), value); }
-      ArrayObject *makeArrayObject(std::vector<ObjectPtr> value) { return new ArrayObject(getClassByName("Array"), value); }
-      VoidObject *makeVoidObject() { return new VoidObject(getClassByName("void")); }
       
       void loadABCFile(std::shared_ptr<ABCFile> file) {
         files.push_back(file);
@@ -312,18 +465,26 @@ namespace jswf {
         for(size_t i = 0, j = file->classes.size(); i < j; ++i) {
           Class &klass = *file->classes[i].get();
           klass.vm = this;
+          if(klass.iinfo.superName != NULL)
+            klass.parent = getClassByName(klass.iinfo.superName->nameString());
           
           MultinamePtr &name = klass.iinfo.name;
           classes[name->nameString()] = &klass;
           
+          ObjectPtr classObject = std::make_shared<ClassObject>(this, &klass);
+          globalObject->setProperty(*klass.iinfo.name, classObject);
+          
+          for(auto it = klass.cinfo.traits.begin(); it != klass.cinfo.traits.end(); ++it); // TODO
+          
           if(klass.cinfo.initializer->body) {
-            ObjectPtr arg0 = std::make_shared<Object>(getClassByName("Class"));
+            ObjectPtr arg0 = std::make_shared<Object>(this, getClassByName("Class"));
             runMethod(klass.cinfo.initializer, std::vector<ObjectPtr>{ arg0 });
           }
         }
       }
       
-      Class *getClassByName(std::string name) {
+      Class *getClassByName(std::string name) const {
+        if(classes.find(name) == classes.end()) return NULL;
         return classes.at(name);
       }
       
@@ -331,10 +492,30 @@ namespace jswf {
         return instantiateClass(getClassByName(klassName));
       }
       
+      void setupSlotDefaults(ObjectPtr &obj, Class *klass) {
+        if(klass->parent) setupSlotDefaults(obj, klass->parent);
+        for(auto it = klass->iinfo.traits.begin(); it != klass->iinfo.traits.end(); ++it)
+          if(dynamic_cast<SlotTraitInfo *>(it->get())) {
+            SlotTraitInfo *s = dynamic_cast<SlotTraitInfo *>(it->get());
+            
+            ObjectPtr value;
+            switch(s->vkind) {
+              case ConstantKind::DoubleKind:
+                value.reset(new DoubleObject(this, klass->file->constantPool.doubles[s->vindex]));
+                break;
+              default:
+                value = undefinedObject;
+            }
+            
+            obj->slotMap[s->slotId] = value;
+          }
+      }
+      
       ObjectPtr instantiateClass(Class *klass) {
         printf("Should create an instance of %s.\n", klass->iinfo.name->nameString().c_str());
         
-        ObjectPtr obj = std::make_shared<Object>(klass);
+        ObjectPtr obj = std::make_shared<Object>(this, klass);
+        setupSlotDefaults(obj, klass);
         runMethod(klass->iinfo.initializer, std::vector<ObjectPtr>{ obj });
         
         return obj;
@@ -343,7 +524,9 @@ namespace jswf {
       ObjectPtr instantiateDisplayClass(Class *klass, flash::DisplayListEntry *entry) {
         printf("Should create a display instance of %s.\n", klass->iinfo.name->nameString().c_str());
         
-        ObjectPtr obj = std::make_shared<DisplayObject>(klass, entry);
+        ObjectPtr obj = std::make_shared<DisplayObject>(this, klass, entry);
+        setupSlotDefaults(obj, klass);
+        // TODO:2015-01-05:alex:Set x, y, etc. here.
         runMethod(klass->iinfo.initializer, std::vector<ObjectPtr>{ obj });
         
         return obj;
@@ -352,17 +535,13 @@ namespace jswf {
       ObjectPtr runMethod(MethodInfo *method, std::vector<ObjectPtr> arguments) {
         ABCFile *file = method->file;
         
-        printf("runMethod\n");
+        //printf("runMethod\n");
         
         MethodBody *body = method->body;
         if(body == NULL) {
-          printf("  native fallback\n");
-          // TODO:2015-01-01:alex:Do something.
-          return std::make_shared<Object>(getClassByName("Object"));
+          if(method->nativeImpl) return method->nativeImpl(*this, method, arguments);
+          return std::make_shared<Object>(this, getClassByName("Object"));
         } else {
-          printf("  VM stuff.");
-          printf("  code = %s\n", body->code.c_str());
-          
           std::vector<Scope> scopeStack; // capacity should be method->body->maxScopeDepth
           std::stack<ObjectPtr> stack; // capacity should be method->body->maxStack
           std::map<u30_t, ObjectPtr> registers; // capacity should be method->body->localCount
@@ -388,7 +567,6 @@ namespace jswf {
 #define read_diadic \
   ObjectPtr v2 = __pop; \
   ObjectPtr v1 = __pop;
-#define cast(name, obj) dynamic_cast<name ## Object *>(obj.get())
 
 #define __ncast(v) ObjectPtr(v)
 #define __push(v) stack.push(__ncast(v))
@@ -407,6 +585,22 @@ namespace jswf {
               case 0x09: {
                 bc_comment("label");
                 // "Do nothing"
+              }; break;
+              case 0x0d: {
+                s24_t offset = codeReader.readS24();
+                bc_comment("ifnle " + std::to_string(offset));
+                read_diadic;
+                
+                if(v2->abstractCompare(*v1) == Object::AcTrueResult)
+                  codeReader.seek(offset);
+              }; break;
+              case 0x0f: {
+                s24_t offset = codeReader.readS24();
+                bc_comment("ifnge " + std::to_string(offset));
+                read_diadic;
+                
+                if(v1->abstractCompare(*v2) != Object::AcFalseResult)
+                  codeReader.seek(offset);
               }; break;
               case 0x10: {
                 s24_t offset = codeReader.readS24();
@@ -427,6 +621,23 @@ namespace jswf {
                 bool shouldBranch = !__pop->coerce_b();
                 if(shouldBranch) codeReader.seek(offset);
               }; break;
+              case 0x1b: { // TODO:2015-01-05:alex:Not tested!
+                s24_t defaultOffset = codeReader.readS24();
+                u30_t caseCount = codeReader.readVU30();
+                
+                bc_comment("lookupswitch " + std::to_string(defaultOffset) + " " + std::to_string(caseCount));
+                
+                s32_t index = __pop->coerce_i();
+                if(index < 0 || index > caseCount) {
+                  codeReader.seek((caseCount + 1) * 3);
+                  codeReader.seek(defaultOffset);
+                } else {
+                  codeReader.seek(index * 3);
+                  s24_t offset = codeReader.readS24();
+                  codeReader.seek((caseCount - index) * 3);
+                  codeReader.seek(offset);
+                }
+              }; break;
               case 0x1c: {
                 bc_comment("pushwith");
                 // TODO:2015-01-04:alex:See below:
@@ -443,7 +654,7 @@ namespace jswf {
                 bc_comment("nextname");
                 ObjectPtr index = __pop;
                 ObjectPtr obj = __pop;
-                __push(makeStringObject(obj->getPropertyName(index->coerce_i())));
+                __push(new StringObject(this, obj->getPropertyName(index->coerce_i())));
               }; break;
               case 0x20: {
                 bc_comment("pushnull");
@@ -454,18 +665,31 @@ namespace jswf {
                 __push(undefinedObject); // undefined!
               }; break;
               case 0x24: {
-                uint8_t byte = codeReader.readU8();
+                // This apparently is a signed byte.
+                // The specification might be wrong on this.
+                
+                int8_t byte = codeReader.readS8();
                 bc_comment("pushbyte " + std::to_string(byte));
                 
-                __push(makeIntObject(byte));
+                __push(new IntObject(this, byte));
+              }; break;
+              case 0x25: {
+                u30_t value = codeReader.readVU30();
+                bc_comment("pushshort " + std::to_string(value));
+                
+                __push(new IntObject(this, value));
               }; break;
               case 0x26: {
                 bc_comment("pushtrue");
-                __push(makeBooleanObject(true));
+                __push(new BooleanObject(this, true));
               }; break;
               case 0x27: {
                 bc_comment("pushfalse");
-                __push(makeBooleanObject(false));
+                __push(new BooleanObject(this, false));
+              }; break;
+              case 0x29: {
+                bc_comment("pop");
+                __pop;
               }; break;
               case 0x2a: {
                 bc_comment("dup");
@@ -478,19 +702,19 @@ namespace jswf {
                 read_auto(strings, str);
                 bc_comment("pushstring \"" + str + "\""); // TODO:2014-12-28:alex:Not correctly escaped.
                 
-                __push(makeStringObject(str));
+                __push(new StringObject(this, str));
               }; break;
               case 0x2d: {
                 read_auto(integers, i);
                 bc_comment("pushint " + std::to_string(i));
                 
-                __push(makeIntObject(i));
+                __push(new IntObject(this, i));
               }; break;
               case 0x2f: {
                 read_auto(doubles, dbl);
                 bc_comment("pushdouble " + std::to_string(dbl));
                 
-                __push(makeNumberObject(dbl));
+                __push(new DoubleObject(this, dbl));
               }; break;
               case 0x30: {
                 bc_comment("pushscope");
@@ -508,18 +732,23 @@ namespace jswf {
                 
                 ObjectPtr obj = registers[objReg];
                 bool hasNext = obj->hasNextProperty(i);
-                __push(makeBooleanObject(hasNext));
+                __push(new BooleanObject(this, hasNext));
                 
                 if(hasNext) {
-                  registers[indexReg] = ObjectPtr(makeIntObject(i + 1));
+                  registers[indexReg] = ObjectPtr(new IntObject(this, i + 1));
                 } else {
-                  registers[objReg] = ObjectPtr(makeVoidObject()); // TODO:2015-01-01:alex:Automatically wrap into ObjectPtr?
-                  registers[indexReg] = ObjectPtr(makeIntObject(0));
+                  registers[objReg] = nullObject;
+                  registers[indexReg] = ObjectPtr(new IntObject(this, 0));
                 }
+              }; break;
+              case 0x40: {
+                u30_t index = codeReader.readVU30();
+                bc_comment("newfunction " + std::to_string(index));
+                __push(new FunctionObject(this, file->methods.at(index).get()));
               }; break;
               case 0x47: {
                 bc_comment("returnvoid");
-                return ObjectPtr(makeVoidObject());
+                return undefinedObject;
               }; break;
               case 0x48: {
                 bc_comment("returnvalue");
@@ -534,18 +763,34 @@ namespace jswf {
                 
                 bc_comment("[ TODO ]");
               }; break;
+                
+              case 0x41: {
+                u30_t argCount = codeReader.readVU30();
+                bc_comment("call[" + std::to_string(argCount) + "]");
+                
+                std::vector<ObjectPtr> args;
+                for(uint32_t i = 0; i <= argCount; ++i) // `<=` because we read one more: receiver (arg0 = `this`)
+                  args.insert(args.begin(), __pop);
+                
+                ObjectPtr method = __pop;
+                __push(method->ecmaCall(*this, args));
+              }; break;
+                
               case 0x46:
               case 0x4f: {
                 u30_t mnIndex = codeReader.readVU30();
                 u30_t argCount = codeReader.readVU30();
+                read_multiname_arg(mnIndex);
+                
+                bc_comment((chr == 0x46 ? "callproperty[" : "callpropvoid[") + std::to_string(argCount) + "] " + mn_str);
                 
                 std::vector<ObjectPtr> args;
                 for(uint32_t i = 0; i < argCount; ++i) args.insert(args.begin(), __pop);
                 
-                read_multiname_arg(mnIndex);
+                ObjectPtr object = __pop;
+                args.insert(args.begin(), object); // arg0 = `this`
                 
-                bc_comment((chr == 0x46 ? "callproperty[" : "callpropvoid[") + std::to_string(argCount) + "] " + mn_str);
-                ObjectPtr method = __pop->getProperty(multiname);
+                ObjectPtr method = object->getProperty(multiname);
                 ObjectPtr ret = method->ecmaCall(*this, args);
                 
                 if(chr == 0x46) __push(ret);
@@ -572,11 +817,11 @@ namespace jswf {
                 std::vector<ObjectPtr> args;
                 for(uint32_t i = 0; i < argCount; ++i) args.insert(args.begin(), __pop);
                 
-                __push(makeArrayObject(args));
+                __push(new ArrayObject(this, args));
               }; break;
               case 0x57: {
                 bc_comment("newactivation");
-                __push(makeVoidObject()); // TODO:2015-01-04:alex:Activation object.
+                __push(nullObject); // TODO:2015-01-04:alex:Activation object.
               }; break;
               case 0x5e:
               case 0x5d:
@@ -619,13 +864,18 @@ namespace jswf {
                 read_multiname;
                 bc_comment("getproperty " + mn_str);
                 
-                ObjectPtr v = __pop->getProperty(multiname);
-                __push(v == NULL ? undefinedObject : v);
+                ObjectPtr obj = __pop;
+                ObjectPtr v = obj->getProperty(multiname);
+                __push(v);
               }; break;
                 
+              case 0x64: {
+                bc_comment("getglobalscope");
+                __push(scopeStack.at(0).object);
+              }; break;
               case 0x65: {
                 uint8_t index = codeReader.readU8();
-                bc_comment("getscopeobject");
+                bc_comment("getscopeobject " + std::to_string(index));
                 __push(scopeStack.at(index).object);
               }; break;
                 
@@ -647,56 +897,60 @@ namespace jswf {
                 
               case 0x73: {
                 bc_comment("convert_i");
-                __push(makeIntObject(__pop->coerce_i()));
+                __push(new IntObject(this, __pop->coerce_i()));
               }; break;
               case 0x75: {
                 bc_comment("convert_d");
-                __push(makeNumberObject(__pop->coerce_d()));
+                __push(new DoubleObject(this, __pop->coerce_d()));
               }; break;
               case 0x80: {
                 read_multiname; // TODO:2015-01-01:alex:"Must not be a runtime multiname"
                 bc_comment("coerce " + mn_str);
-                __push(__pop->coerce(getClassByName(multiname.nameString())));
+                
+                ObjectPtr obj = __pop;
+                __push(obj->coerce(getClassByName(multiname.nameString()), obj));
               }; break;
               case 0x82: {
                 bc_comment("coerce_a"); // TODO:2015-01-01:alex:Assert that we have at least one stack element.
               }; break;
               case 0x96: {
                 bc_comment("not");
-                __push(makeBooleanObject(!__pop->coerce_b()));
+                __push(new BooleanObject(this, !__pop->coerce_b()));
               }; break;
               case 0xa0: {
                 bc_comment("add");
                 
                 read_diadic;
                 
+                // TODO:2015-01-05:alex:This code is crap.
+                
                 if(cast(Number, v1) && cast(Number, v2))
-                  __push(makeNumberObject(cast(Number, v1)->value + cast(Number, v2)->value));
+                  __push(new DoubleObject(this, v1->coerce_d() + v2->coerce_d()));
                 else
-                  __push(makeStringObject(v1->coerce_s() + v2->coerce_s()));
+                  __push(new StringObject(this, v1->coerce_s() + v2->coerce_s()));
               }; break;
               case 0xa1: {
-                bc_comment("subtract"); // TODO:2014-12-28:alex:Right-To-Left bug.
+                bc_comment("subtract");
                 
                 read_diadic;
-                __push(makeNumberObject(v1->coerce_d() - v2->coerce_d()));
+                __push(new DoubleObject(this, v1->coerce_d() - v2->coerce_d()));
               }; break;
               case 0xa2: {
                 bc_comment("multiply");
                 
                 read_diadic;
-                __push(makeNumberObject(v1->coerce_d() * v2->coerce_d()));
+                __push(new DoubleObject(this, v1->coerce_d() * v2->coerce_d()));
               }; break;
               case 0xa3: {
                 bc_comment("divide");
                 
                 read_diadic;
-                __push(makeNumberObject(v1->coerce_d() / v2->coerce_d()));
+                __push(new DoubleObject(this, v1->coerce_d() / v2->coerce_d()));
               }; break;
               case 0xab: {
                 bc_comment("equals");
                 read_diadic;
-                __push(makeBooleanObject(*v1 == *v2));
+                __push(new BooleanObject(this, *v1 == *v2));
               }; break;
                 
               case 0x62: // getlocal with u30

@@ -35,6 +35,10 @@ namespace jswf {
       bool operator ==(const Namespace &rhs) const {
         return kind == rhs.kind && name == rhs.name;
       }
+      
+      bool operator !=(const Namespace &rhs) const {
+        return kind != rhs.kind || name != rhs.name;
+      }
     };
     
     struct NamespaceSet;
@@ -44,6 +48,10 @@ namespace jswf {
       std::vector<NamespacePtr> namespaces;
       bool operator ==(const NamespaceSet &rhs) const {
         return namespaces == rhs.namespaces;
+      }
+      
+      bool operator !=(const NamespaceSet &rhs) const {
+        return namespaces != rhs.namespaces;
       }
     };
   }

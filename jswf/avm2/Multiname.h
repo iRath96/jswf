@@ -40,33 +40,39 @@ namespace jswf {
       NamespaceSetPtr nsSet;
       
       Multiname(Kind kind) {
-        hasName = hasNS = hasNSSet = false;
+        hasName = hasNS = hasNSSet = isAttribute = false;
         
         switch(kind) {
           case QNameAKind: isAttribute = true;
-          case QNameKind:  hasNS = hasName = true; break;
+          case QNameKind:  hasNS = hasName = true;
+            break;
             
           case RTQNameAKind: isAttribute = true;
-          case RTQNameKind:  hasName = true; break;
+          case RTQNameKind:  hasName = true;
+            break;
           
           case RTQNameLAKind: isAttribute = true;
-          case RTQNameLKind:  break;
+          case RTQNameLKind:
+            break;
             
           case MultinameAKind: isAttribute = true;
-          case MultinameKind:  hasName = hasNSSet = true; break;
+          case MultinameKind:  hasName = hasNSSet = true;
+            break;
             
           case MultinameLAKind: isAttribute = true;
-          case MultinameLKind:  hasNSSet = true; break;
+          case MultinameLKind:  hasNSSet = true;
+            break;
             
           case InvalidKind: break;
         }
       }
       
       bool operator ==(const Multiname &rhs) const {
-        if(hasName  != rhs.hasName ||
-           hasNS    != rhs.hasNS   ||
-           hasNSSet != rhs.hasNSSet) return false;
-        return (hasName && name == rhs.name) && (hasNS && *ns == *rhs.ns) && (hasNSSet && *nsSet == *rhs.nsSet);
+        if(hasName  != rhs.hasName  ||
+           hasNS    != rhs.hasNS    ||
+           hasNSSet != rhs.hasNSSet ||
+           isAttribute != rhs.isAttribute) return false;
+        return !((hasName && name != rhs.name) || (hasNS && *ns != *rhs.ns) || (hasNSSet && *nsSet != *rhs.nsSet));
       }
       
       void setName(std::string name) {
