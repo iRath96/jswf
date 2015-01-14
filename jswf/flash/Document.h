@@ -26,18 +26,19 @@
 namespace jswf {
   namespace flash {
     /**
-     * Parses and represents a `SWF file`.
+     * Parses and represents a <tt>SWF file</tt>.
      * @todo Document::tags and Sprite::tags ? Somewhat redundant.
+     * @see ITagForDocument
      */
     class Document {
     protected:
       Reader reader; //!< The flash::Reader used by this document.
     public:
-      Header header; //!< The `HEADER` record for this document.
+      Header header; //!< The <tt>HEADER</tt> record for this document.
       avm2::VM avm2;
       
-      std::vector<std::shared_ptr<tags::Tag>> tags; //!< A `vector` of `shared_ptr`s to the tags this document contains.
-      std::map<uint16_t, std::shared_ptr<Character>> dictionary; //!< The `DICTIONARY` of this document.
+      std::vector<std::shared_ptr<tags::Tag>> tags; //!< A <tt>vector</tt> of <tt>shared_ptr</tt>s to the tags this document contains.
+      std::map<uint16_t, std::shared_ptr<Character>> dictionary; //!< The <tt>DICTIONARY</tt> of this document.
       
       Sprite *rootSprite; //!< \todo This is the main_timeline object! It can also be transformed!
       

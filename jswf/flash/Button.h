@@ -15,7 +15,7 @@
 namespace jswf {
   namespace flash {
     /**
-     * Represents a `BUTTON` character.
+     * Represents a <tt>BUTTON</tt> character.
      */
     class Button : public Character {
     public:

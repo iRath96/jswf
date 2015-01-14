@@ -17,7 +17,7 @@ namespace jswf {
   namespace flash {
     namespace tags {
       /**
-       * Represents `FileAttribute` tags.
+       * Represents <tt>FileAttribute</tt> tags.
        */
       class FileAttributesTag : public TagWithReader {
       public:

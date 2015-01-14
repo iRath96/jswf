@@ -266,7 +266,7 @@ namespace jswf {
       };
       
       /**
-       * Describes a local register (`this`, arguments and local variables).
+       * Describes a local register (<tt>this</tt>, arguments and local variables).
        */
       class LocalNode : public Node {
       public:
@@ -324,7 +324,7 @@ namespace jswf {
       
       /**
        * Describes a declaration of a local variable.
-       * @todo This should be `DeclarationNode`
+       * @todo This should be <tt>DeclarationNode</tt>
        */
       class DefinitionNode : public Node {
       public:
@@ -366,7 +366,7 @@ namespace jswf {
       };
       
       /**
-       * Describes a `with` statement.
+       * Describes a <tt>with</tt> statement.
        */
       class WithNode : public CompoundNode {
       public:

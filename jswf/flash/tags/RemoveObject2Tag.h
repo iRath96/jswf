@@ -15,8 +15,8 @@ namespace jswf {
   namespace flash {
     namespace tags {
       /**
-       * Used to remove a `Character` at a given depth from the `DisplayList`.
-       * @todo Implement `RemoveObject`
+       * Used to remove a <tt>Character</tt> at a given depth from the <tt>DisplayList</tt>.
+       * @todo Implement <tt>RemoveObject</tt>
        */
       class RemoveObject2Tag : public TagWithReader, public ITagForSprite {
       public:

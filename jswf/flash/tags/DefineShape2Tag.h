@@ -15,8 +15,8 @@ namespace jswf {
   namespace flash {
     namespace tags {
       /**
-       * Extends \ref DefineShapeTag with support for
-       * up to 65534 (0xfffe) elements for `FillStyleArray` and `LineStyleArray`.
+       * Extends DefineShapeTag with support for
+       * up to 65534 (0xfffe) elements for <tt>FillStyleArray</tt> and <tt>LineStyleArray</tt>.
        */
       class DefineShape2Tag : public DefineShapeTag {
       protected:

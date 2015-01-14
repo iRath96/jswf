@@ -15,7 +15,7 @@ namespace jswf {
   namespace flash {
     namespace tags {
       /**
-       * Interface for `TAG`s that implement actions to be performed on \ref Sprite "Sprites".
+       * Interface for <tt>TAG</tt>s that implement actions to be performed on instances of Sprite.
        */
       class ITagForSprite {
       public:

@@ -34,8 +34,8 @@ namespace jswf {
       std::string readString(size_t);
       
       /**
-       * Adds an offset to the current reading position, does not change `bitPos`.
-       * @param [in] offset The offset to add to `pos`, can be negative.
+       * Adds an offset to the current reading position, does not change <tt>bitPos</tt>.
+       * @param [in] offset The offset to add to <tt>pos</tt>, can be negative.
        */
       void seek(int offset) {
         pos += offset;

@@ -10,7 +10,7 @@
 #define jswf_DefineButtonTag_h
 
 #include "TagWithReader.h"
-#include "ITagWithCharacter.h"
+#include "TagWithCharacter.h"
 
 #include "Button.h"
 #include "Frame.h"
@@ -22,13 +22,13 @@ namespace jswf {
   namespace flash {
     namespace tags {
       /**
-       * Parses a `BUTTON` record that is to be added to the document's `DICTIONARY`.
+       * Parses a <tt>BUTTON</tt> record that is to be added to the document's <tt>DICTIONARY</tt>.
        */
-      class DefineButtonTag : public TagWithReader, public ITagWithCharacter {
+      class DefineButtonTag : public TagWithReader, public TagWithCharacter {
       protected:
         /**
-         * Reads a 'BUTTONRECORD'. The changes to the frame are applied to \ref button .
-         * @return 'true' if further records follow, 'false' if this was the last record.
+         * Reads a 'BUTTONRECORD'. The changes to the frame are applied to button.
+         * @return <tt>true</tt> if further records follow, <tt>false</tt> if this was the last record.
          * @throw (TODO) if the reserved field was non-zero.
          * @see read
          */
@@ -75,7 +75,7 @@ namespace jswf {
         virtual void readBetween() {} // TODO:2014-12-15:alex:Find a better name.
         
         /**
-         * Instantiates \ref button and parses the payload.
+         * Instantiates button and parses the payload.
          * @see readBetween
          * @see readButtonRecord
          */

@@ -33,8 +33,8 @@ namespace jswf {
       virtual string readString() = 0; //!< Reads a NUL-terminated string (C-string)
       virtual string readString(size_t length) = 0; //!< Reads a string of a given length
       
-      virtual ub_t readUB(uint8_t nbits) = 0; //!< Reads a unsigned bit-field of length `nbits`
-      virtual sb_t readSB(uint8_t nbits); //!< Reads a signed bit-field of length `nbits`, sign-extends to fill `sb_t`
+      virtual ub_t readUB(uint8_t nbits) = 0; //!< Reads a unsigned bit-field of length <tt>nbits</tt>
+      virtual sb_t readSB(uint8_t nbits); //!< Reads a signed bit-field of length <tt>nbits</tt>, sign-extends to fill <tt>sb_t</tt>
       virtual fb_t readFB(uint8_t nbits) { return (fb_t)(readSB(nbits)) / (1 << 16); } //!< Reads a FIXED8.8
       
       virtual void align(uint8_t bytes) = 0; //!< Aligns the reader to a multiple of 'bytes', resets bit-position

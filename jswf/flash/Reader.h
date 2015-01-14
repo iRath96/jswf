@@ -29,60 +29,60 @@ namespace jswf {
      */
     class Reader {
     public:
-      std::shared_ptr<jswf::io::GenericReader> reader; //!< A `shared_ptr` to the \ref io::GenericReader we read from.
+      std::shared_ptr<jswf::io::GenericReader> reader; //!< A <tt>shared_ptr</tt> to the io::GenericReader we read from.
       
       /**
-       * Create a \ref Reader using a `shared_ptr` to a \ref io::GenericReader.
+       * Create a Reader using a <tt>shared_ptr</tt> to a io::GenericReader.
        */
       Reader(std::shared_ptr<jswf::io::GenericReader> r) { reader = r; }
       
       /**
-       * Reads a `HEADER` record.
+       * Reads a <tt>HEADER</tt> record.
        * @param [out] header A reference to the structure to read into.
        */
       void readHeader(Header &header);
       
       /**
-       * Reads a `TAG` record.
-       * @return A pointer to a newly allocated tag object (polymorphistic to \ref Tag)
+       * Reads a <tt>TAG</tt> record.
+       * @return A pointer to a newly allocated tag object (polymorphistic to Tag)
        */
       tags::Tag *readTag();
       
       /**
-       * Reads a `RECT` record.
+       * Reads a <tt>RECT</tt> record.
        * @param [out] rect A reference to the structure to read into.
        */
       void readRect(Rect &rect);
       
       /**
-       * Reads a `MATRIX` record.
+       * Reads a <tt>MATRIX</tt> record.
        * @param [out] matrix A reference to the structure to read into.
        */
       void readMatrix(Matrix &matrix);
       
       /**
-       * Reads a `CXFORM` / `CXFORMWITHALPHA` record.
+       * Reads a <tt>CXFORM</tt> / <tt>CXFORMWITHALPHA</tt> record.
        * @param [out] colorTransform A reference to the structure to read into.
-       * @param [in] withAlpha `true` if a `CXFORMWITHALPHA` should be read, `false` if a `CXFORM` should be read.
+       * @param [in] withAlpha <tt>true</tt> if a <tt>CXFORMWITHALPHA</tt> should be read, <tt>false</tt> if a <tt>CXFORM</tt> should be read.
        */
       void readColorTransform(ColorTransform &colorTransform, bool withAlpha);
       
       // Colors
       
       /**
-       * Reads a `RGB` record.
+       * Reads a <tt>RGB</tt> record.
        * @param [out] rgba A reference to the structure to read into.
        */
       void readRGB(RGBA &rgba);
       
       /**
-       * Reads a `RGBA` record.
+       * Reads a <tt>RGBA</tt> record.
        * @param [out] rgba A reference to the structure to read into.
        */
       void readRGBA(RGBA &rgba);
       
       /**
-       * Reads a `ARGB` record.
+       * Reads a <tt>ARGB</tt> record.
        * @param [out] rgba A reference to the structure to read into.
        */
       void readARGB(RGBA &rgba);

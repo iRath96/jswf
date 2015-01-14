@@ -10,7 +10,7 @@
 #define __jswf__DefineSpriteTag__
 
 #include "TagWithReader.h"
-#include "ITagWithCharacter.h"
+#include "TagWithCharacter.h"
 
 #include "ITagForSprite.h"
 #include "EndTag.h"
@@ -21,9 +21,9 @@ namespace jswf {
   namespace flash {
     namespace tags {
       /**
-       * Parses a `SPRITE` record that is to be added to the document's `DICTIONARY`.
+       * Parses a <tt>SPRITE</tt> record that is to be added to the document's <tt>DICTIONARY</tt>.
        */
-      class DefineSpriteTag : public TagWithReader, public ITagWithCharacter {
+      class DefineSpriteTag : public TagWithReader, public TagWithCharacter {
       public:
         Sprite *sprite;
         DefineSpriteTag(tag_type_t t, std::string &p) : TagWithReader(t, p) {

@@ -30,7 +30,7 @@ namespace jswf {
     };
     
     /**
-     * Represents `RECT` records.
+     * Represents <tt>RECT</tt> records.
      */
     struct Rect {
       sb_t x0, //!< The low x-coordinate.
@@ -40,7 +40,7 @@ namespace jswf {
     };
     
     /**
-     * Represents `RGB`, `RGBA` and `ARGB` color records.
+     * Represents <tt>RGB</tt>, <tt>RGBA</tt> and <tt>ARGB</tt> color records.
      */
     struct RGBA {
       uint8_t r, //!< Red channel.
@@ -50,9 +50,9 @@ namespace jswf {
     };
     
     /**
-     * Represents `CXFORM` and `CXFORMWITHALPHA` records.
+     * Represents <tt>CXFORM</tt> and <tt>CXFORMWITHALPHA</tt> records.
      * For each channel \f$v\f$ from \f${r,g,b,a}\f$, the transformed value \f$v'\f$ can be computed as follows:\n
-     * \f$v' = max(0, min((v * vM / 256) + vA, 255))\f$
+     * \f$v' = max(0, min((v \cdot vM \cdot \frac{1}{256}) + vA, 255))\f$
      */
     struct ColorTransform {
       // r,g,b,a = color channels
@@ -65,9 +65,9 @@ namespace jswf {
     };
     
     /**
-     * Represents `MATRIX` records.
-     * \f$x' = x * sx + y * r1 + tx\f$\n
-     * \f$y' = y * sy + x * r0 + ty\f$
+     * Represents <tt>MATRIX</tt> records.
+     * \f$x' = x \cdot sx + y \cdot r1 + tx\f$\n
+     * \f$y' = y \cdot sy + x \cdot r0 + ty\f$
      * @todo These structures are in the wrong file.
      */
     struct Matrix {
@@ -77,7 +77,7 @@ namespace jswf {
     };
     
     /**
-     * Represents the `HEADER` record.
+     * Represents the <tt>HEADER</tt> record.
      */
     struct Header {
     public:
@@ -86,7 +86,7 @@ namespace jswf {
       uint32_t fileSize; //!< The total file size (including header) after decompression.
       uint16_t frameRate, //!< The frame rate of this file in 1/256 FPS
                frameCount; //!< The count of frames for the main timeline
-      Rect rect; //!< The dimensions of the file in `twips`
+      Rect rect; //!< The dimensions of the file in <tt>twips</tt>
     };
   }
 }

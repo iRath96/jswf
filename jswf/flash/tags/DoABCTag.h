@@ -17,7 +17,7 @@ namespace jswf {
   namespace flash {
     namespace tags {
       /**
-       * Carries an `ABCFile` to be executed by the \ref avm2::VM .
+       * Carries an <tt>avm2::ABCFile</tt> to be executed by the avm2::VM.
        */
       class DoABCTag : public TagWithReader, public ITagForDocument {
       public:

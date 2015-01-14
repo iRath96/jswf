@@ -19,20 +19,20 @@ namespace jswf {
   namespace avm2 {
     struct TraitInfo {
       /**
-       * Describes kinds of \ref TraitInfo .
+       * Describes kinds of TraitInfo .
        */
       enum Kind : u8_t {
-        SlotKind     = 0, //!< Member definition, use \ref SlotTraitInfo
-        MethodKind   = 1, //!< Method definition, use \ref MethodTraitInfo
-        GetterKind   = 2, //!< Getter definition, use \ref MethodTraitInfo
-        SetterKind   = 3, //!< Setter definition, use \ref MethodTraitInfo
-        ClassKind    = 4, //!< Class definition, use \ref ClassTraitInfo
-        FunctionKind = 5, //!< Function definition, use \ref FunctionTraitInfo
-        ConstKind    = 6  //!< Constant member definition, use \ref SlotTraitInfo
+        SlotKind     = 0, //!< Member definition, use SlotTraitInfo
+        MethodKind   = 1, //!< Method definition, use MethodTraitInfo
+        GetterKind   = 2, //!< Getter definition, use MethodTraitInfo
+        SetterKind   = 3, //!< Setter definition, use MethodTraitInfo
+        ClassKind    = 4, //!< Class definition, use ClassTraitInfo
+        FunctionKind = 5, //!< Function definition, use FunctionTraitInfo
+        ConstKind    = 6  //!< Constant member definition, use SlotTraitInfo
       };
       
       /**
-       * Describes attributes of \ref TraitInfo .
+       * Describes attributes of TraitInfo .
        */
       enum Attributes : u8_t {
         FinalAttribute    = 0x1,

@@ -6,6 +6,11 @@
 //  Copyright (c) 2014 Alexander Rath. All rights reserved.
 //
 
+/**
+ * @file
+ * Defines jswf::flash::tags::Tag
+ */
+
 #ifndef __jswf__GenericTag__
 #define __jswf__GenericTag__
 
@@ -19,7 +24,7 @@ namespace jswf {
       typedef uint16_t tag_type_t;
       
       /**
-       * Serves as super-class for all `TAG`s.
+       * Serves as super-class for all <tt>TAG</tt>s.
        */
       class Tag {
       public:

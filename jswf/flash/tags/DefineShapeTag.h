@@ -10,7 +10,7 @@
 #define jswf_DefineShapeTag_h
 
 #include "TagWithReader.h"
-#include "ITagWithCharacter.h"
+#include "TagWithCharacter.h"
 
 #include "Shape.h"
 
@@ -21,9 +21,9 @@ namespace jswf {
   namespace flash {
     namespace tags {
       /**
-       * Parses a `SHAPE` record that is to be added to the document's `DICTIONARY`.
+       * Parses a <tt>SHAPE</tt> record that is to be added to the document's <tt>DICTIONARY</tt>.
        */
-      class DefineShapeTag : public TagWithReader, public ITagWithCharacter {
+      class DefineShapeTag : public TagWithReader, public TagWithCharacter {
       protected:
         std::vector<styles::FillStylePtr> fillStyles; //!< FillStyleArray used for drawing operations.
         std::vector<styles::LineStylePtr> lineStyles; //!< LineStyleArray used for drawing operations.
@@ -91,11 +91,11 @@ namespace jswf {
         void readEdgeRecord();
         
         /**
-         * Reads a `SHAPERECORD`, the actions of which are projected on our shape.
-         * @param [in,out] fbits,lbits nbits for `FillStyle` and `LineStyle`, changed upon `StateNewStyles`
-         * @return Whether other records follow after this record (false means this was the last record)
-         * @throws std::out_of_range Thrown if a `FillStyle` or `LineStyle` is referenced that does not exist
-         *         (i. e. if the `SHAPRECORD` is invalid).
+         * Reads a <tt>SHAPERECORD</tt>, the actions of which are projected on our shape.
+         * @param [in,out] fbits,lbits nbits for <tt>FillStyle</tt> and <tt>LineStyle</tt>, changed upon <tt>StateNewStyles</tt>
+         * @return Whether other records follow after this record (<tt>false</tt> means this was the last record)
+         * @throws std::out_of_range Thrown if a <tt>FillStyle</tt> or <tt>LineStyle</tt> is referenced that does not exist
+         *         (i. e. if the <tt>SHAPRECORD</tt> is invalid).
          * @see Shape
          */
         bool readShapeRecord(uint8_t &fbits, uint8_t &lbits);
@@ -143,7 +143,7 @@ namespace jswf {
         
         /**
          * Constructs a DefineShapeTag without parsing the payload.
-         * Used by subclasses so they can call \ref read with the polymorphistic \ref readBetween .
+         * Used by subclasses so they can call read with the polymorphistic readBetween.
          * @param [in] bool ignored
          */
         DefineShapeTag(tag_type_t t, std::string &p, bool) : TagWithReader(t, p) {}

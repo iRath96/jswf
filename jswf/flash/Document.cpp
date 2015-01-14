@@ -12,7 +12,7 @@
 
 #include "EndTag.h"
 
-#include "ITagWithCharacter.h"
+#include "TagWithCharacter.h"
 
 using namespace jswf::flash;
 
@@ -32,7 +32,7 @@ void Document::read() {
     if(dynamic_cast<tags::ITagForSprite *>(tag))
       (dynamic_cast<tags::ITagForSprite *>(tag))->applyToSprite(*rootSprite);
     
-    if(dynamic_cast<tags::ITagWithCharacter *>(tag)) // TODO:2014-12-30:alex:This is a dirty hack.
-      (dynamic_cast<tags::ITagWithCharacter *>(tag))->character->avm2Class = avm2.getClassByName("flash.display.MovieClip");
+    if(dynamic_cast<tags::TagWithCharacter *>(tag)) // TODO:2014-12-30:alex:This is a dirty hack.
+      (dynamic_cast<tags::TagWithCharacter *>(tag))->character->avm2Class = avm2.getClassByName("flash.display.MovieClip");
   }
 }

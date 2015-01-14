@@ -17,7 +17,7 @@
 namespace jswf {
   namespace flash {
     /**
-     * Provides methods to create a polymorphistic \ref Tag by a given type identifier.
+     * Provides methods to create a polymorphistic Tag by a given type identifier.
      */
     class TagFactory {
     public:

@@ -23,8 +23,8 @@
 namespace jswf {
   namespace flash {
     /**
-     * Represents a segment as drawn by a `SHAPEWITHSTYLE` record `line`/`qline` action.
-     * @todo Use \ref Point "Points" for the coordinates.
+     * Represents a segment as drawn by a <tt>SHAPEWITHSTYLE</tt> record <tt>line</tt>/<tt>qline</tt> action.
+     * @todo Use instances of Point for the coordinates.
      */
     struct Segment {
       sb_t x0, y0;
@@ -44,14 +44,14 @@ namespace jswf {
       sb_t x, //!< The x-coordinate
            y; //!< The y-coordinate
       
-      //! Tests two \ref Point "Points" for equality.
+      //! Tests two instances of Point for equality.
       bool operator ==(const Point &rhs) { return x == rhs.x && y == rhs.y; };
-      //! Tests two \ref Point "Points" for inequality.
+      //! Tests two instances of Point for inequality.
       bool operator !=(const Point &rhs) { return x != rhs.x || y != rhs.y; };
     };
     
     /**
-     * Represents an edge between two \ref Point "Points" .
+     * Represents an edge between two instances of Point.
      */
     struct Edge {
       Point a, //!< Starting point of the edge
@@ -59,14 +59,14 @@ namespace jswf {
     };
     
     /**
-     * Represents a collection of \ref Edge "Edges" that form a closed polygon.
+     * Represents a collection of instances of Edge that form a closed polygon.
      */
     struct Polygon {
-      std::vector<Edge> edges; //!< The `vector` of \ref Edge "Edges"
+      std::vector<Edge> edges; //!< The <tt>vector</tt> of instances of Edge.
     };
     
     /**
-     * Represents a `SHAPE` character.
+     * Represents a <tt>SHAPE</tt> character.
      */
     class Shape : public Character {
       sb_t x = 0, y = 0; // current drawing position

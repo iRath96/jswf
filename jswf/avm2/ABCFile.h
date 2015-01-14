@@ -77,17 +77,17 @@ namespace jswf {
       NamespacePtr protectedNs;
       std::vector<MultinamePtr> interfaces;
       
-      MethodInfo *initializer; // known as `iinit`
+      MethodInfo *initializer; // known as <tt>iinit</tt>
       std::vector<std::shared_ptr<TraitInfo>> traits;
     };
     
     struct ClassInfo {
-      MethodInfo *initializer; // known as `cinit`
+      MethodInfo *initializer; // known as <tt>cinit</tt>
       std::vector<std::shared_ptr<TraitInfo>> traits;
     };
     
     struct ScriptInfo {
-      MethodInfo *initializer; // known as `init`
+      MethodInfo *initializer; // known as <tt>init</tt>
       std::vector<std::shared_ptr<TraitInfo>> traits;
     };
     

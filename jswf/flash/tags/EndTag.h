@@ -15,7 +15,7 @@ namespace jswf {
   namespace flash {
     namespace tags {
       /**
-       * Marks the end of a tag array and thereby the end of a \ref Document or \ref Sprite.
+       * Marks the end of a tag array and thereby the end of a Document or Sprite.
        * @see flash::Document
        * @see flash::tags::DefineSpriteTag
        */

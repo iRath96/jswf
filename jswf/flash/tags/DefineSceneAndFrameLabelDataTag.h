@@ -34,12 +34,12 @@ namespace jswf {
     
     namespace tags {
       /**
-       * Carries `Scene`s and `FrameLabel`s.
+       * Carries instances of Scene and instances of FrameLabel.
        */
       class DefineSceneAndFrameLabelDataTag : public TagWithReader {
       public:
-        std::vector<Scene> scenes; //!< The \ref Scene "scenes" that are described by this tag.
-        std::vector<FrameLabel> frameLabels; //!< The \ref FrameLabel "frame labels" that are described by this tag.
+        std::vector<Scene> scenes; //!< The instances of Scene that are described by this tag.
+        std::vector<FrameLabel> frameLabels; //!< The instances of FrameLabel that are described by this tag.
         
         DefineSceneAndFrameLabelDataTag(tag_type_t t, std::string &p) : TagWithReader(t, p) {
           __read_array(scene, scenes, reader->readVU32(), {

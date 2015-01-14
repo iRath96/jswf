@@ -2,7 +2,7 @@
 namespace jswf {
   //! Contains structures and classes described by the SWF specfication.
   namespace flash {
-    //! Contains classes that describe \ref Tag "\c TAG"s
+    //! Contains classes that describe instances of <tt>TAG</tt>.
     namespace tags {}
     
     //! Contains classes that describe line- and fill-styles.

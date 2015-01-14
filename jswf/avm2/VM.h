@@ -178,7 +178,7 @@ namespace jswf {
       
       virtual ObjectPtr coerce(Class *newKlass, const ObjectPtr &recv) {
         // TODO:2015-01-01:alex:Implement this!
-        klass = newKlass; // `coerce Function` will actually make a `builtin.as$0::MethodClosure` a `Function`.
+        klass = newKlass; // <tt>coerce Function</tt> will actually make a <tt>builtin.as$0::MethodClosure</tt> a <tt>Function</tt>.
         return recv;
       }
       
@@ -209,7 +209,7 @@ namespace jswf {
     builtin_method_t builtin_addEventListener;
     
     /**
-     * Represents a `function() {}` that was created using `newfunction`.
+     * Represents a <tt>function() {}</tt> that was created using <tt>newfunction</tt>.
      */
     class FunctionObject : public Object {
     public:
@@ -225,7 +225,7 @@ namespace jswf {
     
     /**
      * Represents a method that was created as a trait of an instance or a class.
-     * Note that executing `[[Call]]` on a \ref MethodObject will always override the
+     * Note that executing <tt>[[Call]]</tt> on a MethodObject will always override the
      * implicit (receiver) argument.
      */
     class MethodObject : public Object {
@@ -769,7 +769,7 @@ namespace jswf {
                 bc_comment("call[" + std::to_string(argCount) + "]");
                 
                 std::vector<ObjectPtr> args;
-                for(uint32_t i = 0; i <= argCount; ++i) // `<=` because we read one more: receiver (arg0 = `this`)
+                for(uint32_t i = 0; i <= argCount; ++i) // <tt><=</tt> because we read one more: receiver (arg0 = <tt>this</tt>)
                   args.insert(args.begin(), __pop);
                 
                 ObjectPtr method = __pop;
@@ -788,7 +788,7 @@ namespace jswf {
                 for(uint32_t i = 0; i < argCount; ++i) args.insert(args.begin(), __pop);
                 
                 ObjectPtr object = __pop;
-                args.insert(args.begin(), object); // arg0 = `this`
+                args.insert(args.begin(), object); // arg0 = <tt>this</tt>
                 
                 ObjectPtr method = object->getProperty(multiname);
                 ObjectPtr ret = method->ecmaCall(*this, args);

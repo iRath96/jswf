@@ -15,7 +15,7 @@ namespace jswf {
   namespace flash {
     namespace tags {
       /**
-       * Interface for `TAG`s that implement actions to be performed on the Document.
+       * Interface for <tt>TAG</tt>s that implement actions to be performed on the Document.
        */
       class ITagForDocument {
       public:

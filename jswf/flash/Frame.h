@@ -23,9 +23,9 @@ namespace jswf {
   namespace flash {
     /**
      * @todo Should structures implement read/write themselves?
-     * @todo This structure is wrong. `usePreviousMatrix` can be replaced with a `getProperty`-test on
-     *       our `avm2Object` with a fallback to `matrix`.
-     *       Also, `avm2Object` will not properly work in nested environments (tree structures).
+     * @todo This structure is wrong. <tt>usePreviousMatrix</tt> can be replaced with a <tt>getProperty</tt>-test on
+     *       our <tt>avm2Object</tt> with a fallback to <tt>matrix</tt>.
+     *       Also, <tt>avm2Object</tt> will not properly work in nested environments (tree structures).
      *       Same thing with modifications by AVM2 (adding/removing DisplayObjects).
      */
     struct DisplayListEntry {
@@ -34,7 +34,7 @@ namespace jswf {
       avm2::ObjectPtr avm2Object = NULL;
       avm2::ObjectPtr onEnterFrame = NULL;
       
-      bool usePreviousMatrix = false; //!< Set to `true` if \ref matrix was altered by a script and has to be kept.
+      bool usePreviousMatrix = false; //!< Set to <tt>true</tt> if matrix was altered by a script and has to be kept.
       
       bool doesClip = false;
       uint16_t clipDepth;

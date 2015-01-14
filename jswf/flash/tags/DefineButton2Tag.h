@@ -15,7 +15,7 @@ namespace jswf {
   namespace flash {
     namespace tags {
       /**
-       * Extends \ref DefineButtonTag with support for `TrackAsMenu`.
+       * Extends DefineButtonTag with support for <tt>TrackAsMenu</tt>.
        * @todo "by allowing any state transition to trigger actions."... what?
        */
       class DefineButton2Tag : public DefineButtonTag {

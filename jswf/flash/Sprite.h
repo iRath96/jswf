@@ -18,7 +18,8 @@
 namespace jswf {
   namespace flash {
     /**
-     * Represents a `SPRITE` character.
+     * Represents a <tt>SPRITE</tt> character.
+     * @see ITagForSprite
      */
     class Sprite : public Character {
       // Note: This property should be protected, but since "Friendship is neither inherited nor transitive."

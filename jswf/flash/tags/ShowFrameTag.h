@@ -16,7 +16,7 @@ namespace jswf {
   namespace flash {
     namespace tags {
       /**
-       * Finalizes the current temporary frame and adds it to the `frames` of a \ref Document or \ref Sprite .
+       * Finalizes the current temporary frame and adds it to the <tt>frames</tt> of a Document or Sprite .
        * @todo Also some kind of Frame-modification super-class, but requires more parameters.
        */
       class ShowFrameTag : public Tag, public ITagForSprite {

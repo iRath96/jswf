@@ -19,28 +19,29 @@ namespace jswf {
   namespace flash {
     namespace tags {
       /**
-       * Used to add a `Character` to the `DisplayList` or to modify an existing `Character` in the `DisplayList`
-       * @todo Implement `PlaceObject`
-       * @todo Create a super-class for `TAG`s that modify the display list.
+       * Used to add a <tt>Character</tt> to the <tt>DisplayList</tt> or to modify an existing
+       * <tt>Character</tt> in the <tt>DisplayList</tt>
+       * @todo Implement <tt>PlaceObject</tt>
+       * @todo Create a super-class for instances of <tt>TAG</tt> that modify the display list.
        */
       class PlaceObject2Tag : public TagWithReader, public ITagForSprite {
       public:
-        bool hasClipActions,    //!< Whether `AVM` actions for clip events are specified
-             hasClipDepth,      //!< Whether the `Character` is used as mask layer
+        bool hasClipActions,    //!< Whether <tt>AVM</tt> actions for clip events are specified
+             hasClipDepth,      //!< Whether the <tt>Character</tt> is used as mask layer
              hasName,           //!< Whether an instance name for the character is specified
              hasRatio,          //!< Whether a morph-ratio is specified
-             hasColorTransform, //!< Whether a \ref ColorTransform "\c CXFORMALPHA " is specified
-             hasMatrix,         //!< Whether a \ref Matrix "\c MATRIX " for transformation is specified
-             hasCharacter,      //!< Whether a new `Character` is given, otherwise an existing `Character` is modified
+             hasColorTransform, //!< Whether a <tt>CXFORMALPHA</tt> ColorTransform is specified
+             hasMatrix,         //!< Whether a <tt>MATRIX</tt> for transformation is specified
+             hasCharacter,      //!< Whether a new <tt>Character</tt> is given, otherwise an existing <tt>Character</tt> is modified
              doesMove;          //!< This field is apparently useless, we read it nevertheless.
-        uint16_t depth; //!< The depth in the `displayList` to operate on.
+        uint16_t depth; //!< The depth in the <tt>displayList</tt> to operate on.
         
-        uint16_t characterId; //!< A \ref Document::dictionary "\c DICTIONARY "-identifier if \ref hasCharacter is set.
-        Matrix matrix;        //!< A \ref Matrix "\c MATRIX " record for transformation if \ref hasMatrix is set.
-        uint16_t ratio;       //!< A morph-ratio if \ref hasRatio is set.
-        std::string name;     //!< A string if \ref hasName is set.
-        uint16_t clipDepth;   //!< The depth up to which this masks if \ref hasClipDepth is set.
-        ColorTransform colorTransform; //!< A \ref ColorTransform "\c CXFORMWITHALPHA " if \ref hasColorTransform is set.
+        uint16_t characterId; //!< A <tt>DICTIONARY</tt>-identifier if hasCharacter is set. \see Document::dictionary
+        Matrix matrix;        //!< A <tt>MATRIX</tt> record for transformation if hasMatrix is set.
+        uint16_t ratio;       //!< A morph-ratio if hasRatio is set.
+        std::string name;     //!< A string if hasName is set.
+        uint16_t clipDepth;   //!< The depth up to which this masks if hasClipDepth is set.
+        ColorTransform colorTransform; //!< A <tt>CXFORMWITHALPHA</tt> ColorTransform if hasColorTransform is set.
         
         /**
          * Applies the changes as described by this tag to the displayList of a given frame.
@@ -62,7 +63,7 @@ namespace jswf {
         }
         
         /**
-         * Constructs the `TAG` and parses the payload.
+         * Constructs the <tt>TAG</tt> and parses the payload.
          */
         PlaceObject2Tag(tag_type_t t, std::string &p) : TagWithReader(t, p) {
           hasClipActions = reader->readUB(1);

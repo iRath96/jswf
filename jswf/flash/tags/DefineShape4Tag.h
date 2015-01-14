@@ -15,7 +15,7 @@ namespace jswf {
   namespace flash {
     namespace tags {
       /**
-       * Extends \ref DefineShape3Tag with support for `LINESTYLE2`.
+       * Extends DefineShape3Tag with support for <tt>LINESTYLE2</tt>.
        */
       class DefineShape4Tag : public DefineShape3Tag {
         virtual styles::LineStyle *readLineStyle() {

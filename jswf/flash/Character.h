@@ -19,7 +19,7 @@ namespace jswf {
   
   namespace flash {
     /**
-     * Represents a character for the document's `DICTIONARY`.
+     * Represents a character for the document's <tt>DICTIONARY</tt>.
      */
     class Character {
     public:
