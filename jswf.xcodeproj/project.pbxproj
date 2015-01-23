@@ -30,6 +30,7 @@
 		FAACBCDA1A3DE1CE00D5F9F5 /* PlaceObject2Tag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAACBCD81A3DE1CE00D5F9F5 /* PlaceObject2Tag.cpp */; };
 		FAC913AC1A4C1B700056AAB8 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAC913AA1A4C1B700056AAB8 /* Button.cpp */; };
 		FAD922851A3F3EDF00D92EDD /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD922841A3F3EDF00D92EDD /* OpenGL.framework */; };
+		FADCAF561A72E1200023E250 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADCAF551A72E1200023E250 /* Node.cpp */; };
 		FAF1B1111A3DF469007BBA1E /* Frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAF1B10F1A3DF469007BBA1E /* Frame.cpp */; };
 		FAF1B1151A3DF8A7007BBA1E /* Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAF1B1131A3DF8A7007BBA1E /* Render.cpp */; };
 		FAF1B1181A3E0539007BBA1E /* DefineSpriteTag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAF1B1161A3E0539007BBA1E /* DefineSpriteTag.cpp */; };
@@ -181,6 +182,7 @@
 		FAD2C16A1A51B9C600D460C6 /* ConstantKind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConstantKind.h; sourceTree = "<group>"; };
 		FAD2C16B1A51BA1400D460C6 /* MethodInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MethodInfo.h; sourceTree = "<group>"; };
 		FAD922841A3F3EDF00D92EDD /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenGL.framework; sourceTree = "<group>"; };
+		FADCAF551A72E1200023E250 /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
 		FAF1B10F1A3DF469007BBA1E /* Frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Frame.cpp; sourceTree = "<group>"; };
 		FAF1B1101A3DF469007BBA1E /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Frame.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FAF1B1131A3DF8A7007BBA1E /* Render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Render.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -242,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				FA6D73F51A50A37000486BFA /* Node.h */,
+				FADCAF551A72E1200023E250 /* Node.cpp */,
 			);
 			name = "::ast";
 			path = ast;
@@ -754,6 +757,7 @@
 				FAACBCAF1A3BF13200D5F9F5 /* Reader.cpp in Sources */,
 				FA6D73FE1A50AA6F00486BFA /* Decompiler.cpp in Sources */,
 				FA6CA7E61A6E57BB005D7AB5 /* Verifier.cpp in Sources */,
+				FADCAF561A72E1200023E250 /* Node.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,13 +9,19 @@
 #ifndef jswf_Node_h
 #define jswf_Node_h
 
+#include "Multiname.h"
+#include "MethodInfo.h"
+
+#include <string>
+#include <vector>
+
 namespace jswf {
   namespace avm2 {
     namespace ast {
       /**
        * Serves as super-class for all nodes.
        */
-      class Node {
+      class Node : public std::enable_shared_from_this<Node> {
       public:
         int precedence;
         
@@ -23,11 +29,22 @@ namespace jswf {
         virtual ~Node() {};
         virtual std::string toString() = 0;
         
+        std::string coerce_s() { return toString(); }
+        Namespace coerce_ns() {
+          Namespace ns;
+          ns.kind = NamespaceKind::NormalNamespaceKind;
+          ns.name = toString();
+          return ns;
+        }
+        
         virtual std::string toIntendedString(int intend) {
           std::string pre = "";
           for(int i = 0; i < intend; ++i) pre += "  ";
           return pre + toString(); // TODO:2014-12-28:alex:Awkward solution.
         }
+        
+        std::shared_ptr<Node> getProperty(Multiname &mn);
+        std::shared_ptr<Node> setProperty(Multiname &mn, std::shared_ptr<Node> &value);
       };
       
       typedef std::shared_ptr<Node> NodePtr;
@@ -116,18 +133,11 @@ namespace jswf {
        */
       class PropNode : public Node {
       public:
-        NodePtr ns, name;
-        MultinamePtr multiname;
-        PropNode(MultinamePtr mn, NodePtr ns, NodePtr name) : multiname(mn), ns(ns), name(name), Node(0) {}
+        Multiname multiname;
+        PropNode(const Multiname &mn) : multiname(mn), Node(0) {}
         
         virtual std::string toString() {
-          std::string ns = "(namespace)"; // ???
-          std::string out = "";
-          if(multiname->hasName)
-            out = multiname->nameString();
-          else
-            out = "this[" + name->toString() + "]";
-          return out;
+          return multiname.nameString();
         }
       };
       
@@ -150,16 +160,11 @@ namespace jswf {
       class AttrNode : public PropNode {
       public:
         NodePtr obj;
-        AttrNode(NodePtr obj, MultinamePtr mn, NodePtr ns, NodePtr name) : obj(obj), PropNode(mn, ns, name) {}
+        AttrNode(NodePtr obj, const Multiname &mn) : obj(obj), PropNode(mn) {}
         
         virtual std::string toString() {
-          std::string ns = "(namespace)"; // ???
           std::string out = dynamic_cast<VoidNode *>(obj.get()) ? "" : wrap(obj);
-          
-          if(multiname->hasName)
-            out += (out.empty() ? "" : ".") + multiname->nameString();
-          else
-            out += std::string(out.empty() ? "#notsure" : "") + "[" + name->toString() + "]";
+          out += (out.empty() ? "" : ".") + multiname.nameString();
           return out;
         }
       };

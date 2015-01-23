@@ -16,6 +16,9 @@
 
 #include "StringReader.h"
 #include "Opcode.h"
+
+#include "Node.h"
+
 #include <string>
 #include <map>
 
@@ -41,7 +44,7 @@ namespace jswf {
     /**
      * Verifies bytecode.
      */
-    class Verifier {
+    class Verifier : public IConstantSource<ast::Node> {
     public:
       ABCFile *origin;
       io::StringReader bcReader;
@@ -49,10 +52,35 @@ namespace jswf {
       std::vector<Block *> blocks;
       ABCFile *file;
       
+      MethodInfo *minfo;
+      
+      ast::NodePtr getPoolConstant(ConstantKind::Enum kind, ABCFile *file, u30_t index) {
+        switch(kind) {
+          case ConstantKind::UTF8Kind: return std::make_shared<ast::StringNode>(file->constantPool.strings[index]);
+          default: return std::make_shared<ast::ConstantNode>("wtf:constant:" + std::to_string(index));
+        }
+      }
+      
+      ast::NodePtr getConstant(ConstantKind::Enum kind) {
+        switch(kind) {
+          case ConstantKind::TrueKind     : return std::make_shared<ast::ConstantNode>("true");
+          case ConstantKind::FalseKind    : return std::make_shared<ast::ConstantNode>("false");
+          case ConstantKind::NANKind      : return std::make_shared<ast::ConstantNode>("nan");
+          case ConstantKind::UndefinedKind: return std::make_shared<ast::ConstantNode>("undefined");
+          case ConstantKind::NullKind     : return std::make_shared<ast::ConstantNode>("null");
+          default: return std::make_shared<ast::ConstantNode>("wtf:constant");
+        }
+      }
+      
+      ast::NodePtr getImmediateConstant(ConstantKind::Enum kind, int32_t imm) {
+        return std::make_shared<ast::IntNode>(imm);
+      }
+      
       void analyzeBlock(Block &block);
       void analyzeStackUsage(Block &block);
       
       std::string disassembleBlock(Block &block);
+      void decompileBlock(Block &block);
       
       void verifyBytecode(const std::string bytecode) {
         bcReader = io::StringReader(bytecode);
@@ -74,6 +102,7 @@ namespace jswf {
         
         // output all blocks
         
+        // do some funky GraphViz!
         printf("digraph {\n");
         
         for(size_t i = 0, j = blocks.size(); i < j; ++i) {
@@ -82,6 +111,8 @@ namespace jswf {
           
           printf("  L%ld[shape=\"box\",label=\"L%ld (%d, %d to %d)\\n\\l", i, b.id, b.stackBalance, b.stackMin, b.stackMax);
           disassembleBlock(b);
+          printf("\n");
+          decompileBlock(b);
           printf("\"];\n");
           
           for(size_t ii = 0, jj = b.successors.size(); ii < jj; ++ii) {

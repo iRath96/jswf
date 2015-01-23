@@ -100,7 +100,17 @@ namespace jswf {
       
       int32_t immediateInt;
       
-      inline int totalStackPop() { return opcode.stackPop + argumentCount + (multiname.hasName ? 0 : 1) + (multiname.hasNS || multiname.hasNSSet ? 0 : 1); }
+      inline int totalStackPop(ABCFile *file) {
+        int total = opcode.stackPop;
+        if(opcode.flags & Opcode::HasArgumentCountFlag) total += argumentCount;
+        if(opcode.flags & Opcode::HasMultinameFlag) {
+          Multiname *mn = file->constantPool.multinames[multinameIndex].get();
+          total += (mn->hasName ? 0 : 1) + ((mn->hasNS || mn->hasNSSet) ? 0 : 1);
+        }
+        return total;
+      }
+      
+      inline int totalStackPush() { return opcode.stackPush; }
       
       std::string disassemble(ABCFile *file) {
         std::string dis = opcode.code == Opcode::op_invalid ? "op_" + std::to_string(code) : std::string(opcode.name);

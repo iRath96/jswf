@@ -10,6 +10,7 @@
 #define jswf_Multiname_h
 
 #include "types.h"
+#include "Namespace.h"
 
 namespace jswf {
   namespace avm2 {
