@@ -9,7 +9,7 @@
 #ifndef __jswf__ABCFile__
 #define __jswf__ABCFile__
 
-#include <vector>
+#include <set>
 #include <cmath>
 #include <stack>
 #include <map>
@@ -28,38 +28,54 @@
 namespace jswf {
   namespace avm2 {
     struct ConstantPool {
-      std::vector<s32_t> integers;
-      std::vector<u32_t> uintegers;
-      std::vector<d64_t> doubles;
-      std::vector<string> strings;
-      std::vector<NamespacePtr> namespaces;
-      std::vector<NamespaceSetPtr> namespaceSets;
-      std::vector<MultinamePtr> multinames;
+      /**
+       * Extends std::vector<T> to support set-like behavior.
+       * @note This is needed because the constant arrays must be indexable. (std::set would not support this)
+       */
+      template<typename T>
+      class SetU30 : public std::vector<T> {
+      public:
+        /**
+         * Return the index of an element, inserting the element if it is not yet contained in this set.
+         * @param [in] value The element to find / insert.
+         * @return The index of the element as U30
+         */
+        u30_t insert(const T &value) {
+          size_t i = 0, j = this->size();
+          
+          for(i = 0; i < j; ++i) if((*this)[i] == value)
+            return (u30_t)i; // already in the set
+          
+          // not yet in the set.
+          
+          this->resize(j+1);
+          (*this)[j] = value;
+          return (u30_t)j;
+        }
+      };
+      
+      SetU30<s32_t          > integers;
+      SetU30<u32_t          > uintegers;
+      SetU30<d64_t          > doubles;
+      SetU30<string         > strings;
+      SetU30<NamespacePtr   > namespaces;
+      SetU30<NamespaceSetPtr> namespaceSets;
+      SetU30<MultinamePtr   > multinames;
       
       ConstantPool() {
-        integers .resize(1); integers [0] = 0;
-        uintegers.resize(1); uintegers[0] = 0;
-        doubles  .resize(1); doubles  [0] = NAN;
-        strings  .resize(1); strings  [0] = "";
+        integers .insert(0);
+        uintegers.insert(0);
+        doubles  .insert(NAN);
+        strings  .insert("");
         
-        namespaces.resize(1);
-        namespaces[0] = std::make_shared<Namespace>();
-        namespaces[0]->kind = NamespaceKind::NormalNamespaceKind;
-        namespaces[0]->name = "";
+        NamespacePtr ns = std::make_shared<Namespace>();
+        ns->kind = NamespaceKind::NormalNamespaceKind;
+        ns->name = "";
+        namespaces.insert(ns);
         
-        multinames.resize(1);
         MultinamePtr any = std::make_shared<Multiname>(Multiname::RTQNameKind);
         any->name = "";
-        multinames[0] = any;
-      }
-      
-      u30_t indexDouble(double d) {
-        size_t i, j;
-        for(i = 0, j = doubles.size(); i < j; ++i) if(doubles[i] == d) return (u30_t)i;
-        doubles.resize(i+1);
-        doubles[i] = d;
-        
-        return (u30_t)i;
+        multinames.insert(any);
       }
     };
     
@@ -134,30 +150,23 @@ namespace jswf {
       ABCFile(std::shared_ptr<io::GenericReader> reader) : reader(reader) { read(); }
       ABCFile() {}
       
-      std::string makeString(std::string string, u30_t *iOut = NULL) {
-        size_t i = 0, j = constantPool.strings.size();
-        for(; i < j; ++i)
-          if(constantPool.strings[i] == string) {
-            if(iOut) *iOut = (u30_t)i;
-            return constantPool.strings[i];
-          }
-        
-        constantPool.strings.push_back(string);
-        if(iOut) *iOut = (u30_t)i;
-        return constantPool.strings[i];
+      std::string makeString(const std::string &string) {
+        constantPool.strings.insert(string);
+        return string;
       }
       
       NamespacePtr makeNamespace(std::string name, NamespaceKind::Enum kind) {
         NamespacePtr ns = std::make_shared<Namespace>();
         ns->name = makeString(name);
         ns->kind = kind;
-        constantPool.namespaces.push_back(ns);
+        constantPool.namespaces.insert(ns);
         return ns;
       }
       
+      // TODO:2015-01-17:alex:Ouch. Those should _not_ be shared pointers in the constan pool!
       MultinamePtr makeMultiname(Multiname::Kind kind) {
         MultinamePtr ptr = std::make_shared<Multiname>(kind);
-        constantPool.multinames.push_back(ptr);
+        constantPool.multinames.insert(ptr);
         return ptr;
       }
       
@@ -339,11 +348,11 @@ namespace jswf {
       
       void printConstant(ConstantKind::Enum kind, u30_t index) {
         switch(kind) {
-          case ConstantKind::IntKind: printf("%d", constantPool.integers[index]); break;
+          case ConstantKind::IntKind   : printf("%d", constantPool.integers[index]); break;
           case ConstantKind::DoubleKind: printf("%lf", constantPool.doubles[index]); break;
-            
-          case ConstantKind::FalseKind: printf("false"); break;
-          case ConstantKind::TrueKind: printf("true"); break;
+          
+          case ConstantKind::FalseKind : printf("false"); break;
+          case ConstantKind::TrueKind  : printf("true"); break;
           
           default:
             printf("?");

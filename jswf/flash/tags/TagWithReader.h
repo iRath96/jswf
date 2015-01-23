@@ -6,6 +6,11 @@
 //  Copyright (c) 2014 Alexander Rath. All rights reserved.
 //
 
+/**
+ * @file
+ * Defines jswf::flash::tags::TagWithReader.
+ */
+
 #ifndef __jswf__TagWithReader__
 #define __jswf__TagWithReader__
 

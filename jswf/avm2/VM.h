@@ -12,345 +12,15 @@
 #include <string>
 #include <map>
 
+#include "Opcode.h"
 #include "ABCFile.h"
 #include "TraitInfo.h"
 #include "StringReader.h"
+#include "Object.h"
+#include "Verifier.h"
 
-namespace jswf {
-  namespace flash {
-    struct DisplayListEntry;
-  }
-  
+namespace jswf {  
   namespace avm2 {
-    #define cast(name, obj) dynamic_cast<name ## Object *>(obj.get())
-    
-    class Object;
-    typedef std::shared_ptr<Object> ObjectPtr;
-    
-    typedef std::map<u30_t, ObjectPtr> SlotMap;
-    
-    struct TraitMatch {
-      bool isStatic;
-      TraitMap *dataStore;
-      TraitInfo *trait;
-    };
-    
-    struct ECMAHint {
-      enum Enum {
-        NoHint = 0,
-        NumberHint = 1
-      };
-    };
-    
-    class Object : public std::enable_shared_from_this<Object> {
-    public:
-      Object(VM *vm, Class *klass) : vm(vm), klass(klass) {}
-      
-      VM *vm;
-      Class *klass;
-      
-      std::map<std::string, ObjectPtr> properties;
-      // std::map<u30_t, ObjectPtr> slots;
-      TraitMap traitMap;
-      SlotMap slotMap;
-      
-      // TODO:2015-01-04:alex:Initialize slots!
-      // TODO:2015-01-01:alex:Property chain!
-      // TODO:2015-01-04:alex:Slots of parent classes. Ouch.
-      
-      TraitMatch getTraitByName(const Multiname &name) {
-        Class *k = klass;
-        while(k != NULL) {
-          // Search instance traits.
-          for(auto it = k->iinfo.traits.begin(); it != k->iinfo.traits.end(); ++it)
-            if(*(*it)->name == name)
-              return { .isStatic = false, .trait = it->get(), .dataStore = &traitMap };
-          
-          // Search class traits.
-          for(auto it = k->cinfo.traits.begin(); it != k->cinfo.traits.end(); ++it)
-            if(*(*it)->name == name)
-              return { .isStatic = true, .trait = it->get(), .dataStore = &klass->traitMap };
-          
-          k = k->parent;
-        } return { .trait = NULL, .dataStore = NULL };
-      }
-      
-      TraitMatch getTraitBySlotId(u30_t slotId) {
-        Class *k = klass;
-        while(k != NULL) {
-          // Search instance traits.
-          for(auto it = k->iinfo.traits.begin(); it != k->iinfo.traits.end(); ++it)
-            if(dynamic_cast<SlotTraitInfo *>(it->get()) && dynamic_cast<SlotTraitInfo *>(it->get())->slotId == slotId)
-              return { .isStatic = false, .trait = it->get(), .dataStore = &traitMap };
-          
-          // Search class traits.
-          for(auto it = k->cinfo.traits.begin(); it != k->cinfo.traits.end(); ++it)
-            if(dynamic_cast<SlotTraitInfo *>(it->get()) && dynamic_cast<SlotTraitInfo *>(it->get())->slotId == slotId)
-              return { .isStatic = true, .trait = it->get(), .dataStore = &klass->traitMap };
-          
-          k = k->parent;
-        } return { .trait = NULL, .dataStore = NULL };
-      }
-      
-      // TODO:2015-01-04:alex:Hardcode class names for native objects??
-      virtual ObjectPtr getProperty(const Multiname &property);
-      virtual void setProperty(const Multiname &property, const ObjectPtr &value);
-      
-      void setSlot(u30_t slotIndex, const ObjectPtr &value) {
-        // TODO:2015-01-04:alex:Check that the type is correct.
-        slotMap[slotIndex] = value;
-      }
-      
-      ObjectPtr getSlot(u30_t slotIndex) const;
-      
-      virtual ObjectPtr ecmaCall(VM &vm, std::vector<ObjectPtr> &args) const {
-        throw "TypeError: Error #1006: value is not a function.";
-      }
-      
-      // ecmaConstruct
-      // ecmaDescendants
-      // ecmaHasProperty
-      
-      // ecmaGetOwnProperty
-      // ecmaGetProperty
-      // ecmaGet
-      // ecmaCanPut
-      // ecmaPut
-      // ecmaHasProperty
-      // ecmaDelete
-      // ecmaDefaultValue
-      // ecmaDefineOwnProperty
-      
-      // ecmaCall
-      // ecmaConstruct
-      // ecmaThrowTypeError
-      
-      // ecmaClass
-      // ecmaPrototype
-      // ecmaCall
-      // ecmaScope
-      
-      bool hasDeclaredProperty(const Multiname &property) {
-        return getTraitByName(property).trait != NULL;
-      }
-      
-      bool hasDynamicProperty(const Multiname &property) {
-        std::string name = property.nameString();
-        return properties.find(name) != properties.end();
-      }
-      
-      bool hasProperty(const Multiname &property) {
-        return hasDeclaredProperty(property) || hasDynamicProperty(property);
-      }
-      
-      virtual std::string toString() const {
-        return "[object " + klass->iinfo.name->nameString() + "];";
-      }
-      
-      virtual bool operator ==(const Object &rhs) const { // ECMA-262, section 11.9.3
-        if(klass == rhs.klass && this == &rhs) return true;
-        return false;
-      }
-      
-      virtual ObjectPtr ecmaToPrimitive(ECMAHint::Enum hint = ECMAHint::NoHint) {
-        // TODO:2015-01-05:alex:Implement this?
-        return shared_from_this();
-      }
-      
-      enum AcResult {
-        AcUndefinedResult = 0,
-        AcFalseResult = 1,
-        AcTrueResult = 2
-      };
-      
-      virtual AcResult abstractCompare(Object &rhs, bool leftFirst = true); // ECMA-262, section 11.8.5
-      
-      virtual bool isNaN() const { return false; }
-      
-      virtual bool coerce_b() const { return true; } // ECMA-262, section 9.2
-      virtual s32_t coerce_i() const { throw "Cannot coerce_i"; }
-      virtual std::string coerce_s() const { return "[object " + klass->iinfo.name->nameString() + "]"; }
-      virtual Namespace coerce_ns() const { throw "Cannot coerce_ns"; }
-      virtual Multiname coerce_multiname() const { throw "Cannot coerce_multiname"; }
-      virtual double coerce_d() const { throw "Cannot coerce_d"; }
-      
-      double ecmaToNumber() const { return this->coerce_d(); }
-      
-      virtual ObjectPtr coerce(Class *newKlass, const ObjectPtr &recv) {
-        // TODO:2015-01-01:alex:Implement this!
-        klass = newKlass; // <tt>coerce Function</tt> will actually make a <tt>builtin.as$0::MethodClosure</tt> a <tt>Function</tt>.
-        return recv;
-      }
-      
-      std::string getPropertyName(int index) const {
-        if(properties.size() == 0) return "";
-        
-        auto it = properties.begin();
-        --index;
-        while(index) {
-          if(++it == properties.end()) return "";
-          --index;
-        } return it->first;
-      }
-      
-      bool hasNextProperty(int index) const {
-        if(properties.size() == 0) return false;
-        
-        auto it = properties.begin();
-        while(index) {
-          if(++it == properties.end()) return false;
-          --index;
-        } return true;
-      }
-    };
-    
-    builtin_method_t builtin_trace;
-    builtin_method_t builtin_getQualifiedClassName;
-    builtin_method_t builtin_addEventListener;
-    
-    /**
-     * Represents a <tt>function() {}</tt> that was created using <tt>newfunction</tt>.
-     */
-    class FunctionObject : public Object {
-    public:
-      // TODO:2015-01-04:alex:Saved scope.
-      
-      MethodInfo *value;
-      FunctionObject(VM *vm, MethodInfo *value);
-      
-      std::string coerce_s() const { return "function Function() {}"; }
-      
-      ObjectPtr ecmaCall(VM &vm, std::vector<ObjectPtr> &args) const;
-    };
-    
-    /**
-     * Represents a method that was created as a trait of an instance or a class.
-     * Note that executing <tt>[[Call]]</tt> on a MethodObject will always override the
-     * implicit (receiver) argument.
-     */
-    class MethodObject : public Object {
-    public:
-      ObjectPtr receiver;
-      
-      MethodInfo *value;
-      MethodObject(VM *vm, const ObjectPtr &recv, MethodInfo *value);
-      
-      std::string coerce_s() const { return "function Function() {}"; }
-      
-      ObjectPtr ecmaCall(VM &vm, std::vector<ObjectPtr> &args) const;
-    };
-    
-    /**
-     * Represents a method that is provided by the runtime.
-     */
-    class BuiltinMethodObject : public Object {
-    public:
-      builtin_method_t *value;
-      BuiltinMethodObject(VM *vm, builtin_method_t *value);
-      
-      std::string coerce_s() const { return "function Function() {}"; }
-      
-      ObjectPtr ecmaCall(VM &vm, std::vector<ObjectPtr> &args) const {
-        return value(vm, NULL, args);
-      }
-    };
-    
-    /**
-     * Represents a class.
-     */
-    class ClassObject : public Object {
-    public:
-      Class *value;
-      ClassObject(VM *vm, Class *value);
-      
-      std::string coerce_s() const {
-        return "[class " + value->iinfo.name->nameString() + "]";
-      }
-    };
-    
-    class DisplayObject : public Object {
-    public:
-      double rotation = 1, scaleX = 1, scaleY = 1;
-      
-      flash::DisplayListEntry *value;
-      DisplayObject(VM *vm, Class *klass, flash::DisplayListEntry *value) : value(value), Object(vm, klass) {}
-      
-      void setProperty(const Multiname &property, const ObjectPtr &value);
-    };
-    
-    class NativeObject : public Object {
-    public:
-      NativeObject(VM *vm, Class *klass) : Object(vm, klass) {}
-    };
-    
-    class VoidObject : public NativeObject {
-    public:
-      enum Kind {
-        NullValue = 0,
-        UndefinedValue
-      };
-      
-      Kind value;
-      
-      VoidObject(VM *vm, const Kind &value);
-      bool operator ==(const Object &rhs) {
-        return dynamic_cast<const VoidObject *>(&rhs);
-      }
-      
-      bool coerce_b() const { return false; }
-      std::string coerce_s() const { return value == NullValue ? "null" : "undefined"; }
-      double coerce_d() const { return value == NullValue ? +0 : NAN; } // TODID:2015-01-01:alex:+0 for null.
-    };
-    
-#define make_native_class(name, parent_class, value_type, coerce_name, code) \
-  class name : public parent_class { \
-  public: \
-    value_type value; \
-    name(VM *vm, const value_type &value); \
-    bool operator ==(const Object &rhs) const { \
-      const name *casted = dynamic_cast<const name *>(&rhs); \
-      return casted && value == casted->value; \
-    } \
-    value_type coerce_name() const { return value; } \
-    code \
-  };
-    
-    make_native_class(NamespaceObject, NativeObject, Namespace, coerce_ns,);
-    make_native_class(MultinameObject, NativeObject, Multiname, coerce_multiname,);
-    make_native_class(ArrayObject, NativeObject, std::vector<ObjectPtr>, coerce_a,);
-    make_native_class
-     (StringObject, NativeObject, std::string, coerce_s,
-      bool coerce_b() const { return !value.empty(); }
-    );
-    make_native_class
-     (BooleanObject, NativeObject, bool, coerce_b,
-      std::string coerce_s() const { return value ? "true" : "false"; }
-      double coerce_d() const { return value ? 1 : +0; }
-    );
-    
-    class NumberObject : public NativeObject {
-    public:
-      NumberObject(VM *vm, Class *klass) : NativeObject(vm, klass) {}
-    };
-    
-    make_native_class
-    (DoubleObject, NumberObject, double, coerce_d,
-     bool coerce_b() const { return !isnan(value) && value != 0; }
-     std::string coerce_s() const { return std::to_string(value); }
-     );
-    make_native_class // TODO:2015-01-04:alex:Not DRY with IntObject
-     (UIntObject, NumberObject, u32_t, coerce_u,
-      std::string coerce_s() const { return std::to_string(value); }
-      bool coerce_b() const { return value != 0; }
-      double coerce_d() const { return value; }
-    );
-    make_native_class
-     (IntObject, NumberObject, s32_t, coerce_i,
-      std::string coerce_s() const { return std::to_string(value); }
-      bool coerce_b() const { return value != 0; }
-      double coerce_d() const { return value; }
-    );
-    
     class Scope {
     public:
       enum Kind {
@@ -372,7 +42,7 @@ namespace jswf {
       }
     };
     
-    class VM {
+    class VM : public IConstantSource<Object> {
     public:
       std::map<std::string, Class *> classes; // TODO:2014-12-29:alex:Could be QName indexed.
       std::vector<std::shared_ptr<ABCFile>> files;
@@ -399,7 +69,7 @@ namespace jswf {
         std::shared_ptr<SlotTraitInfo> enterFrame = std::make_shared<SlotTraitInfo>();
         enterFrame->kind = TraitInfo::ConstKind;
         enterFrame->typeName = api->makeQName("", "String");
-        api->makeString("enterFrame", &enterFrame->vindex);
+        enterFrame->vindex = api->constantPool.strings.insert("enterFrame");
         enterFrame->vkind = ConstantKind::UTF8Kind;
         eventClass->iinfo.traits.push_back(enterFrame);
         
@@ -418,7 +88,7 @@ namespace jswf {
         std::vector<std::string> dispObjProps = { "rotation", "x", "y", "xScale", "yScale", "alpha" };
         // TODO:2015-01-04:alex:Correct default values
         
-        u30_t nullDblIndex = api->constantPool.indexDouble(0.0);
+        u30_t nullDblIndex = api->constantPool.doubles.insert(0.0);
         u30_t slotId = 0;
         for(auto it = dispObjProps.begin(); it != dispObjProps.end(); ++it) {
           parent->iinfo.traits.push_back(
@@ -492,22 +162,42 @@ namespace jswf {
         return instantiateClass(getClassByName(klassName));
       }
       
+      ObjectPtr getConstant(ConstantKind::Enum kind) {
+        switch(kind) {
+          case ConstantKind::NullKind     : return nullObject;
+          case ConstantKind::UndefinedKind: return undefinedObject;
+          case ConstantKind::TrueKind     : return std::make_shared<BooleanObject>(this, true);
+          case ConstantKind::FalseKind    : return std::make_shared<BooleanObject>(this, false);
+          case ConstantKind::NANKind      : return std::make_shared<NumberObject<double>>(this, NAN);
+          default: return ObjectPtr(NULL);
+        }
+      }
+      
+      ObjectPtr getPoolConstant(ConstantKind::Enum kind, ABCFile *file, u30_t index) {
+        switch(kind) {
+          case ConstantKind::DoubleKind: return std::make_shared<NumberObject<double>>(this, file->constantPool.doubles[index]);
+          case ConstantKind::IntKind   : return std::make_shared<NumberObject<int32_t>>(this, file->constantPool.integers[index]);
+          case ConstantKind::UIntKind  : return std::make_shared<NumberObject<uint32_t>>(this, file->constantPool.uintegers[index]);
+          case ConstantKind::UTF8Kind  : return std::make_shared<StringObject>(this, file->constantPool.strings[index]);
+          case ConstantKind::NormalNamespaceKind: return std::make_shared<NamespaceObject>(this, *file->constantPool.namespaces[index]);
+          default: return ObjectPtr(NULL);
+        }
+      }
+      
+      ObjectPtr getImmediateConstant(ConstantKind::Enum kind, int32_t imm) {
+        return std::make_shared<NumberObject<int32_t>>(this, imm);
+      }
+      
       void setupSlotDefaults(ObjectPtr &obj, Class *klass) {
         if(klass->parent) setupSlotDefaults(obj, klass->parent);
         for(auto it = klass->iinfo.traits.begin(); it != klass->iinfo.traits.end(); ++it)
           if(dynamic_cast<SlotTraitInfo *>(it->get())) {
             SlotTraitInfo *s = dynamic_cast<SlotTraitInfo *>(it->get());
             
-            ObjectPtr value;
-            switch(s->vkind) {
-              case ConstantKind::DoubleKind:
-                value.reset(new DoubleObject(this, klass->file->constantPool.doubles[s->vindex]));
-                break;
-              default:
-                value = undefinedObject;
-            }
-            
-            obj->slotMap[s->slotId] = value;
+            if(ConstantKind::needsPool(s->vkind))
+              obj->slotMap[s->slotId] = getPoolConstant(s->vkind, klass->file, s->vindex);
+            else
+              obj->slotMap[s->slotId] = getConstant(s->vkind);
           }
       }
       
@@ -542,6 +232,10 @@ namespace jswf {
           if(method->nativeImpl) return method->nativeImpl(*this, method, arguments);
           return std::make_shared<Object>(this, getClassByName("Object"));
         } else {
+          Verifier v;
+          v.file = method->file;
+          v.verifyBytecode(method->body->code);
+          
           std::vector<Scope> scopeStack; // capacity should be method->body->maxScopeDepth
           std::stack<ObjectPtr> stack; // capacity should be method->body->maxStack
           std::map<u30_t, ObjectPtr> registers; // capacity should be method->body->localCount
@@ -552,82 +246,152 @@ namespace jswf {
           for(size_t i = 0, j = arguments.size(); i < j; ++i)
             registers[(u30_t)i] = arguments[i];
           
-          bool show_disassembly = 0;
+          bool show_disassembly = 1;
           
           io::StringReader codeReader(method->body->code);
-#define read_auto(afield, vname) auto vname = file->constantPool.afield[codeReader.readVU30()];
-#define read_multiname_arg(index) \
-  Multiname multiname = *file->constantPool.multinames[index]; \
-  if(!multiname.hasName) multiname.setName(__pop->coerce_s()); \
-  if(!multiname.hasNS && !multiname.hasNSSet) multiname.setNS(std::make_shared<Namespace>(__pop->coerce_ns()));
-#define read_multiname read_multiname_arg(codeReader.readVU30())
-#define mn_cstr multiname.nameString().c_str()
-#define mn_str multiname.nameString()
-#define bc_comment(v) if(show_disassembly) printf("[vm 0x%04lx] %s\n", pos, std::string(v).c_str());
-#define read_diadic \
-  ObjectPtr v2 = __pop; \
-  ObjectPtr v1 = __pop;
+#define bc_comment(v) if(show_disassembly) { \
+  int length = (int)(codeReader.pos - op.pos); \
+  codeReader.seek(-length); \
+  std::string bytecode = codeReader.readString(length); \
+  printf("[vm 0x%04lx]", op.pos); \
+  for(size_t bci = 0; bci < length; ++bci) printf(" %02x", (uint8_t)bytecode[bci]); \
+  printf(" %s\n", std::string(v).c_str()); \
+}
 
 #define __ncast(v) ObjectPtr(v)
 #define __push(v) stack.push(__ncast(v))
 #define __pop (top = stack.top(), stack.pop(), top)
+ 
           ObjectPtr top;
           
+          OpcodeData<Object> op;
+          
           while(!codeReader.eof()) {
-            size_t pos = codeReader.pos;
-            uint8_t chr = codeReader.readU8();
-            switch(chr) {
-              case 0x08: {
-                u30_t i = codeReader.readVU30();
-                registers.erase(i);
-                bc_comment("kill " + std::to_string(i));
-              }; break;
-              case 0x09: {
-                bc_comment("label");
-                // "Do nothing"
-              }; break;
-              case 0x0d: {
-                s24_t offset = codeReader.readS24();
-                bc_comment("ifnle " + std::to_string(offset));
-                read_diadic;
+            op.read(&codeReader, method->file, this, stack);
+            bc_comment(op.disassemble(method->file));
+            
+            switch(op.code) {
+#pragma mark Load and store instructions
+              case Opcode::op_getlocal_0:
+              case Opcode::op_getlocal_1:
+              case Opcode::op_getlocal_2:
+              case Opcode::op_getlocal_3: op.registerIndex = op.code - Opcode::op_getlocal_0;
+              case Opcode::op_getlocal  : __push(registers.find(op.registerIndex) == registers.end() ? undefinedObject : registers[op.registerIndex]); break;
                 
-                if(v2->abstractCompare(*v1) == Object::AcTrueResult)
-                  codeReader.seek(offset);
-              }; break;
-              case 0x0f: {
-                s24_t offset = codeReader.readS24();
-                bc_comment("ifnge " + std::to_string(offset));
-                read_diadic;
+              case Opcode::op_setlocal_0:
+              case Opcode::op_setlocal_1:
+              case Opcode::op_setlocal_2:
+              case Opcode::op_setlocal_3: op.registerIndex = op.code - Opcode::op_setlocal_0;
+              case Opcode::op_setlocal  : registers[op.registerIndex] = op.value1; break;
+              
+              case Opcode::op_kill: registers.erase(op.registerIndex); break;
                 
-                if(v1->abstractCompare(*v2) != Object::AcFalseResult)
-                  codeReader.seek(offset);
-              }; break;
-              case 0x10: {
-                s24_t offset = codeReader.readS24();
-                bc_comment("jump " + std::to_string(offset));
-                codeReader.seek(offset);
-              }; break;
-              case 0x11: {
-                s24_t offset = codeReader.readS24();
-                bc_comment("iftrue " + std::to_string(offset));
+#pragma mark Airthmetic instructions
+              case Opcode::op_increment  : __push(new NumberObject<double >(this, op.value1->coerce_d  () + 1)); break;
+              case Opcode::op_increment_i: __push(new NumberObject<int32_t>(this, op.value1->coerce_s32() + 1)); break;
                 
-                bool shouldBranch = __pop->coerce_b();
-                if(shouldBranch) codeReader.seek(offset);
+              case Opcode::op_add: {
+                if(cast(NumberBase, op.value1) && cast(NumberBase, op.value2))
+                  __push(new NumberObject<double>(this, op.value1->coerce_d() + op.value2->coerce_d()));
+                else // concatenation
+                  __push(new StringObject(this, op.value1->coerce_s() + op.value2->coerce_s()));
               }; break;
-              case 0x12: {
-                s24_t offset = codeReader.readS24();
-                bc_comment("iffalse " + std::to_string(offset));
+              case Opcode::op_add_i     : __push(new NumberObject<int32_t>(this, op.value1->coerce_s32() + op.value2->coerce_s32())); break;
+              case Opcode::op_subtract  : __push(new NumberObject<double >(this, op.value1->coerce_d  () - op.value2->coerce_d  ())); break;
+              case Opcode::op_subtract_i: __push(new NumberObject<int32_t>(this, op.value1->coerce_s32() - op.value2->coerce_s32())); break;
+              case Opcode::op_multiply  : __push(new NumberObject<double >(this, op.value1->coerce_d  () * op.value2->coerce_d  ())); break;
+              case Opcode::op_multiply_i: __push(new NumberObject<int32_t>(this, op.value1->coerce_s32() * op.value2->coerce_s32())); break;
+              case Opcode::op_divide    : __push(new NumberObject<double >(this, op.value1->coerce_d  () / op.value2->coerce_d  ())); break;
+              case Opcode::op_negate    : __push(new NumberObject<double >(this, -op.value1->coerce_d  ())); break;
+              case Opcode::op_negate_i  : __push(new NumberObject<int32_t>(this, -op.value1->coerce_s32())); break;
                 
-                bool shouldBranch = !__pop->coerce_b();
-                if(shouldBranch) codeReader.seek(offset);
+#pragma mark Bit manipulation instructions
+                // TODO:2015-01-22:alex:Verify that these are really u32.
+              case Opcode::op_bitnot: __push(new NumberObject<uint32_t>(this, ~op.value1->coerce_u32())); break;
+              case Opcode::op_bitand: __push(new NumberObject<uint32_t>(this, op.value1->coerce_u32() & op.value2->coerce_u32())); break;
+              case Opcode::op_bitor : __push(new NumberObject<uint32_t>(this, op.value1->coerce_u32() | op.value2->coerce_u32())); break;
+              case Opcode::op_bitxor: __push(new NumberObject<uint32_t>(this, op.value1->coerce_u32() ^ op.value2->coerce_u32())); break;
+                
+                // TODO:2015-01-22:alex:Verify that these work, especially sign-extended right shift.
+              case Opcode::op_lshift : __push(new NumberObject<uint32_t>(this, op.value1->coerce_u32() << (op.value2->coerce_u32() & 0x1f))); break;
+              case Opcode::op_rshift : __push(new NumberObject<uint32_t>(this, op.value1->coerce_s32() >> (op.value2->coerce_u32() & 0x1f))); break;
+              case Opcode::op_urshift: __push(new NumberObject<uint32_t>(this, op.value1->coerce_u32() >> (op.value2->coerce_u32() & 0x1f))); break;
+                
+#pragma mark Type conversion instructions
+              case Opcode::op_coerce   : __push(op.value1->coerce(getClassByName(op.multiname.nameString()))); break;
+              case Opcode::op_coerce_a : __push(op.value1); break;
+              case Opcode::op_convert_i: __push(new NumberObject<int32_t>(this, op.value1->coerce_s32())); break;
+              case Opcode::op_convert_d: __push(new NumberObject<double >(this, op.value1->coerce_d  ())); break;
+                
+#pragma mark Object creation and manipulation instructions
+#pragma mark Stack management instructions
+                // constants
+              case Opcode::op_pushnull     :
+              case Opcode::op_pushundefined:
+              case Opcode::op_pushtrue     :
+              case Opcode::op_pushfalse    :
+              case Opcode::op_pushnan      :
+                
+                // pool constants
+              case Opcode::op_pushstring   :
+              case Opcode::op_pushint      :
+              case Opcode::op_pushdouble   :
+              case Opcode::op_pushnamespace:
+                
+                // immediate values
+              case Opcode::op_pushbyte     :
+              case Opcode::op_pushshort    : __push(op.constant); break;
+                
+                // scope management
+              case Opcode::op_pushwith: {
+                if(dynamic_cast<VoidObject *>(op.value1.get())) // if null or undefined
+                  throw "TypeError";
+                Scope scope(op.value1, Scope::WithScopeKind);
+                scopeStack.push_back(scope);
               }; break;
-              case 0x1b: { // TODO:2015-01-05:alex:Not tested!
+              case Opcode::op_pushscope: {
+                Scope scope(op.value1, Scope::NormalScopeKind);
+                scopeStack.push_back(scope);
+              }; break;
+              case Opcode::op_popscope: scopeStack.pop_back(); break;
+                
+                // management
+              case Opcode::op_pop : break;
+              case Opcode::op_dup : stack.push(op.value1); stack.push(op.value1); break;
+              case Opcode::op_swap: stack.push(op.value2); stack.push(op.value1); break;
+                
+#pragma mark Control transfer instructions
+#define perform_branch codeReader.seek(op.branchOffset)
+#define branch_if(condition) if(condition) perform_branch;
+              case Opcode::op_ifnlt: branch_if(!(*op.value1 <  *op.value2)); break;
+              case Opcode::op_ifnle: branch_if(!(*op.value1 <= *op.value2)); break;
+              case Opcode::op_ifngt: branch_if(!(*op.value1 >  *op.value2)); break;
+              case Opcode::op_ifnge: branch_if(!(*op.value1 >= *op.value2)); break;
+              
+              case Opcode::op_jump   : perform_branch; break;
+              case Opcode::op_iftrue : branch_if( op.value1->coerce_b()); break;
+              case Opcode::op_iffalse: branch_if(!op.value1->coerce_b()); break;
+              
+              case Opcode::op_ifeq: branch_if(*op.value1 == *op.value2); break;
+              case Opcode::op_ifne: branch_if(*op.value1 != *op.value2); break;
+              case Opcode::op_iflt: branch_if(*op.value1 <  *op.value2); break;
+              case Opcode::op_ifle: branch_if(*op.value1 <= *op.value2); break;
+              case Opcode::op_ifgt: branch_if(*op.value1 >  *op.value2); break;
+              case Opcode::op_ifge: branch_if(*op.value1 >= *op.value2); break;
+              
+              case Opcode::op_ifstricteq: branch_if( op.value1->strictEquals(*op.value2)); break;
+              case Opcode::op_ifstrictne: branch_if(!op.value1->strictEquals(*op.value2)); break;
+              
+              case Opcode::op_label: break; // Do nothing.
+              
+              case Opcode::op_lookupswitch: { // TODO:2015-01-05:alex:Not tested!
                 s24_t defaultOffset = codeReader.readS24();
                 u30_t caseCount = codeReader.readVU30();
                 
                 bc_comment("lookupswitch " + std::to_string(defaultOffset) + " " + std::to_string(caseCount));
                 
-                s32_t index = __pop->coerce_i();
+                // TODO:2015-01-22:alex:Test if cast(int)
+                s32_t index = __pop->coerce_s32();
                 if(index < 0 || index > caseCount) {
                   codeReader.seek((caseCount + 1) * 3);
                   codeReader.seek(defaultOffset);
@@ -638,164 +402,65 @@ namespace jswf {
                   codeReader.seek(offset);
                 }
               }; break;
-              case 0x1c: {
-                bc_comment("pushwith");
-                // TODO:2015-01-04:alex:See below:
-                // "A TypeError is thrown if scope_obj is null or undefined."
+              
+#undef perform_branch
+#undef branch_if
+
+#pragma mark Function invocation and return instructions
+                // invocation
+              case Opcode::op_call: {
+                op.arguments.insert(op.arguments.begin(), op.value2);
+                __push(op.value1->ecmaCall(*this, op.arguments));
+              }; break;
                 
-                Scope scope(__pop, Scope::WithScopeKind);
-                scopeStack.push_back(scope);
-              }; break;
-              case 0x1d: {
-                bc_comment("popscope");
-                scopeStack.pop_back();
-              }; break;
-              case 0x1e: {
-                bc_comment("nextname");
-                ObjectPtr index = __pop;
-                ObjectPtr obj = __pop;
-                __push(new StringObject(this, obj->getPropertyName(index->coerce_i())));
-              }; break;
-              case 0x20: {
-                bc_comment("pushnull");
-                __push(undefinedObject); // TODO:2015-01-04:alex:Undefined!
-              }; break;
-              case 0x21: {
-                bc_comment("pushundefined");
-                __push(undefinedObject); // undefined!
-              }; break;
-              case 0x24: {
-                // This apparently is a signed byte.
-                // The specification might be wrong on this.
+              case Opcode::op_callproperty:
+              case Opcode::op_callpropvoid: {
+                op.arguments.insert(op.arguments.begin(), op.value1);
                 
-                int8_t byte = codeReader.readS8();
-                bc_comment("pushbyte " + std::to_string(byte));
+                ObjectPtr method = op.value1->getProperty(op.multiname);
+                ObjectPtr ret = method->ecmaCall(*this, op.arguments);
                 
-                __push(new IntObject(this, byte));
+                if(op.code != Opcode::op_callpropvoid) __push(ret);
               }; break;
-              case 0x25: {
-                u30_t value = codeReader.readVU30();
-                bc_comment("pushshort " + std::to_string(value));
                 
-                __push(new IntObject(this, value));
-              }; break;
-              case 0x26: {
-                bc_comment("pushtrue");
-                __push(new BooleanObject(this, true));
-              }; break;
-              case 0x27: {
-                bc_comment("pushfalse");
-                __push(new BooleanObject(this, false));
-              }; break;
-              case 0x29: {
-                bc_comment("pop");
-                __pop;
-              }; break;
-              case 0x2a: {
-                bc_comment("dup");
+                // return
+              case Opcode::op_returnvoid : return undefinedObject;
+              case Opcode::op_returnvalue: return op.value1;
                 
-                ObjectPtr v = __pop;
-                stack.push(v);
-                stack.push(v);
-              }; break;
-              case 0x2c: {
-                read_auto(strings, str);
-                bc_comment("pushstring \"" + str + "\""); // TODO:2014-12-28:alex:Not correctly escaped.
-                
-                __push(new StringObject(this, str));
-              }; break;
-              case 0x2d: {
-                read_auto(integers, i);
-                bc_comment("pushint " + std::to_string(i));
-                
-                __push(new IntObject(this, i));
-              }; break;
-              case 0x2f: {
-                read_auto(doubles, dbl);
-                bc_comment("pushdouble " + std::to_string(dbl));
-                
-                __push(new DoubleObject(this, dbl));
-              }; break;
-              case 0x30: {
-                bc_comment("pushscope");
-                
-                Scope scope(__pop, Scope::NormalScopeKind);
-                scopeStack.push_back(scope);
-              }; break;
-              case 0x32: {
+#pragma mark Exception instructions
+#pragma mark Debugging instructions
+#pragma mark Property enumeration
+              // TODO:2015-01-22:alex:Test if cast(int)
+              case Opcode::op_nextname: __push(new StringObject(this, op.value1->getPropertyName(op.value2->coerce_s32()))); break;
+              case Opcode::op_hasnext2: {
                 u30_t objReg = codeReader.readVU30();
                 u30_t indexReg = codeReader.readVU30();
                 
                 bc_comment("hasnext2 " + std::to_string(objReg) + " " + std::to_string(indexReg));
                 
-                u32_t i = registers[indexReg]->coerce_i();
+                // TODO:2015-01-22:alex:Test if cast(int)
+                u32_t i = registers[indexReg]->coerce_u32();
                 
                 ObjectPtr obj = registers[objReg];
                 bool hasNext = obj->hasNextProperty(i);
                 __push(new BooleanObject(this, hasNext));
                 
                 if(hasNext) {
-                  registers[indexReg] = ObjectPtr(new IntObject(this, i + 1));
+                  registers[indexReg] = ObjectPtr(new NumberObject<int32_t>(this, i + 1));
                 } else {
                   registers[objReg] = nullObject;
-                  registers[indexReg] = ObjectPtr(new IntObject(this, 0));
+                  registers[indexReg] = ObjectPtr(new NumberObject<int32_t>(this, 0));
                 }
               }; break;
-              case 0x40: {
+              case Opcode::op_newfunction: {
                 u30_t index = codeReader.readVU30();
                 bc_comment("newfunction " + std::to_string(index));
                 __push(new FunctionObject(this, file->methods.at(index).get()));
               }; break;
-              case 0x47: {
-                bc_comment("returnvoid");
-                return undefinedObject;
-              }; break;
-              case 0x48: {
-                bc_comment("returnvalue");
-                return __pop;
-              }; break;
-              case 0x49: {
-                u30_t argCount = codeReader.readVU30();
-                bc_comment("constructsuper[" + std::to_string(argCount) + "]");
                 
-                std::vector<ObjectPtr> args;
-                for(uint32_t i = 0; i < argCount; ++i) args.insert(args.begin(), __pop);
+              case Opcode::op_newobject: {
+                // This is weird.
                 
-                bc_comment("[ TODO ]");
-              }; break;
-                
-              case 0x41: {
-                u30_t argCount = codeReader.readVU30();
-                bc_comment("call[" + std::to_string(argCount) + "]");
-                
-                std::vector<ObjectPtr> args;
-                for(uint32_t i = 0; i <= argCount; ++i) // <tt><=</tt> because we read one more: receiver (arg0 = <tt>this</tt>)
-                  args.insert(args.begin(), __pop);
-                
-                ObjectPtr method = __pop;
-                __push(method->ecmaCall(*this, args));
-              }; break;
-                
-              case 0x46:
-              case 0x4f: {
-                u30_t mnIndex = codeReader.readVU30();
-                u30_t argCount = codeReader.readVU30();
-                read_multiname_arg(mnIndex);
-                
-                bc_comment((chr == 0x46 ? "callproperty[" : "callpropvoid[") + std::to_string(argCount) + "] " + mn_str);
-                
-                std::vector<ObjectPtr> args;
-                for(uint32_t i = 0; i < argCount; ++i) args.insert(args.begin(), __pop);
-                
-                ObjectPtr object = __pop;
-                args.insert(args.begin(), object); // arg0 = <tt>this</tt>
-                
-                ObjectPtr method = object->getProperty(multiname);
-                ObjectPtr ret = method->ecmaCall(*this, args);
-                
-                if(chr == 0x46) __push(ret);
-              }; break;
-              case 0x55: {
                 u30_t argCount = codeReader.readVU30();
                 bc_comment("newobject[" + std::to_string(argCount) + "]");
                 
@@ -810,167 +475,75 @@ namespace jswf {
                 
                 stack.push(obj);
               }; break;
-              case 0x56: {
-                u30_t argCount = codeReader.readVU30();
-                bc_comment("newarray[" + std::to_string(argCount) + "]");
-                
-                std::vector<ObjectPtr> args;
-                for(uint32_t i = 0; i < argCount; ++i) args.insert(args.begin(), __pop);
-                
-                __push(new ArrayObject(this, args));
-              }; break;
-              case 0x57: {
-                bc_comment("newactivation");
-                __push(nullObject); // TODO:2015-01-04:alex:Activation object.
-              }; break;
-              case 0x5e:
-              case 0x5d:
-              case 0x60: {
-                read_multiname;
-                bc_comment((chr == 0x5e ? "findproperty " : (chr == 0x60 ? "getlex " : "findpropstrict ")) + mn_str);
-                
+              case Opcode::op_newarray: __push(new ArrayObject(this, op.arguments)); break;
+              case Opcode::op_newactivation: __push(nullObject); break; // TODO:2015-01-04:alex:Activation object.
+              
+#pragma mark Accessing properties
+              case Opcode::op_findproperty:
+              case Opcode::op_findpropstrict:
+              case Opcode::op_getlex: {
                 ObjectPtr object;
                 for(int64_t i = scopeStack.size() - 1; i >= 0; --i)
-                  if(scopeStack[i].hasProperty(multiname)) {
+                  if(scopeStack[i].hasProperty(op.multiname)) {
                     object = scopeStack[i].object;
                     goto gpObjectFound;
                   }
                 
               gpObjectNotFound:
-                if(chr == 0x5d || chr == 0x60) // findpropstrict
-                  throw "Don't know what-exception";
-                else
+                if(op.code == Opcode::op_findproperty) // loose
                   object = globalObject;
+                else // strict
+                  throw "Don't know what-exception";
                 
               gpObjectFound:
-                if(chr == 0x60) { // getlex
-                  ObjectPtr v = object->getProperty(multiname);
+                if(op.code == Opcode::op_getlex) {
+                  ObjectPtr v = object->getProperty(op.multiname);
                   __push(v == NULL ? undefinedObject : v);
-                } else // findproperty, findpropstrict
+                } else
                   __push(object);
               }; break;
-              case 0x61:
-              case 0x68: {
-                ObjectPtr value = __pop;
-                read_multiname;
-                ObjectPtr obj = __pop;
                 
-                bc_comment((chr == 0x68 ? "initproperty " : "setproperty ") + mn_str);
-                
-                // TODO:2015-01-04:alex:initproperty is able to set constant traits!
-                obj->setProperty(multiname, value);
-              }; break;
-              case 0x66: {
-                read_multiname;
-                bc_comment("getproperty " + mn_str);
-                
-                ObjectPtr obj = __pop;
-                ObjectPtr v = obj->getProperty(multiname);
-                __push(v);
-              }; break;
-                
-              case 0x64: {
-                bc_comment("getglobalscope");
-                __push(scopeStack.at(0).object);
-              }; break;
-              case 0x65: {
+              case Opcode::op_setproperty   : // TODO:2015-01-04:alex:initproperty is able to set constant traits!
+              case Opcode::op_initproperty  : op.value1->setProperty(op.multiname, op.value2); break;
+              case Opcode::op_getproperty   : __push(op.value1->getProperty(op.multiname)); break;
+              case Opcode::op_getglobalscope: __push(scopeStack.at(0).object); break;
+              case Opcode::op_getscopeobject: {
                 uint8_t index = codeReader.readU8();
                 bc_comment("getscopeobject " + std::to_string(index));
                 __push(scopeStack.at(index).object);
               }; break;
                 
-              case 0x6c: {
+              case Opcode::op_getslot: {
                 u30_t slotIndex = codeReader.readVU30();
                 bc_comment("getslot " + std::to_string(slotIndex));
                 
-                ObjectPtr v = __pop->getSlot(slotIndex);
+                ObjectPtr v = op.value1->getSlot(slotIndex);
                 __push(v == NULL ? undefinedObject : v);
               }; break;
-              case 0x6d: {
+              case Opcode::op_setslot: {
                 u30_t slotIndex = codeReader.readVU30();
                 bc_comment("setslot " + std::to_string(slotIndex));
                 
-                ObjectPtr value = __pop;
-                ObjectPtr object = __pop;
-                object->setSlot(slotIndex, value);
+                op.value1->setSlot(slotIndex, op.value2);
               }; break;
+              
+              case Opcode::op_not          : __push(new BooleanObject(this, !op.value1->coerce_b())); break;
+              case Opcode::op_equals       : __push(new BooleanObject(this, *op.value1 == *op.value2)); break;
+              case Opcode::op_lessthan     : __push(new BooleanObject(this, *op.value1 <  *op.value2)); break;
+              case Opcode::op_greaterthan  : __push(new BooleanObject(this, *op.value1 >  *op.value2)); break;
+              case Opcode::op_lessequals   : __push(new BooleanObject(this, *op.value1 <= *op.value2)); break;
+              case Opcode::op_greaterequals: __push(new BooleanObject(this, *op.value1 >= *op.value2)); break;
                 
-              case 0x73: {
-                bc_comment("convert_i");
-                __push(new IntObject(this, __pop->coerce_i()));
-              }; break;
-              case 0x75: {
-                bc_comment("convert_d");
-                __push(new DoubleObject(this, __pop->coerce_d()));
-              }; break;
-              case 0x80: {
-                read_multiname; // TODO:2015-01-01:alex:"Must not be a runtime multiname"
-                bc_comment("coerce " + mn_str);
+              case Opcode::op_constructsuper: break; // TODO:2015-01-22:alex:Implement this.
                 
-                ObjectPtr obj = __pop;
-                __push(obj->coerce(getClassByName(multiname.nameString()), obj));
-              }; break;
-              case 0x82: {
-                bc_comment("coerce_a"); // TODO:2015-01-01:alex:Assert that we have at least one stack element.
-              }; break;
-              case 0x96: {
-                bc_comment("not");
-                __push(new BooleanObject(this, !__pop->coerce_b()));
-              }; break;
-              case 0xa0: {
-                bc_comment("add");
-                
-                read_diadic;
-                
-                // TODO:2015-01-05:alex:This code is crap.
-                
-                if(cast(Number, v1) && cast(Number, v2))
-                  __push(new DoubleObject(this, v1->coerce_d() + v2->coerce_d()));
-                else
-                  __push(new StringObject(this, v1->coerce_s() + v2->coerce_s()));
-              }; break;
-              case 0xa1: {
-                bc_comment("subtract");
-                
-                read_diadic;
-                __push(new DoubleObject(this, v1->coerce_d() - v2->coerce_d()));
-              }; break;
-              case 0xa2: {
-                bc_comment("multiply");
-                
-                read_diadic;
-                __push(new DoubleObject(this, v1->coerce_d() * v2->coerce_d()));
-              }; break;
-              case 0xa3: {
-                bc_comment("divide");
-                
-                read_diadic;
-                __push(new DoubleObject(this, v1->coerce_d() / v2->coerce_d()));
-              }; break;
-              case 0xab: {
-                bc_comment("equals");
-                read_diadic;
-                __push(new BooleanObject(this, *v1 == *v2));
-              }; break;
-                
-              case 0x62: // getlocal with u30
-              case 0xd0: case 0xd1: case 0xd2: case 0xd3: { // getlocal_<n>
-                u30_t index = chr == 0x62 ? codeReader.readVU30() : chr - 0xd0;
-                bc_comment(std::string("getlocal") + (chr == 0x62 ? " " : "_") + std::to_string(index));
-                __push(registers[index]);
-              }; break;
-                
-              case 0x63: // setlocal with u30
-              case 0xd4: case 0xd5: case 0xd6: case 0xd7: { // setlocal_<n>
-                u30_t index = chr == 0x63 ? codeReader.readVU30() : chr - 0xd4;
-                bc_comment(std::string("setlocal") + (chr == 0x63 ? " " : "_") + std::to_string(index));
-                
-                registers[index] = __pop;
-              }; break;
+#pragma mark Default
               default:
-                bc_comment("[unknown] op_" + std::to_string(chr));
-            }
-          }
+                throw "Not implemented";
+            } // end switch
+            
+            // clean up
+            op.reset();
+          } // end while
           
           return __pop;
         }

@@ -18,6 +18,12 @@ namespace jswf {
        * Extends DefineShape3Tag with support for <tt>LINESTYLE2</tt>.
        */
       class DefineShape4Tag : public DefineShape3Tag {
+        /**
+         * Overridden to support <tt>LINESTYLE2</tt>.
+         */
+        
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
         virtual styles::LineStyle *readLineStyle() {
           styles::LineStyle *style = new styles::LineStyle();
           style->width = reader->readU16();
@@ -47,7 +53,11 @@ namespace jswf {
           
           return style;
         }
+#pragma clang diagnostic pop
         
+        /**
+         * Overridden to support <tt>LINESTYLE2</tt> flags.
+         */
         virtual void readBetween() {
           reader->align(1); // TODO:2014-12-14:alex:For all RECTs?
           flashReader.readRect(shape->edgeBounds);

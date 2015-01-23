@@ -6,6 +6,11 @@
 //  Copyright (c) 2014 Alexander Rath. All rights reserved.
 //
 
+/**
+ * @file
+ * Defines jswf::io::StringReader.
+ */
+
 #ifndef __jswf_io__StringReader__
 #define __jswf_io__StringReader__
 
@@ -39,6 +44,14 @@ namespace jswf {
        */
       void seek(int offset) {
         pos += offset;
+      }
+      
+      /**
+       * Sets the current reading position, does not change <tt>bitPos</tt>.
+       * @param [in] pos The new value for <tt>pos</tt>, cannot be negative.
+       */
+      void seek_abs(size_t pos) {
+        this->pos = pos;
       }
       
       void align(uint8_t bytes);

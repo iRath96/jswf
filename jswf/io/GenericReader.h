@@ -6,6 +6,11 @@
 //  Copyright (c) 2014 Alexander Rath. All rights reserved.
 //
 
+/**
+ * @file
+ * Defines jswf::io::GenericReader.
+ */
+
 #ifndef __jswf_io__GenericReader__
 #define __jswf_io__GenericReader__
 

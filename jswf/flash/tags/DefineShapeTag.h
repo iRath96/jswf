@@ -94,7 +94,7 @@ namespace jswf {
          * Reads a <tt>SHAPERECORD</tt>, the actions of which are projected on our shape.
          * @param [in,out] fbits,lbits nbits for <tt>FillStyle</tt> and <tt>LineStyle</tt>, changed upon <tt>StateNewStyles</tt>
          * @return Whether other records follow after this record (<tt>false</tt> means this was the last record)
-         * @throws std::out_of_range Thrown if a <tt>FillStyle</tt> or <tt>LineStyle</tt> is referenced that does not exist
+         * @throw std::out_of_range Thrown if a <tt>FillStyle</tt> or <tt>LineStyle</tt> is referenced that does not exist
          *         (i. e. if the <tt>SHAPRECORD</tt> is invalid).
          * @see Shape
          */

@@ -88,6 +88,7 @@ void renderSWF(std::string filename) {
   renderCurrentFrame();
 }
 
+// TODO:2015-01-15:alex:Test whether gradients still work.
 int main(int argc, char *argv[]) {
 #pragma mark Render
   
@@ -102,7 +103,7 @@ int main(int argc, char *argv[]) {
   char title[128];
   
   SDL_GL_GetDrawableSize(window, &width, &height);
-  sprintf(title, "jswf [%d x %d]", width, height);
+  snprintf(title, sizeof(title), "jswf [%d x %d]", width, height);
   SDL_SetWindowTitle(window, title);
   
   // Create an OpenGL context associated with the window.
@@ -149,7 +150,7 @@ int main(int argc, char *argv[]) {
   // - 24216.swf  [lines]
   // -  5481.swf  [lines] (before: [general failure])
   
-  if(false) {
+  if((false)) {
     for(int i = 0; i < 16; ++i)
       renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/24215.swf");
     return 0;
@@ -164,7 +165,7 @@ int main(int argc, char *argv[]) {
   
   renderSWF("test.swf");
   
-  if(false) {
+  if((false)) {
     renderSWF(PENGUIN_FILENAME);
     renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/2129.swf"); // face
     renderSWF("/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/1025.swf"); // hair
@@ -197,9 +198,12 @@ int main(int argc, char *argv[]) {
     SDL_Delay(1000/24);
   }
   
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunreachable-code"
 exitMainLoop:
   SDL_GL_DeleteContext(glcontext);
   SDL_Quit();
   
   return 0;
+#pragma clang diagnostic pop
 }

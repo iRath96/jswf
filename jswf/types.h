@@ -6,6 +6,11 @@
 //  Copyright (c) 2014 Alexander Rath. All rights reserved.
 //
 
+/**
+ * @file
+ * Defines primitive types used across the software.
+ */
+
 #ifndef jswf_types_h
 #define jswf_types_h
 
@@ -14,8 +19,8 @@
 
 namespace jswf {
   typedef double fb_t; //!< Represents <tt>FB</tt> values \todo Could store them differently
-  typedef int64_t sb_t; //!< Represents <tt>SB</tt> values (only up to 64 bits supported)
-  typedef uint64_t ub_t; //!< Represents <tt>UB</tt> values (only up to 64 bits supported)
+  typedef int64_t sb_t; //!< Represents <tt>SB</tt> values \warning Only up to 64 bits are supported
+  typedef uint64_t ub_t; //!< Represents <tt>UB</tt> values \warning Only up to 64 bits are supported
   typedef float fixed8_t; // stored like int16
   
   typedef uint8_t  u8_t;  //!< Represents <tt>U8</tt>

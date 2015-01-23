@@ -39,6 +39,8 @@ namespace jswf {
       NamespacePtr ns;
       NamespaceSetPtr nsSet;
       
+      Multiname() : Multiname(RTQNameLKind) {}
+      
       Multiname(Kind kind) {
         hasName = hasNS = hasNSSet = isAttribute = false;
         
@@ -97,6 +99,10 @@ namespace jswf {
           if(hasName) return isAttribute ? RTQNameAKind : RTQNameKind;
           else return isAttribute ? RTQNameLAKind : RTQNameLKind;
         }
+      }
+      
+      inline bool isQualified() const {
+        return hasName && (hasNS || hasNSSet);
       }
       
       std::string nameString() const {

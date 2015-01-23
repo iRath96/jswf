@@ -6,6 +6,11 @@
 //  Copyright (c) 2014 Alexander Rath. All rights reserved.
 //
 
+/**
+ * @file
+ * Defines jswf::flash::tags::TagWithCharacter.
+ */
+
 #ifndef jswf_TagWithCharacter_h
 #define jswf_TagWithCharacter_h
 

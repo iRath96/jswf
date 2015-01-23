@@ -10,18 +10,22 @@
 #define jswf_Namespace_h
 
 #include "types.h"
+#include <vector>
 
 namespace jswf {
   namespace avm2 {
     struct NamespaceKind {
       enum Enum : u8_t {
-        NormalNamespaceKind = 0x08,
-        PackageNamespaceKind = 0x16,
-        PackageInternalNsKind = 0x17,
-        ProtectedNamespaceKind = 0x18,
-        ExplicitNamespaceKind = 0x19,
-        StaticProtectedNsKind = 0x1a,
-        PrivateNamespaceKind = 0x05
+#define namespace_kinds \
+        NormalNamespaceKind    = 0x08, \
+        PackageNamespaceKind   = 0x16, \
+        PackageInternalNsKind  = 0x17, \
+        ProtectedNamespaceKind = 0x18, \
+        ExplicitNamespaceKind  = 0x19, \
+        StaticProtectedNsKind  = 0x1a, \
+        PrivateNamespaceKind   = 0x05, \
+        
+        namespace_kinds
       };
     };
     

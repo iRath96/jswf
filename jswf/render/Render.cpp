@@ -49,25 +49,7 @@ void render::renderFrame(const flash::Frame &frame, const Context &context) {
       clipDepth = obj.clipDepth;
     }
     
-    // x' = x * sx + y * r1 + tx
-    // y' = y * sy + x * r0 + ty
-    
-    // x'' = x' * sx' + y' * r1' + tx'
-    // x'' = (x * sx + y * r1 + tx) * sx' + (y * sy + x * r0 + ty) * r1' + tx'
-    
-    // sx^ = sx * sx' + r0 * r1'
-    // r1^ = r1 * sx' + sy * r1'
-    // tx^ = tx * sx' + ty * r1' + tx'
-    
-    // TODO:2014-12-25:alex:Put this in a function?
-    c.matrix.sx = obj.matrix.sx * context.matrix.sx + obj.matrix.r0 * context.matrix.r1;
-    c.matrix.sy = obj.matrix.sy * context.matrix.sy + obj.matrix.r1 * context.matrix.r0;
-    
-    c.matrix.r0 = obj.matrix.r0 * context.matrix.sy + obj.matrix.sx * context.matrix.r0;
-    c.matrix.r1 = obj.matrix.r1 * context.matrix.sx + obj.matrix.sy * context.matrix.r1;
-    
-    c.matrix.tx = obj.matrix.tx * context.matrix.sx + obj.matrix.ty * context.matrix.r1 + context.matrix.tx;
-    c.matrix.ty = obj.matrix.ty * context.matrix.sy + obj.matrix.tx * context.matrix.r0 + context.matrix.ty;
+    flash::Matrix::product(c.matrix, obj.matrix, context.matrix);
     
     flash::Character *character = context.document->dictionary[obj.characterId].get();
     if(dynamic_cast<flash::Shape *>(character)) { // Shape
@@ -92,68 +74,17 @@ void render::renderFrame(const flash::Frame &frame, const Context &context) {
   delete[] clip;
 }
 
-inline void reverseTransformPoint(const flash::Matrix &m, sb_t &x, sb_t &y) {
-  // mainly used for gradients.
-  
-  sb_t xOld = x, yOld = y;
-  if(m.sx == 0 && m.sy == 0) {
-    // x' = y * r1 + tx => y = (x' - tx) / r1
-    // y' = x * r0 + ty => x = (y' - ty) / r0
-    
-    x = (yOld - m.ty) / m.r0;
-    y = (xOld - m.tx) / m.r1;
-    
-    return;
-  }
-  
-  if(m.sx == 0) {
-    // x' = y * r1 + tx => y = (x' - tx) / r1
-    // y' = y * sy + x * r0 + ty => x = (y' - y * sy - ty) / r0
-    
-    y = (xOld - m.tx) / m.r1;
-    x = (yOld - y * m.sy - m.ty) / m.r0;
-    
-    return;
-  }
-  
-  if(m.sy == 0) {
-    // y' = x * r0 + ty => x = (y' - ty) / r0
-    // x' = x * sx + y * r1 + tx => y = (x' - x * sx - tx) / r1
-    
-    x = (yOld - m.ty) / m.r0;
-    y = (xOld - x * m.sx - m.tx) / m.r1;
-    
-    return;
-  }
-  
-  // x' = x * sx + y * r1 + tx
-  
-  // x = (x' - (y' - ty) / sy * r1 - tx) / sx / (1 - r0 / sy * r1 / sx)
-  // y = (y' - (x' - tx) / sx * r0 - ty) / sy / (1 - r1 / sx * r0 / sy)
-  
-  x = (xOld - (yOld - m.ty) / m.sy * m.r1 - m.tx) / m.sx / (1 - m.r0 / m.sy * m.r1 / m.sx);
-  y = (yOld - (xOld - m.tx) / m.sx * m.r0 - m.ty) / m.sy / (1 - m.r1 / m.sx * m.r0 / m.sy);
-  
-  return;
-}
-
-inline void transformPoint(const flash::Matrix &matrix, sb_t &x, sb_t &y) {
-  sb_t xOld = x, yOld = y;
-  x = xOld * matrix.sx + yOld * matrix.r1 + matrix.tx;
-  y = yOld * matrix.sy + xOld * matrix.r0 + matrix.ty;
-}
-
 inline uint8_t clamp(sb_t min, sb_t v, sb_t max) {
   return v < min ? min : (v > max ? max : v);
 }
 
 inline void transformColor(const flash::ColorTransform &ct, flash::RGBA &color) {
-  // TODO:2014-12-24:alex:Use a macro.
-  
-  color.r = clamp(0, (color.r * ct.rM / 256) + ct.rA, 255);
-  color.g = clamp(0, (color.g * ct.gM / 256) + ct.gA, 255);
-  color.b = clamp(0, (color.b * ct.bM / 256) + ct.bA, 255);
-  color.a = clamp(0, (color.a * ct.aM / 256) + ct.aA, 255);
+#define calc_chan(chan) color.chan = clamp(0, (color.chan * ct.chan##M / 256) + ct.chan##A, 255);
+  calc_chan(r);
+  calc_chan(g);
+  calc_chan(b);
+  calc_chan(a);
+#undef calc_chan
 }
 
 inline void reverseSegment(flash::Segment &segment) {
@@ -178,6 +109,9 @@ void calculateIntersections2(sb_t twipsY, std::vector<sb_t> &intersections, cons
 }
 
 void render::renderShape(const flash::Shape &shape, const Context &context) {
+  flash::Matrix invMat;
+  context.matrix.inverse(invMat);
+  
   //printf("shape => %d\n", shape.id);
   
   std::vector<flash::styles::FillStylePtr> fills;
@@ -196,8 +130,8 @@ void render::renderShape(const flash::Shape &shape, const Context &context) {
       for(auto edge = polygon->edges.begin(); edge != polygon->edges.end(); ++edge) {
         flash::Edge e = *edge;
         
-        transformPoint(context.matrix, e.a.x, e.a.y);
-        transformPoint(context.matrix, e.b.x, e.b.y);
+        context.matrix.transform(e.a.x, e.a.y);
+        context.matrix.transform(e.b.x, e.b.y);
         
         edges.push_back(e);
       }
@@ -285,10 +219,13 @@ void render::renderShape(const flash::Shape &shape, const Context &context) {
           color = ((flash::styles::SolidFillStyle *)fill.get())->color;
         } else if(dynamic_cast<flash::styles::GradientFillStyle *>(fill.get())) {
           flash::styles::GradientFillStyle *gradient = (flash::styles::GradientFillStyle *)fill.get();
+          flash::Matrix gInvMat;
+          gradient->matrix.inverse(gInvMat); // TODO:2015-01-15:alex:This is inefficient, and so are the two transforms below.
           
           sb_t gx = x * 20, gy = y * 20;
-          reverseTransformPoint(context.matrix, gx, gy);
-          reverseTransformPoint(gradient->matrix, gx, gy);
+          invMat.transform(gx, gy);
+          gInvMat.transform(gx, gy);
+          
           uint8_t ratio;
           
           // Normalize gx to [ 0; 16384 )

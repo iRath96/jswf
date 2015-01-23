@@ -22,9 +22,12 @@ namespace jswf {
      * @see ITagForSprite
      */
     class Sprite : public Character {
-      // Note: This property should be protected, but since "Friendship is neither inherited nor transitive."
-      //       that would cause a lot of trouble (redundancy or insecurity).
     public:
+      /**
+       * The temporary frame that tags operate on.
+       * @note This property should be protected, but since "Friendship is neither inherited nor transitive."
+       *       that would cause a lot of trouble (redundancy or insecurity).
+       */
       Frame temporaryFrame;
     public:
       std::vector<std::shared_ptr<tags::Tag>> tags;

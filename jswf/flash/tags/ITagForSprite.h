@@ -6,6 +6,11 @@
 //  Copyright (c) 2014 Alexander Rath. All rights reserved.
 //
 
+/**
+ * @file
+ * Defines jswf::flash::tags::ITagForSprite.
+ */
+
 #ifndef jswf_ITagForSprite_h
 #define jswf_ITagForSprite_h
 

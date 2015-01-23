@@ -8,7 +8,7 @@
 
 /**
  * @file
- * Defines jswf::flash::tags::Tag
+ * Defines jswf::flash::tags::Tag.
  */
 
 #ifndef __jswf__GenericTag__

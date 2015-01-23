@@ -6,6 +6,11 @@
 //  Copyright (c) 2014 Alexander Rath. All rights reserved.
 //
 
+/**
+ * @file
+ * Defines jswf::flash::tags::ITagForDocument.
+ */
+
 #ifndef jswf_ITagForDocument_h
 #define jswf_ITagForDocument_h
 

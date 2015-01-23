@@ -6,6 +6,11 @@
 //  Copyright (c) 2014 Alexander Rath. All rights reserved.
 //
 
+/**
+ * @file
+ * Defines jswf::flash::TagFactory.
+ */
+
 #ifndef __jswf_flash__Tag__
 #define __jswf_flash__Tag__
 
