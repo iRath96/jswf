@@ -1,0 +1,182 @@
+\hypertarget{classjswf_1_1flash_1_1_reader}{\section{jswf\+:\+:flash\+:\+:Reader Class Reference}
+\label{classjswf_1_1flash_1_1_reader}\index{jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}}
+}
+
+
+Servers as reader for complex structures like tags, colors, matrices, etc.  
+
+
+
+
+{\ttfamily \#include $<$Reader.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1flash_1_1_reader_ac5e07ac1401d7686dfa57b728c7942f3}{\hyperlink{classjswf_1_1flash_1_1_reader_ac5e07ac1401d7686dfa57b728c7942f3}{Reader} (std\+::shared\+\_\+ptr$<$ \hyperlink{classjswf_1_1io_1_1_generic_reader}{jswf\+::io\+::\+Generic\+Reader} $>$ r)}\label{classjswf_1_1flash_1_1_reader_ac5e07ac1401d7686dfa57b728c7942f3}
+
+\begin{DoxyCompactList}\small\item\em Create a \hyperlink{classjswf_1_1flash_1_1_reader}{Reader} using a {\ttfamily shared\+\_\+ptr} to a \hyperlink{classjswf_1_1io_1_1_generic_reader}{io\+::\+Generic\+Reader}. \end{DoxyCompactList}\item 
+void \hyperlink{classjswf_1_1flash_1_1_reader_ae8d28fd2729553fa394027cb79df53f9}{read\+Header} (\hyperlink{structjswf_1_1flash_1_1_header}{Header} \&header)
+\begin{DoxyCompactList}\small\item\em Reads a {\ttfamily H\+E\+A\+D\+E\+R} record. \end{DoxyCompactList}\item 
+\hyperlink{classjswf_1_1flash_1_1tags_1_1_tag}{tags\+::\+Tag} $\ast$ \hyperlink{classjswf_1_1flash_1_1_reader_a515a1f5e100cd4bbb236e147d26d5987}{read\+Tag} ()
+\begin{DoxyCompactList}\small\item\em Reads a {\ttfamily T\+A\+G} record. \end{DoxyCompactList}\item 
+void \hyperlink{classjswf_1_1flash_1_1_reader_a4ae8c183b1dd3661bc16a85ccf93973e}{read\+Rect} (\hyperlink{structjswf_1_1flash_1_1_rect}{Rect} \&rect)
+\begin{DoxyCompactList}\small\item\em Reads a {\ttfamily R\+E\+C\+T} record. \end{DoxyCompactList}\item 
+void \hyperlink{classjswf_1_1flash_1_1_reader_a1619dc50eea06c0cbac9c5065d1c80d4}{read\+Matrix} (\hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix} \&matrix)
+\begin{DoxyCompactList}\small\item\em Reads a {\ttfamily M\+A\+T\+R\+I\+X} record. \end{DoxyCompactList}\item 
+void \hyperlink{classjswf_1_1flash_1_1_reader_a5cc00c7ec945fffc7c73ca6d741b4ccc}{read\+Color\+Transform} (\hyperlink{structjswf_1_1flash_1_1_color_transform}{Color\+Transform} \&color\+Transform, bool with\+Alpha)
+\begin{DoxyCompactList}\small\item\em Reads a {\ttfamily C\+X\+F\+O\+R\+M} / {\ttfamily C\+X\+F\+O\+R\+M\+W\+I\+T\+H\+A\+L\+P\+H\+A} record. \end{DoxyCompactList}\item 
+void \hyperlink{classjswf_1_1flash_1_1_reader_abba53a3337f589e3641681c2251e4d8d}{read\+R\+G\+B} (\hyperlink{structjswf_1_1flash_1_1_r_g_b_a}{R\+G\+B\+A} \&rgba)
+\begin{DoxyCompactList}\small\item\em Reads a {\ttfamily R\+G\+B} record. \end{DoxyCompactList}\item 
+void \hyperlink{classjswf_1_1flash_1_1_reader_a2c89e5f540d698d4d4fc4dc983dcf81c}{read\+R\+G\+B\+A} (\hyperlink{structjswf_1_1flash_1_1_r_g_b_a}{R\+G\+B\+A} \&rgba)
+\begin{DoxyCompactList}\small\item\em Reads a {\ttfamily \hyperlink{structjswf_1_1flash_1_1_r_g_b_a}{R\+G\+B\+A}} record. \end{DoxyCompactList}\item 
+void \hyperlink{classjswf_1_1flash_1_1_reader_a24336182f01a3250950dd5b6c20d0b11}{read\+A\+R\+G\+B} (\hyperlink{structjswf_1_1flash_1_1_r_g_b_a}{R\+G\+B\+A} \&rgba)
+\begin{DoxyCompactList}\small\item\em Reads a {\ttfamily A\+R\+G\+B} record. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1flash_1_1_reader_a3068a74af985abeea11ac36673e7fcbd}{std\+::shared\+\_\+ptr\\*
+$<$ \hyperlink{classjswf_1_1io_1_1_generic_reader}{jswf\+::io\+::\+Generic\+Reader} $>$ \hyperlink{classjswf_1_1flash_1_1_reader_a3068a74af985abeea11ac36673e7fcbd}{reader}}\label{classjswf_1_1flash_1_1_reader_a3068a74af985abeea11ac36673e7fcbd}
+
+\begin{DoxyCompactList}\small\item\em A {\ttfamily shared\+\_\+ptr} to the \hyperlink{classjswf_1_1io_1_1_generic_reader}{io\+::\+Generic\+Reader} we read from. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Servers as reader for complex structures like tags, colors, matrices, etc. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classjswf_1_1flash_1_1_reader_a24336182f01a3250950dd5b6c20d0b11}{\index{jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}!read\+A\+R\+G\+B@{read\+A\+R\+G\+B}}
+\index{read\+A\+R\+G\+B@{read\+A\+R\+G\+B}!jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}}
+\subsubsection[{read\+A\+R\+G\+B}]{\setlength{\rightskip}{0pt plus 5cm}void Reader\+::read\+A\+R\+G\+B (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+G\+B\+A} \&}]{rgba}
+\end{DoxyParamCaption}
+)}}\label{classjswf_1_1flash_1_1_reader_a24336182f01a3250950dd5b6c20d0b11}
+
+
+Reads a {\ttfamily A\+R\+G\+B} record. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em rgba} & A reference to the structure to read into. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classjswf_1_1flash_1_1_reader_a5cc00c7ec945fffc7c73ca6d741b4ccc}{\index{jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}!read\+Color\+Transform@{read\+Color\+Transform}}
+\index{read\+Color\+Transform@{read\+Color\+Transform}!jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}}
+\subsubsection[{read\+Color\+Transform}]{\setlength{\rightskip}{0pt plus 5cm}void Reader\+::read\+Color\+Transform (
+\begin{DoxyParamCaption}
+\item[{{\bf Color\+Transform} \&}]{color\+Transform, }
+\item[{bool}]{with\+Alpha}
+\end{DoxyParamCaption}
+)}}\label{classjswf_1_1flash_1_1_reader_a5cc00c7ec945fffc7c73ca6d741b4ccc}
+
+
+Reads a {\ttfamily C\+X\+F\+O\+R\+M} / {\ttfamily C\+X\+F\+O\+R\+M\+W\+I\+T\+H\+A\+L\+P\+H\+A} record. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em color\+Transform} & A reference to the structure to read into. \\
+\hline
+\mbox{\tt in}  & {\em with\+Alpha} & {\ttfamily true} if a {\ttfamily C\+X\+F\+O\+R\+M\+W\+I\+T\+H\+A\+L\+P\+H\+A} should be read, {\ttfamily false} if a {\ttfamily C\+X\+F\+O\+R\+M} should be read. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classjswf_1_1flash_1_1_reader_ae8d28fd2729553fa394027cb79df53f9}{\index{jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}!read\+Header@{read\+Header}}
+\index{read\+Header@{read\+Header}!jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}}
+\subsubsection[{read\+Header}]{\setlength{\rightskip}{0pt plus 5cm}void Reader\+::read\+Header (
+\begin{DoxyParamCaption}
+\item[{{\bf Header} \&}]{header}
+\end{DoxyParamCaption}
+)}}\label{classjswf_1_1flash_1_1_reader_ae8d28fd2729553fa394027cb79df53f9}
+
+
+Reads a {\ttfamily H\+E\+A\+D\+E\+R} record. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em header} & A reference to the structure to read into. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classjswf_1_1flash_1_1_reader_a1619dc50eea06c0cbac9c5065d1c80d4}{\index{jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}!read\+Matrix@{read\+Matrix}}
+\index{read\+Matrix@{read\+Matrix}!jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}}
+\subsubsection[{read\+Matrix}]{\setlength{\rightskip}{0pt plus 5cm}void Reader\+::read\+Matrix (
+\begin{DoxyParamCaption}
+\item[{{\bf Matrix} \&}]{matrix}
+\end{DoxyParamCaption}
+)}}\label{classjswf_1_1flash_1_1_reader_a1619dc50eea06c0cbac9c5065d1c80d4}
+
+
+Reads a {\ttfamily M\+A\+T\+R\+I\+X} record. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em matrix} & A reference to the structure to read into. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classjswf_1_1flash_1_1_reader_a4ae8c183b1dd3661bc16a85ccf93973e}{\index{jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}!read\+Rect@{read\+Rect}}
+\index{read\+Rect@{read\+Rect}!jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}}
+\subsubsection[{read\+Rect}]{\setlength{\rightskip}{0pt plus 5cm}void Reader\+::read\+Rect (
+\begin{DoxyParamCaption}
+\item[{{\bf Rect} \&}]{rect}
+\end{DoxyParamCaption}
+)}}\label{classjswf_1_1flash_1_1_reader_a4ae8c183b1dd3661bc16a85ccf93973e}
+
+
+Reads a {\ttfamily R\+E\+C\+T} record. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em rect} & A reference to the structure to read into. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classjswf_1_1flash_1_1_reader_abba53a3337f589e3641681c2251e4d8d}{\index{jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}!read\+R\+G\+B@{read\+R\+G\+B}}
+\index{read\+R\+G\+B@{read\+R\+G\+B}!jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}}
+\subsubsection[{read\+R\+G\+B}]{\setlength{\rightskip}{0pt plus 5cm}void Reader\+::read\+R\+G\+B (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+G\+B\+A} \&}]{rgba}
+\end{DoxyParamCaption}
+)}}\label{classjswf_1_1flash_1_1_reader_abba53a3337f589e3641681c2251e4d8d}
+
+
+Reads a {\ttfamily R\+G\+B} record. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em rgba} & A reference to the structure to read into. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classjswf_1_1flash_1_1_reader_a2c89e5f540d698d4d4fc4dc983dcf81c}{\index{jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}!read\+R\+G\+B\+A@{read\+R\+G\+B\+A}}
+\index{read\+R\+G\+B\+A@{read\+R\+G\+B\+A}!jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}}
+\subsubsection[{read\+R\+G\+B\+A}]{\setlength{\rightskip}{0pt plus 5cm}void Reader\+::read\+R\+G\+B\+A (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+G\+B\+A} \&}]{rgba}
+\end{DoxyParamCaption}
+)}}\label{classjswf_1_1flash_1_1_reader_a2c89e5f540d698d4d4fc4dc983dcf81c}
+
+
+Reads a {\ttfamily \hyperlink{structjswf_1_1flash_1_1_r_g_b_a}{R\+G\+B\+A}} record. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em rgba} & A reference to the structure to read into. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classjswf_1_1flash_1_1_reader_a515a1f5e100cd4bbb236e147d26d5987}{\index{jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}!read\+Tag@{read\+Tag}}
+\index{read\+Tag@{read\+Tag}!jswf\+::flash\+::\+Reader@{jswf\+::flash\+::\+Reader}}
+\subsubsection[{read\+Tag}]{\setlength{\rightskip}{0pt plus 5cm}{\bf tags\+::\+Tag} $\ast$ Reader\+::read\+Tag (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classjswf_1_1flash_1_1_reader_a515a1f5e100cd4bbb236e147d26d5987}
+
+
+Reads a {\ttfamily T\+A\+G} record. 
+
+\begin{DoxyReturn}{Returns}
+A pointer to a newly allocated tag object (polymorphistic to Tag) 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+jswf/flash/Reader.\+h\item 
+jswf/flash/Reader.\+cpp\end{DoxyCompactItemize}

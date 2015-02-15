@@ -1,0 +1,72 @@
+\hypertarget{classjswf_1_1flash_1_1tags_1_1_define_shape3_tag}{\section{jswf\+:\+:flash\+:\+:tags\+:\+:Define\+Shape3\+Tag Class Reference}
+\label{classjswf_1_1flash_1_1tags_1_1_define_shape3_tag}\index{jswf\+::flash\+::tags\+::\+Define\+Shape3\+Tag@{jswf\+::flash\+::tags\+::\+Define\+Shape3\+Tag}}
+}
+
+
+Extends \hyperlink{classjswf_1_1flash_1_1tags_1_1_define_shape2_tag}{Define\+Shape2\+Tag} with support for transparency in colors by using \hyperlink{classjswf_1_1flash_1_1_reader_a2c89e5f540d698d4d4fc4dc983dcf81c}{Reader\+::read\+R\+G\+B\+A} instead of \hyperlink{classjswf_1_1flash_1_1_reader_abba53a3337f589e3641681c2251e4d8d}{Reader\+::read\+R\+G\+B} .  
+
+
+
+
+{\ttfamily \#include $<$Define\+Shape3\+Tag.\+h$>$}
+
+Inheritance diagram for jswf\+:\+:flash\+:\+:tags\+:\+:Define\+Shape3\+Tag\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{classjswf_1_1flash_1_1tags_1_1_define_shape3_tag}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1flash_1_1tags_1_1_define_shape3_tag_ace71312c7aba7d88c3da2c122e7f9320}{{\bfseries Define\+Shape3\+Tag} (tag\+\_\+type\+\_\+t t, std\+::string \&p)}\label{classjswf_1_1flash_1_1tags_1_1_define_shape3_tag_ace71312c7aba7d88c3da2c122e7f9320}
+
+\item 
+\hypertarget{classjswf_1_1flash_1_1tags_1_1_define_shape3_tag_aa72e1084cb0052dec2b23a228db0d063}{{\bfseries Define\+Shape3\+Tag} (tag\+\_\+type\+\_\+t t, std\+::string \&p, bool)}\label{classjswf_1_1flash_1_1tags_1_1_define_shape3_tag_aa72e1084cb0052dec2b23a228db0d063}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1flash_1_1tags_1_1_define_shape3_tag_a14b7e7770473f51a1658e712d968552c}{virtual void \hyperlink{classjswf_1_1flash_1_1tags_1_1_define_shape3_tag_a14b7e7770473f51a1658e712d968552c}{read\+Between} ()}\label{classjswf_1_1flash_1_1tags_1_1_define_shape3_tag_a14b7e7770473f51a1658e712d968552c}
+
+\begin{DoxyCompactList}\small\item\em Implemented by subclasses to perform reads between 'Bounds' and 'Fill\+Style\+Array'. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classjswf_1_1flash_1_1tags_1_1_define_shape3_tag_a23bdaf9f98d600edbc0222c3ba4edc39}{read\+Color} (\hyperlink{structjswf_1_1flash_1_1_r_g_b_a}{R\+G\+B\+A} \&rgba)
+\begin{DoxyCompactList}\small\item\em Reads a color from the payload stream. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Extends \hyperlink{classjswf_1_1flash_1_1tags_1_1_define_shape2_tag}{Define\+Shape2\+Tag} with support for transparency in colors by using \hyperlink{classjswf_1_1flash_1_1_reader_a2c89e5f540d698d4d4fc4dc983dcf81c}{Reader\+::read\+R\+G\+B\+A} instead of \hyperlink{classjswf_1_1flash_1_1_reader_abba53a3337f589e3641681c2251e4d8d}{Reader\+::read\+R\+G\+B} . 
+
+\subsection{Member Function Documentation}
+\hypertarget{classjswf_1_1flash_1_1tags_1_1_define_shape3_tag_a23bdaf9f98d600edbc0222c3ba4edc39}{\index{jswf\+::flash\+::tags\+::\+Define\+Shape3\+Tag@{jswf\+::flash\+::tags\+::\+Define\+Shape3\+Tag}!read\+Color@{read\+Color}}
+\index{read\+Color@{read\+Color}!jswf\+::flash\+::tags\+::\+Define\+Shape3\+Tag@{jswf\+::flash\+::tags\+::\+Define\+Shape3\+Tag}}
+\subsubsection[{read\+Color}]{\setlength{\rightskip}{0pt plus 5cm}virtual void jswf\+::flash\+::tags\+::\+Define\+Shape3\+Tag\+::read\+Color (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+G\+B\+A} \&}]{rgba}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classjswf_1_1flash_1_1tags_1_1_define_shape3_tag_a23bdaf9f98d600edbc0222c3ba4edc39}
+
+
+Reads a color from the payload stream. 
+
+Subclasses can override this to add support for other color schemes (e. G. \hyperlink{structjswf_1_1flash_1_1_r_g_b_a}{R\+G\+B\+A}) 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em rgba} & The R\+G\+B\+A-\/field to read into. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classjswf_1_1flash_1_1tags_1_1_define_shape_tag_a4608b4e2716301637136fbbd1c5040ab}{read\+Fill\+Style} 
+
+\hyperlink{classjswf_1_1flash_1_1tags_1_1_define_shape_tag_aecc1cc8ae869cd1bce8ec793c4c8124e}{read\+Line\+Style} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{classjswf_1_1flash_1_1tags_1_1_define_shape_tag_ad6886a89c251b532eecd1edf306943c1}{jswf\+::flash\+::tags\+::\+Define\+Shape\+Tag}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+jswf/flash/tags/Define\+Shape3\+Tag.\+h\end{DoxyCompactItemize}

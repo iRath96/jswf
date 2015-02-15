@@ -1,0 +1,138 @@
+\hypertarget{classjswf_1_1io_1_1_string_reader}{\section{jswf\+:\+:io\+:\+:String\+Reader Class Reference}
+\label{classjswf_1_1io_1_1_string_reader}\index{jswf\+::io\+::\+String\+Reader@{jswf\+::io\+::\+String\+Reader}}
+}
+
+
+Implements \hyperlink{classjswf_1_1io_1_1_generic_reader}{io\+::\+Generic\+Reader} using a string as stream.  
+
+
+
+
+{\ttfamily \#include $<$String\+Reader.\+h$>$}
+
+Inheritance diagram for jswf\+:\+:io\+:\+:String\+Reader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classjswf_1_1io_1_1_string_reader}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classjswf_1_1io_1_1_string_reader_a929e5ce4945d5685c15e45f8a3072248}{String\+Reader} (std\+::string \hyperlink{namespacejswf_a755127d61081aa8af105eb800aa2c1ec}{string}=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{classjswf_1_1io_1_1_string_reader}{String\+Reader} with a given string. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_string_reader_a3c204c47950debc47676d29b9a6dea06}{uint8\+\_\+t \hyperlink{classjswf_1_1io_1_1_string_reader_a3c204c47950debc47676d29b9a6dea06}{read\+U8} ()}\label{classjswf_1_1io_1_1_string_reader_a3c204c47950debc47676d29b9a6dea06}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned 8-\/bit unsigned integer. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_string_reader_a460f5655e6729ad34548791f7fc4a8f5}{uint16\+\_\+t \hyperlink{classjswf_1_1io_1_1_string_reader_a460f5655e6729ad34548791f7fc4a8f5}{read\+U16} ()}\label{classjswf_1_1io_1_1_string_reader_a460f5655e6729ad34548791f7fc4a8f5}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned 16-\/bit unsigned integer (little endian) \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_string_reader_a44867abdd6da4a8ba548380d973bd24a}{uint32\+\_\+t \hyperlink{classjswf_1_1io_1_1_string_reader_a44867abdd6da4a8ba548380d973bd24a}{read\+U32} ()}\label{classjswf_1_1io_1_1_string_reader_a44867abdd6da4a8ba548380d973bd24a}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned 32-\/bit unsigned integer (little endian) \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_string_reader_aa5e7d00a821f006f1c3c243dc094da3c}{std\+::string \hyperlink{classjswf_1_1io_1_1_string_reader_aa5e7d00a821f006f1c3c243dc094da3c}{read\+String} ()}\label{classjswf_1_1io_1_1_string_reader_aa5e7d00a821f006f1c3c243dc094da3c}
+
+\begin{DoxyCompactList}\small\item\em Reads a N\+U\+L-\/terminated string (C-\/string) \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_string_reader_a404dbc73f76fdf1c27d5e0526530babe}{std\+::string \hyperlink{classjswf_1_1io_1_1_string_reader_a404dbc73f76fdf1c27d5e0526530babe}{read\+String} (size\+\_\+t)}\label{classjswf_1_1io_1_1_string_reader_a404dbc73f76fdf1c27d5e0526530babe}
+
+\begin{DoxyCompactList}\small\item\em Reads a string of a given length. \end{DoxyCompactList}\item 
+void \hyperlink{classjswf_1_1io_1_1_string_reader_ab695ac277d141b4bb4ff4aa79143ef84}{seek} (int offset)
+\begin{DoxyCompactList}\small\item\em Adds an offset to the current reading position, does not change {\ttfamily bit\+Pos}. \end{DoxyCompactList}\item 
+void \hyperlink{classjswf_1_1io_1_1_string_reader_a6a51bd9cd491ba5cb57cc24ef9f2a389}{seek\+\_\+abs} (size\+\_\+t \hyperlink{classjswf_1_1io_1_1_generic_reader_a29dcfa1317485ea04e6caef568e803ce}{pos})
+\begin{DoxyCompactList}\small\item\em Sets the current reading position, does not change {\ttfamily bit\+Pos}. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_string_reader_a355a2aab277f71ef59d4cc4afec44d84}{void \hyperlink{classjswf_1_1io_1_1_string_reader_a355a2aab277f71ef59d4cc4afec44d84}{align} (uint8\+\_\+t bytes)}\label{classjswf_1_1io_1_1_string_reader_a355a2aab277f71ef59d4cc4afec44d84}
+
+\begin{DoxyCompactList}\small\item\em Aligns the reader to a multiple of 'bytes', resets bit-\/position. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_string_reader_a796d972ec02d45b475bac1e9c6575195}{uint64\+\_\+t \hyperlink{classjswf_1_1io_1_1_string_reader_a796d972ec02d45b475bac1e9c6575195}{read\+U\+B} (uint8\+\_\+t nbits)}\label{classjswf_1_1io_1_1_string_reader_a796d972ec02d45b475bac1e9c6575195}
+
+\begin{DoxyCompactList}\small\item\em Reads a unsigned bit-\/field of length {\ttfamily nbits} \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_string_reader_a4da4ef9c89f5c23c1a890912c5d416b6}{std\+::string \hyperlink{classjswf_1_1io_1_1_string_reader_a4da4ef9c89f5c23c1a890912c5d416b6}{read\+Remaining} ()}\label{classjswf_1_1io_1_1_string_reader_a4da4ef9c89f5c23c1a890912c5d416b6}
+
+\begin{DoxyCompactList}\small\item\em Reads all remaining bytes (bit-\/position rounded up) \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_string_reader_a5820f44ae96ae632bac44821e2f48c01}{bool \hyperlink{classjswf_1_1io_1_1_string_reader_a5820f44ae96ae632bac44821e2f48c01}{eof} ()}\label{classjswf_1_1io_1_1_string_reader_a5820f44ae96ae632bac44821e2f48c01}
+
+\begin{DoxyCompactList}\small\item\em Returns true if the end of stream is reached, false otherwise. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_string_reader_a9f68d4083aca232bfef3c4f80dfe9c6a}{\hyperlink{namespacejswf_a19b2a5980fe3b05994a2127a3c7e0521}{s32\+\_\+t} \hyperlink{classjswf_1_1io_1_1_string_reader_a9f68d4083aca232bfef3c4f80dfe9c6a}{read\+S24} ()}\label{classjswf_1_1io_1_1_string_reader_a9f68d4083aca232bfef3c4f80dfe9c6a}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned 24-\/bit unsigned integer (little endian) \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_string_reader_af2b064506a4f395613d5d8b915506d10}{\hyperlink{namespacejswf_ae68dd480b6437e9a20db7b004283a466}{u32\+\_\+t} \hyperlink{classjswf_1_1io_1_1_string_reader_af2b064506a4f395613d5d8b915506d10}{read\+V\+U30} ()}\label{classjswf_1_1io_1_1_string_reader_af2b064506a4f395613d5d8b915506d10}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned, variable-\/length encoded 30-\/bit unsigned integer. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_string_reader_a2ce0c1a1cde08073e9eb452344be96f8}{\hyperlink{namespacejswf_ae68dd480b6437e9a20db7b004283a466}{u32\+\_\+t} \hyperlink{classjswf_1_1io_1_1_string_reader_a2ce0c1a1cde08073e9eb452344be96f8}{read\+V\+U32} ()}\label{classjswf_1_1io_1_1_string_reader_a2ce0c1a1cde08073e9eb452344be96f8}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned, variable-\/length encoded 32-\/bit unsigned integer. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_string_reader_a4d73ed16cfc8382c29e7879b6c449cc8}{\hyperlink{namespacejswf_a19b2a5980fe3b05994a2127a3c7e0521}{s32\+\_\+t} \hyperlink{classjswf_1_1io_1_1_string_reader_a4d73ed16cfc8382c29e7879b6c449cc8}{read\+V\+S32} ()}\label{classjswf_1_1io_1_1_string_reader_a4d73ed16cfc8382c29e7879b6c449cc8}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned, variable-\/length encoded 32-\/bit signed integer. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_string_reader_a9d9df157b37598bd0ace7100245e359a}{\hyperlink{namespacejswf_acfbb3c7c9fbb807e233387995eb76a96}{d64\+\_\+t} \hyperlink{classjswf_1_1io_1_1_string_reader_a9d9df157b37598bd0ace7100245e359a}{read\+D64} ()}\label{classjswf_1_1io_1_1_string_reader_a9d9df157b37598bd0ace7100245e359a}
+
+\begin{DoxyCompactList}\small\item\em Reads a I\+E\+E-\/754 double-\/precision floating point number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1io_1_1_string_reader_a6671e2e8098cd1b6a64a3c562d9824a4}{std\+::string \hyperlink{classjswf_1_1io_1_1_string_reader_a6671e2e8098cd1b6a64a3c562d9824a4}{string}}\label{classjswf_1_1io_1_1_string_reader_a6671e2e8098cd1b6a64a3c562d9824a4}
+
+\begin{DoxyCompactList}\small\item\em The string we are reading from. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implements \hyperlink{classjswf_1_1io_1_1_generic_reader}{io\+::\+Generic\+Reader} using a string as stream. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classjswf_1_1io_1_1_string_reader_a929e5ce4945d5685c15e45f8a3072248}{\index{jswf\+::io\+::\+String\+Reader@{jswf\+::io\+::\+String\+Reader}!String\+Reader@{String\+Reader}}
+\index{String\+Reader@{String\+Reader}!jswf\+::io\+::\+String\+Reader@{jswf\+::io\+::\+String\+Reader}}
+\subsubsection[{String\+Reader}]{\setlength{\rightskip}{0pt plus 5cm}jswf\+::io\+::\+String\+Reader\+::\+String\+Reader (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{string = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classjswf_1_1io_1_1_string_reader_a929e5ce4945d5685c15e45f8a3072248}
+
+
+Constructs a \hyperlink{classjswf_1_1io_1_1_string_reader}{String\+Reader} with a given string. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em string} & The string to be used as data source \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classjswf_1_1io_1_1_string_reader_ab695ac277d141b4bb4ff4aa79143ef84}{\index{jswf\+::io\+::\+String\+Reader@{jswf\+::io\+::\+String\+Reader}!seek@{seek}}
+\index{seek@{seek}!jswf\+::io\+::\+String\+Reader@{jswf\+::io\+::\+String\+Reader}}
+\subsubsection[{seek}]{\setlength{\rightskip}{0pt plus 5cm}void jswf\+::io\+::\+String\+Reader\+::seek (
+\begin{DoxyParamCaption}
+\item[{int}]{offset}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classjswf_1_1io_1_1_string_reader_ab695ac277d141b4bb4ff4aa79143ef84}
+
+
+Adds an offset to the current reading position, does not change {\ttfamily bit\+Pos}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em offset} & The offset to add to {\ttfamily pos}, can be negative. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classjswf_1_1io_1_1_string_reader_a6a51bd9cd491ba5cb57cc24ef9f2a389}{\index{jswf\+::io\+::\+String\+Reader@{jswf\+::io\+::\+String\+Reader}!seek\+\_\+abs@{seek\+\_\+abs}}
+\index{seek\+\_\+abs@{seek\+\_\+abs}!jswf\+::io\+::\+String\+Reader@{jswf\+::io\+::\+String\+Reader}}
+\subsubsection[{seek\+\_\+abs}]{\setlength{\rightskip}{0pt plus 5cm}void jswf\+::io\+::\+String\+Reader\+::seek\+\_\+abs (
+\begin{DoxyParamCaption}
+\item[{size\+\_\+t}]{pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classjswf_1_1io_1_1_string_reader_a6a51bd9cd491ba5cb57cc24ef9f2a389}
+
+
+Sets the current reading position, does not change {\ttfamily bit\+Pos}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em pos} & The new value for {\ttfamily pos}, cannot be negative. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+jswf/io/\hyperlink{_string_reader_8h}{String\+Reader.\+h}\item 
+jswf/io/String\+Reader.\+cpp\end{DoxyCompactItemize}

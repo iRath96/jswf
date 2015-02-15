@@ -1,0 +1,111 @@
+\hypertarget{_render_8cpp}{\section{jswf/render/\+Render.cpp File Reference}
+\label{_render_8cpp}\index{jswf/render/\+Render.\+cpp@{jswf/render/\+Render.\+cpp}}
+}
+{\ttfamily \#include \char`\"{}Render.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Document.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_render_8cpp_ab1833e2954fb6ab5f69da9f4b15d3ae9}{F\+S\+A\+A}~4
+\item 
+\#define \hyperlink{_render_8cpp_a82a7d0c7fc27559a4e79acaa3ac77fc1}{F\+S\+A\+A2}~(\hyperlink{_render_8cpp_ab1833e2954fb6ab5f69da9f4b15d3ae9}{F\+S\+A\+A} $\ast$ \hyperlink{_render_8cpp_ab1833e2954fb6ab5f69da9f4b15d3ae9}{F\+S\+A\+A})
+\item 
+\#define \hyperlink{_render_8cpp_a14436d295a0ffbc32121851a0ba30513}{p8}(a, i)~$\ast$((uint8\+\_\+t $\ast$)(\&a)+i)
+\item 
+\#define \hyperlink{_render_8cpp_a0ce4499743bd9a69dc4699afe8675d88}{m8}(i, a)~\hyperlink{_render_8cpp_a14436d295a0ffbc32121851a0ba30513}{p8}(pixel, i) = \hyperlink{_render_8cpp_a14436d295a0ffbc32121851a0ba30513}{p8}(pixel, i) $\ast$ (1 -\/ blend) + a $\ast$ blend;
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_render_8cpp_a2bef45aad1e17fee152ee2f663ac6ff3}{reverse\+Transform\+Point} (const \hyperlink{structjswf_1_1flash_1_1_matrix}{flash\+::\+Matrix} \&m, \hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} \&x, \hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} \&y)
+\item 
+void \hyperlink{_render_8cpp_ad66c80a63f526e58dcd878e04af04f8e}{transform\+Point} (const \hyperlink{structjswf_1_1flash_1_1_matrix}{flash\+::\+Matrix} \&matrix, \hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} \&x, \hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} \&y)
+\item 
+uint8\+\_\+t \hyperlink{_render_8cpp_a47427bc519f9a94f277719b167d373c7}{clamp} (\hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} min, \hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} v, \hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} max)
+\item 
+void \hyperlink{_render_8cpp_a17e9c5c2edb4db72289e608c255458fc}{transform\+Color} (const \hyperlink{structjswf_1_1flash_1_1_color_transform}{flash\+::\+Color\+Transform} \&ct, \hyperlink{structjswf_1_1flash_1_1_r_g_b_a}{flash\+::\+R\+G\+B\+A} \&color)
+\item 
+void \hyperlink{_render_8cpp_ac76ed64dc9dfe6964dace71fec5fc08c}{reverse\+Segment} (\hyperlink{structjswf_1_1flash_1_1_segment}{flash\+::\+Segment} \&segment)
+\item 
+void \hyperlink{_render_8cpp_ad2243e4457cae571702e1756f92f72fe}{calculate\+Intersections2} (\hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} twips\+Y, std\+::vector$<$ \hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} $>$ \&intersections, const std\+::vector$<$ \hyperlink{structjswf_1_1flash_1_1_edge}{flash\+::\+Edge} $>$ \&edges)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{_render_8cpp_ab1833e2954fb6ab5f69da9f4b15d3ae9}{\index{Render.\+cpp@{Render.\+cpp}!F\+S\+A\+A@{F\+S\+A\+A}}
+\index{F\+S\+A\+A@{F\+S\+A\+A}!Render.\+cpp@{Render.\+cpp}}
+\subsubsection[{F\+S\+A\+A}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+S\+A\+A~4}}\label{_render_8cpp_ab1833e2954fb6ab5f69da9f4b15d3ae9}
+\hypertarget{_render_8cpp_a82a7d0c7fc27559a4e79acaa3ac77fc1}{\index{Render.\+cpp@{Render.\+cpp}!F\+S\+A\+A2@{F\+S\+A\+A2}}
+\index{F\+S\+A\+A2@{F\+S\+A\+A2}!Render.\+cpp@{Render.\+cpp}}
+\subsubsection[{F\+S\+A\+A2}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+S\+A\+A2~({\bf F\+S\+A\+A} $\ast$ {\bf F\+S\+A\+A})}}\label{_render_8cpp_a82a7d0c7fc27559a4e79acaa3ac77fc1}
+\hypertarget{_render_8cpp_a0ce4499743bd9a69dc4699afe8675d88}{\index{Render.\+cpp@{Render.\+cpp}!m8@{m8}}
+\index{m8@{m8}!Render.\+cpp@{Render.\+cpp}}
+\subsubsection[{m8}]{\setlength{\rightskip}{0pt plus 5cm}\#define m8(
+\begin{DoxyParamCaption}
+\item[{}]{i, }
+\item[{}]{a}
+\end{DoxyParamCaption}
+)~{\bf p8}(pixel, i) = {\bf p8}(pixel, i) $\ast$ (1 -\/ blend) + a $\ast$ blend;}}\label{_render_8cpp_a0ce4499743bd9a69dc4699afe8675d88}
+\hypertarget{_render_8cpp_a14436d295a0ffbc32121851a0ba30513}{\index{Render.\+cpp@{Render.\+cpp}!p8@{p8}}
+\index{p8@{p8}!Render.\+cpp@{Render.\+cpp}}
+\subsubsection[{p8}]{\setlength{\rightskip}{0pt plus 5cm}\#define p8(
+\begin{DoxyParamCaption}
+\item[{}]{a, }
+\item[{}]{i}
+\end{DoxyParamCaption}
+)~$\ast$((uint8\+\_\+t $\ast$)(\&a)+i)}}\label{_render_8cpp_a14436d295a0ffbc32121851a0ba30513}
+
+
+\subsection{Function Documentation}
+\hypertarget{_render_8cpp_ad2243e4457cae571702e1756f92f72fe}{\index{Render.\+cpp@{Render.\+cpp}!calculate\+Intersections2@{calculate\+Intersections2}}
+\index{calculate\+Intersections2@{calculate\+Intersections2}!Render.\+cpp@{Render.\+cpp}}
+\subsubsection[{calculate\+Intersections2}]{\setlength{\rightskip}{0pt plus 5cm}void calculate\+Intersections2 (
+\begin{DoxyParamCaption}
+\item[{{\bf sb\+\_\+t}}]{twips\+Y, }
+\item[{std\+::vector$<$ {\bf sb\+\_\+t} $>$ \&}]{intersections, }
+\item[{const std\+::vector$<$ {\bf flash\+::\+Edge} $>$ \&}]{edges}
+\end{DoxyParamCaption}
+)}}\label{_render_8cpp_ad2243e4457cae571702e1756f92f72fe}
+\hypertarget{_render_8cpp_a47427bc519f9a94f277719b167d373c7}{\index{Render.\+cpp@{Render.\+cpp}!clamp@{clamp}}
+\index{clamp@{clamp}!Render.\+cpp@{Render.\+cpp}}
+\subsubsection[{clamp}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t clamp (
+\begin{DoxyParamCaption}
+\item[{{\bf sb\+\_\+t}}]{min, }
+\item[{{\bf sb\+\_\+t}}]{v, }
+\item[{{\bf sb\+\_\+t}}]{max}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{_render_8cpp_a47427bc519f9a94f277719b167d373c7}
+\hypertarget{_render_8cpp_ac76ed64dc9dfe6964dace71fec5fc08c}{\index{Render.\+cpp@{Render.\+cpp}!reverse\+Segment@{reverse\+Segment}}
+\index{reverse\+Segment@{reverse\+Segment}!Render.\+cpp@{Render.\+cpp}}
+\subsubsection[{reverse\+Segment}]{\setlength{\rightskip}{0pt plus 5cm}void reverse\+Segment (
+\begin{DoxyParamCaption}
+\item[{{\bf flash\+::\+Segment} \&}]{segment}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{_render_8cpp_ac76ed64dc9dfe6964dace71fec5fc08c}
+\hypertarget{_render_8cpp_a2bef45aad1e17fee152ee2f663ac6ff3}{\index{Render.\+cpp@{Render.\+cpp}!reverse\+Transform\+Point@{reverse\+Transform\+Point}}
+\index{reverse\+Transform\+Point@{reverse\+Transform\+Point}!Render.\+cpp@{Render.\+cpp}}
+\subsubsection[{reverse\+Transform\+Point}]{\setlength{\rightskip}{0pt plus 5cm}void reverse\+Transform\+Point (
+\begin{DoxyParamCaption}
+\item[{const {\bf flash\+::\+Matrix} \&}]{m, }
+\item[{{\bf sb\+\_\+t} \&}]{x, }
+\item[{{\bf sb\+\_\+t} \&}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{_render_8cpp_a2bef45aad1e17fee152ee2f663ac6ff3}
+\hypertarget{_render_8cpp_a17e9c5c2edb4db72289e608c255458fc}{\index{Render.\+cpp@{Render.\+cpp}!transform\+Color@{transform\+Color}}
+\index{transform\+Color@{transform\+Color}!Render.\+cpp@{Render.\+cpp}}
+\subsubsection[{transform\+Color}]{\setlength{\rightskip}{0pt plus 5cm}void transform\+Color (
+\begin{DoxyParamCaption}
+\item[{const {\bf flash\+::\+Color\+Transform} \&}]{ct, }
+\item[{{\bf flash\+::\+R\+G\+B\+A} \&}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{_render_8cpp_a17e9c5c2edb4db72289e608c255458fc}
+\hypertarget{_render_8cpp_ad66c80a63f526e58dcd878e04af04f8e}{\index{Render.\+cpp@{Render.\+cpp}!transform\+Point@{transform\+Point}}
+\index{transform\+Point@{transform\+Point}!Render.\+cpp@{Render.\+cpp}}
+\subsubsection[{transform\+Point}]{\setlength{\rightskip}{0pt plus 5cm}void transform\+Point (
+\begin{DoxyParamCaption}
+\item[{const {\bf flash\+::\+Matrix} \&}]{matrix, }
+\item[{{\bf sb\+\_\+t} \&}]{x, }
+\item[{{\bf sb\+\_\+t} \&}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{_render_8cpp_ad66c80a63f526e58dcd878e04af04f8e}

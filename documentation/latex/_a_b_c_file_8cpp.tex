@@ -1,0 +1,182 @@
+\hypertarget{_a_b_c_file_8cpp}{\section{jswf/avm2/\+A\+B\+C\+File.cpp File Reference}
+\label{_a_b_c_file_8cpp}\index{jswf/avm2/\+A\+B\+C\+File.\+cpp@{jswf/avm2/\+A\+B\+C\+File.\+cpp}}
+}
+{\ttfamily \#include \char`\"{}A\+B\+C\+File.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}String\+Reader.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_node}{jswf\+::avm2\+::\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_int_node}{jswf\+::avm2\+::\+Int\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_string_node}{jswf\+::avm2\+::\+String\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_double_node}{jswf\+::avm2\+::\+Double\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_monadic_node}{jswf\+::avm2\+::\+Monadic\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_diadic_node}{jswf\+::avm2\+::\+Diadic\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_prop_node}{jswf\+::avm2\+::\+Prop\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_void_node}{jswf\+::avm2\+::\+Void\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_attr_node}{jswf\+::avm2\+::\+Attr\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_return_node}{jswf\+::avm2\+::\+Return\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_call_node}{jswf\+::avm2\+::\+Call\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_array_node}{jswf\+::avm2\+::\+Array\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_object_node}{jswf\+::avm2\+::\+Object\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_primitive_cast_node}{jswf\+::avm2\+::\+Primitive\+Cast\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_activation_node}{jswf\+::avm2\+::\+Activation\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_local_node}{jswf\+::avm2\+::\+Local\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_compound_node}{jswf\+::avm2\+::\+Compound\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_definition_node}{jswf\+::avm2\+::\+Definition\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_function_node}{jswf\+::avm2\+::\+Function\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_with_node}{jswf\+::avm2\+::\+With\+Node}
+\item 
+class \hyperlink{classjswf_1_1avm2_1_1_comment_node}{jswf\+::avm2\+::\+Comment\+Node}
+\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacejswf}{jswf}
+\item 
+ \hyperlink{namespacejswf_1_1avm2}{jswf\+::avm2}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_a_b_c_file_8cpp_a06ee18ca5585fcd86c6312c2846f56cf}{wrap}(obj)~(obj-\/$>$precedence $>$ precedence ? \char`\"{}(\char`\"{} + obj-\/$>$to\+String() + \char`\"{})\char`\"{} \+: obj-\/$>$to\+String())
+\item 
+\#define \hyperlink{_a_b_c_file_8cpp_af0308cb1511680c40eca87581b00cf7e}{\+\_\+\+\_\+ncast}(v)~std\+::shared\+\_\+ptr$<$Node$>$((Node $\ast$)v)
+\item 
+\#define \hyperlink{_a_b_c_file_8cpp_a8be9b1aebf77d12fc58c2a228e69e251}{\+\_\+\+\_\+push}(v)~stack.\+push(\hyperlink{_a_b_c_file_8cpp_af0308cb1511680c40eca87581b00cf7e}{\+\_\+\+\_\+ncast}(v))
+\item 
+\#define \hyperlink{_a_b_c_file_8cpp_a34a5a5b0a0393cec2da4ab0f40e6fd01}{\+\_\+\+\_\+pop}~(top = stack.\+top(), stack.\+pop(), top)
+\item 
+\#define \hyperlink{_a_b_c_file_8cpp_a5a7d7e9a756e202b8dd3dadd81d265eb}{\+\_\+\+\_\+output}(v)~current\+Compound-\/$>$body.\+push\+\_\+back(\hyperlink{_a_b_c_file_8cpp_af0308cb1511680c40eca87581b00cf7e}{\+\_\+\+\_\+ncast}(v)); \textbackslash{}
+\item 
+\#define \hyperlink{_a_b_c_file_8cpp_a5337c52591c7ae1c4563b7be248144e7}{bc\+\_\+comment}(str)~if(print\+Byte\+Code) \hyperlink{_a_b_c_file_8cpp_a5a7d7e9a756e202b8dd3dadd81d265eb}{\+\_\+\+\_\+output}(new Comment\+Node(str))
+\item 
+\#define \hyperlink{_a_b_c_file_8cpp_ad76403ae00fc091189cdca0c21a089b4}{\+\_\+\+\_\+needs\+\_\+definition}(local\+Node)
+\item 
+\#define \hyperlink{_a_b_c_file_8cpp_a7b197b806acbdf969bc48637ad4d6054}{\+\_\+\+\_\+put\+\_\+definition}(local\+Node)~(def\+Map\mbox{[}((Local\+Node $\ast$)local\+Node)-\/$>$index\mbox{]} = true)
+\item 
+\#define \hyperlink{_a_b_c_file_8cpp_a7a7c760988928d5be3d6f70b5fdc4e5a}{read\+\_\+auto}(afield, vname)~auto vname = constant\+Pool.\+afield\mbox{[}code\+Reader.\+read\+V\+U30()\mbox{]};
+\item 
+\#define \hyperlink{_a_b_c_file_8cpp_a242c9788d83eb4136696e7275d760b2a}{read\+\_\+multiname\+\_\+arg}(index)
+\item 
+\#define \hyperlink{_a_b_c_file_8cpp_a4fdf18d9928f3550accd38a0986315c9}{read\+\_\+multiname}~\hyperlink{_a_b_c_file_8cpp_a242c9788d83eb4136696e7275d760b2a}{read\+\_\+multiname\+\_\+arg}(code\+Reader.\+read\+V\+U30())
+\item 
+\#define \hyperlink{_a_b_c_file_8cpp_ab97930a4380d5395adf4453f4021c422}{mn\+\_\+cstr}~multiname-\/$>$name\+String().c\+\_\+str()
+\item 
+\#define \hyperlink{_a_b_c_file_8cpp_a6796ad9d4f22b4e98fca6d14a574e598}{mn\+\_\+str}~multiname-\/$>$name\+String()
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::shared\+\_\+ptr$<$ \hyperlink{classjswf_1_1avm2_1_1_node}{Node} $>$ \hyperlink{namespacejswf_1_1avm2_ae04c3cae081014fe8742de1b452fbbee}{jswf\+::avm2\+::\+Node\+Ptr}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{_a_b_c_file_8cpp_af0308cb1511680c40eca87581b00cf7e}{\index{A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}!\+\_\+\+\_\+ncast@{\+\_\+\+\_\+ncast}}
+\index{\+\_\+\+\_\+ncast@{\+\_\+\+\_\+ncast}!A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}}
+\subsubsection[{\+\_\+\+\_\+ncast}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+\+\_\+ncast(
+\begin{DoxyParamCaption}
+\item[{}]{v}
+\end{DoxyParamCaption}
+)~std\+::shared\+\_\+ptr$<$Node$>$((Node $\ast$)v)}}\label{_a_b_c_file_8cpp_af0308cb1511680c40eca87581b00cf7e}
+\hypertarget{_a_b_c_file_8cpp_ad76403ae00fc091189cdca0c21a089b4}{\index{A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}!\+\_\+\+\_\+needs\+\_\+definition@{\+\_\+\+\_\+needs\+\_\+definition}}
+\index{\+\_\+\+\_\+needs\+\_\+definition@{\+\_\+\+\_\+needs\+\_\+definition}!A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}}
+\subsubsection[{\+\_\+\+\_\+needs\+\_\+definition}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+\+\_\+needs\+\_\+definition(
+\begin{DoxyParamCaption}
+\item[{}]{local\+Node}
+\end{DoxyParamCaption}
+)}}\label{_a_b_c_file_8cpp_ad76403ae00fc091189cdca0c21a089b4}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+(((\hyperlink{classjswf_1_1avm2_1_1_local_node}{LocalNode} *)localNode)->isTemporary && \(\backslash\)
+  defMap.find(((\hyperlink{classjswf_1_1avm2_1_1_local_node}{LocalNode} *)localNode)->index) == defMap.end())
+\end{DoxyCode}
+\hypertarget{_a_b_c_file_8cpp_a5a7d7e9a756e202b8dd3dadd81d265eb}{\index{A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}!\+\_\+\+\_\+output@{\+\_\+\+\_\+output}}
+\index{\+\_\+\+\_\+output@{\+\_\+\+\_\+output}!A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}}
+\subsubsection[{\+\_\+\+\_\+output}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+\+\_\+output(
+\begin{DoxyParamCaption}
+\item[{}]{v}
+\end{DoxyParamCaption}
+)~current\+Compound-\/$>$body.\+push\+\_\+back({\bf \+\_\+\+\_\+ncast}(v)); \textbackslash{}}}\label{_a_b_c_file_8cpp_a5a7d7e9a756e202b8dd3dadd81d265eb}
+\hypertarget{_a_b_c_file_8cpp_a34a5a5b0a0393cec2da4ab0f40e6fd01}{\index{A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}!\+\_\+\+\_\+pop@{\+\_\+\+\_\+pop}}
+\index{\+\_\+\+\_\+pop@{\+\_\+\+\_\+pop}!A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}}
+\subsubsection[{\+\_\+\+\_\+pop}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+\+\_\+pop~(top = stack.\+top(), stack.\+pop(), top)}}\label{_a_b_c_file_8cpp_a34a5a5b0a0393cec2da4ab0f40e6fd01}
+\hypertarget{_a_b_c_file_8cpp_a8be9b1aebf77d12fc58c2a228e69e251}{\index{A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}!\+\_\+\+\_\+push@{\+\_\+\+\_\+push}}
+\index{\+\_\+\+\_\+push@{\+\_\+\+\_\+push}!A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}}
+\subsubsection[{\+\_\+\+\_\+push}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+\+\_\+push(
+\begin{DoxyParamCaption}
+\item[{}]{v}
+\end{DoxyParamCaption}
+)~stack.\+push({\bf \+\_\+\+\_\+ncast}(v))}}\label{_a_b_c_file_8cpp_a8be9b1aebf77d12fc58c2a228e69e251}
+\hypertarget{_a_b_c_file_8cpp_a7b197b806acbdf969bc48637ad4d6054}{\index{A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}!\+\_\+\+\_\+put\+\_\+definition@{\+\_\+\+\_\+put\+\_\+definition}}
+\index{\+\_\+\+\_\+put\+\_\+definition@{\+\_\+\+\_\+put\+\_\+definition}!A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}}
+\subsubsection[{\+\_\+\+\_\+put\+\_\+definition}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+\+\_\+put\+\_\+definition(
+\begin{DoxyParamCaption}
+\item[{}]{local\+Node}
+\end{DoxyParamCaption}
+)~(def\+Map\mbox{[}((Local\+Node $\ast$)local\+Node)-\/$>$index\mbox{]} = true)}}\label{_a_b_c_file_8cpp_a7b197b806acbdf969bc48637ad4d6054}
+\hypertarget{_a_b_c_file_8cpp_a5337c52591c7ae1c4563b7be248144e7}{\index{A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}!bc\+\_\+comment@{bc\+\_\+comment}}
+\index{bc\+\_\+comment@{bc\+\_\+comment}!A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}}
+\subsubsection[{bc\+\_\+comment}]{\setlength{\rightskip}{0pt plus 5cm}\#define bc\+\_\+comment(
+\begin{DoxyParamCaption}
+\item[{}]{str}
+\end{DoxyParamCaption}
+)~if(print\+Byte\+Code) {\bf \+\_\+\+\_\+output}(new Comment\+Node(str))}}\label{_a_b_c_file_8cpp_a5337c52591c7ae1c4563b7be248144e7}
+\hypertarget{_a_b_c_file_8cpp_ab97930a4380d5395adf4453f4021c422}{\index{A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}!mn\+\_\+cstr@{mn\+\_\+cstr}}
+\index{mn\+\_\+cstr@{mn\+\_\+cstr}!A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}}
+\subsubsection[{mn\+\_\+cstr}]{\setlength{\rightskip}{0pt plus 5cm}\#define mn\+\_\+cstr~multiname-\/$>$name\+String().c\+\_\+str()}}\label{_a_b_c_file_8cpp_ab97930a4380d5395adf4453f4021c422}
+\hypertarget{_a_b_c_file_8cpp_a6796ad9d4f22b4e98fca6d14a574e598}{\index{A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}!mn\+\_\+str@{mn\+\_\+str}}
+\index{mn\+\_\+str@{mn\+\_\+str}!A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}}
+\subsubsection[{mn\+\_\+str}]{\setlength{\rightskip}{0pt plus 5cm}\#define mn\+\_\+str~multiname-\/$>$name\+String()}}\label{_a_b_c_file_8cpp_a6796ad9d4f22b4e98fca6d14a574e598}
+\hypertarget{_a_b_c_file_8cpp_a7a7c760988928d5be3d6f70b5fdc4e5a}{\index{A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}!read\+\_\+auto@{read\+\_\+auto}}
+\index{read\+\_\+auto@{read\+\_\+auto}!A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}}
+\subsubsection[{read\+\_\+auto}]{\setlength{\rightskip}{0pt plus 5cm}\#define read\+\_\+auto(
+\begin{DoxyParamCaption}
+\item[{}]{afield, }
+\item[{}]{vname}
+\end{DoxyParamCaption}
+)~auto vname = constant\+Pool.\+afield\mbox{[}code\+Reader.\+read\+V\+U30()\mbox{]};}}\label{_a_b_c_file_8cpp_a7a7c760988928d5be3d6f70b5fdc4e5a}
+\hypertarget{_a_b_c_file_8cpp_a4fdf18d9928f3550accd38a0986315c9}{\index{A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}!read\+\_\+multiname@{read\+\_\+multiname}}
+\index{read\+\_\+multiname@{read\+\_\+multiname}!A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}}
+\subsubsection[{read\+\_\+multiname}]{\setlength{\rightskip}{0pt plus 5cm}\#define read\+\_\+multiname~{\bf read\+\_\+multiname\+\_\+arg}(code\+Reader.\+read\+V\+U30())}}\label{_a_b_c_file_8cpp_a4fdf18d9928f3550accd38a0986315c9}
+\hypertarget{_a_b_c_file_8cpp_a242c9788d83eb4136696e7275d760b2a}{\index{A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}!read\+\_\+multiname\+\_\+arg@{read\+\_\+multiname\+\_\+arg}}
+\index{read\+\_\+multiname\+\_\+arg@{read\+\_\+multiname\+\_\+arg}!A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}}
+\subsubsection[{read\+\_\+multiname\+\_\+arg}]{\setlength{\rightskip}{0pt plus 5cm}\#define read\+\_\+multiname\+\_\+arg(
+\begin{DoxyParamCaption}
+\item[{}]{index}
+\end{DoxyParamCaption}
+)}}\label{_a_b_c_file_8cpp_a242c9788d83eb4136696e7275d760b2a}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{structjswf_1_1avm2_1_1_multiname_base}{MultinameBase} *multiname = constantPool.multinames[index].get(); \hyperlink{namespacejswf_1_1avm2_ae04c3cae081014fe8742de1b452fbbee}{\(\backslash\)}
+\hyperlink{namespacejswf_1_1avm2_ae04c3cae081014fe8742de1b452fbbee}{  NodePtr} name; \textcolor{keywordflow}{if}(!multiname->\hyperlink{structjswf_1_1avm2_1_1_multiname_base_a7d563f60053dec666c5fd30ffcbde8c6}{hasName}) name = \hyperlink{_a_b_c_file_8cpp_a34a5a5b0a0393cec2da4ab0f40e6fd01}{\_\_pop}; \hyperlink{namespacejswf_1_1avm2_ae04c3cae081014fe8742de1b452fbbee}{\(\backslash\)}
+\hyperlink{namespacejswf_1_1avm2_ae04c3cae081014fe8742de1b452fbbee}{  NodePtr} ns; \textcolor{keywordflow}{if}(!multiname->\hyperlink{structjswf_1_1avm2_1_1_multiname_base_aa7e22c03dff1f686046006d8f434252e}{hasNS}) ns = \hyperlink{_a_b_c_file_8cpp_a34a5a5b0a0393cec2da4ab0f40e6fd01}{\_\_pop};
+\end{DoxyCode}
+\hypertarget{_a_b_c_file_8cpp_a06ee18ca5585fcd86c6312c2846f56cf}{\index{A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}!wrap@{wrap}}
+\index{wrap@{wrap}!A\+B\+C\+File.\+cpp@{A\+B\+C\+File.\+cpp}}
+\subsubsection[{wrap}]{\setlength{\rightskip}{0pt plus 5cm}\#define wrap(
+\begin{DoxyParamCaption}
+\item[{}]{obj}
+\end{DoxyParamCaption}
+)~(obj-\/$>$precedence $>$ precedence ? \char`\"{}(\char`\"{} + obj-\/$>$to\+String() + \char`\"{})\char`\"{} \+: obj-\/$>$to\+String())}}\label{_a_b_c_file_8cpp_a06ee18ca5585fcd86c6312c2846f56cf}

@@ -1,0 +1,73 @@
+\hypertarget{structjswf_1_1avm2_1_1_opcode}{\section{jswf\+:\+:avm2\+:\+:Opcode Struct Reference}
+\label{structjswf_1_1avm2_1_1_opcode}\index{jswf\+::avm2\+::\+Opcode@{jswf\+::avm2\+::\+Opcode}}
+}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{structjswf_1_1avm2_1_1_opcode_a5454d0bfca332ead7135c42d76477e4c}{Flags} \{ \\*
+{\bfseries No\+Flag} = 0, 
+{\bfseries Has\+Multiname\+Flag} = 1, 
+{\bfseries Multiname\+Is\+Q\+Name\+Flag} = 2, 
+{\bfseries Has\+Q\+Name\+Flag} = 1$\vert$2, 
+\\*
+{\bfseries Is\+Branch\+Flag} = 4, 
+\hyperlink{structjswf_1_1avm2_1_1_opcode_a5454d0bfca332ead7135c42d76477e4caa309032a1a0b42c33390ffbad794a482}{Has\+Argument\+Count\+Flag} = 8, 
+{\bfseries Has\+Constant\+Flag} = 16, 
+{\bfseries Constant\+Is\+Pool\+Const\+Flag} = 32, 
+\\*
+{\bfseries Has\+Pool\+Constant\+Flag} = 16$\vert$32, 
+{\bfseries Has\+Immediate\+Value\+Flag} = 64, 
+{\bfseries Has\+Register\+Flag} = 128, 
+{\bfseries Has\+Implicit\+Register\+Flag} = 256, 
+\\*
+{\bfseries Is\+Custom\+Length\+Flag} = 512, 
+{\bfseries Is\+Custom\+Stack\+Flag} = 1024
+ \}
+\item 
+\hypertarget{structjswf_1_1avm2_1_1_opcode_a8227da5e4379108c48ffc40990d53ad8}{enum {\bfseries Code} \{ {\bfseries op\+\_\+invalid} = 0x00, 
+{\bfseries ops}
+ \}}\label{structjswf_1_1avm2_1_1_opcode_a8227da5e4379108c48ffc40990d53ad8}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structjswf_1_1avm2_1_1_opcode_a5cfc5e69e189c7c896fee2b5d4c3aeba}{const char $\ast$ {\bfseries name}}\label{structjswf_1_1avm2_1_1_opcode_a5cfc5e69e189c7c896fee2b5d4c3aeba}
+
+\item 
+\hypertarget{structjswf_1_1avm2_1_1_opcode_a66af674d21335823ce14d3eb8036b2d5}{Constant\+Kind\+::\+Enum {\bfseries constant\+Kind}}\label{structjswf_1_1avm2_1_1_opcode_a66af674d21335823ce14d3eb8036b2d5}
+
+\item 
+\hypertarget{structjswf_1_1avm2_1_1_opcode_af44a6a69c4cf58874c14557e2906559e}{int {\bfseries stack\+Pop}}\label{structjswf_1_1avm2_1_1_opcode_af44a6a69c4cf58874c14557e2906559e}
+
+\item 
+\hypertarget{structjswf_1_1avm2_1_1_opcode_ab6573bad5c08583f5936fc461df69a46}{int {\bfseries stack\+Push}}\label{structjswf_1_1avm2_1_1_opcode_ab6573bad5c08583f5936fc461df69a46}
+
+\item 
+\hypertarget{structjswf_1_1avm2_1_1_opcode_a34d5e636ea3a89db8054269f7434c2af}{int {\bfseries scope\+Balance}}\label{structjswf_1_1avm2_1_1_opcode_a34d5e636ea3a89db8054269f7434c2af}
+
+\item 
+\hypertarget{structjswf_1_1avm2_1_1_opcode_ad2e7c44af169cf4af02d0b7ae4e1c409}{Opcode\+::\+Code {\bfseries code}}\label{structjswf_1_1avm2_1_1_opcode_ad2e7c44af169cf4af02d0b7ae4e1c409}
+
+\item 
+\hypertarget{structjswf_1_1avm2_1_1_opcode_ab9940e32bdab2141fd30092d5822ab67}{\hyperlink{structjswf_1_1avm2_1_1_opcode_a5454d0bfca332ead7135c42d76477e4c}{Opcode\+::\+Flags} {\bfseries flags}}\label{structjswf_1_1avm2_1_1_opcode_ab9940e32bdab2141fd30092d5822ab67}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{structjswf_1_1avm2_1_1_opcode_a5454d0bfca332ead7135c42d76477e4c}{\index{jswf\+::avm2\+::\+Opcode@{jswf\+::avm2\+::\+Opcode}!Flags@{Flags}}
+\index{Flags@{Flags}!jswf\+::avm2\+::\+Opcode@{jswf\+::avm2\+::\+Opcode}}
+\subsubsection[{Flags}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf jswf\+::avm2\+::\+Opcode\+::\+Flags}}}\label{structjswf_1_1avm2_1_1_opcode_a5454d0bfca332ead7135c42d76477e4c}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Has\+Argument\+Count\+Flag@{Has\+Argument\+Count\+Flag}!jswf\+::avm2\+::\+Opcode@{jswf\+::avm2\+::\+Opcode}}\index{jswf\+::avm2\+::\+Opcode@{jswf\+::avm2\+::\+Opcode}!Has\+Argument\+Count\+Flag@{Has\+Argument\+Count\+Flag}}\item[{\em 
+\hypertarget{structjswf_1_1avm2_1_1_opcode_a5454d0bfca332ead7135c42d76477e4caa309032a1a0b42c33390ffbad794a482}{Has\+Argument\+Count\+Flag}\label{structjswf_1_1avm2_1_1_opcode_a5454d0bfca332ead7135c42d76477e4caa309032a1a0b42c33390ffbad794a482}
+}]Number of additional stack elements to pop, typical of literal construction or method invocations. \end{description}
+\end{Desc}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+jswf/avm2/Opcode.\+h\end{DoxyCompactItemize}

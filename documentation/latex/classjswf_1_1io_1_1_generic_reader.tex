@@ -1,0 +1,107 @@
+\hypertarget{classjswf_1_1io_1_1_generic_reader}{\section{jswf\+:\+:io\+:\+:Generic\+Reader Class Reference}
+\label{classjswf_1_1io_1_1_generic_reader}\index{jswf\+::io\+::\+Generic\+Reader@{jswf\+::io\+::\+Generic\+Reader}}
+}
+
+
+Servers as reader for primitive data-\/types like integers, doubles and strings.  
+
+
+
+
+{\ttfamily \#include $<$Generic\+Reader.\+h$>$}
+
+Inheritance diagram for jswf\+:\+:io\+:\+:Generic\+Reader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classjswf_1_1io_1_1_generic_reader}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_a5ed096def8d74916ee47b7537842b4da}{virtual \hyperlink{namespacejswf_a3458b3040189121ea8ffc0bdfd3e32ee}{u8\+\_\+t} \hyperlink{classjswf_1_1io_1_1_generic_reader_a5ed096def8d74916ee47b7537842b4da}{read\+U8} ()=0}\label{classjswf_1_1io_1_1_generic_reader_a5ed096def8d74916ee47b7537842b4da}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned 8-\/bit unsigned integer. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_a548b8e690f367ede657fa6227e49c6b9}{virtual \hyperlink{namespacejswf_a68db00e879e7d4a42c18e20dcea75292}{u16\+\_\+t} \hyperlink{classjswf_1_1io_1_1_generic_reader_a548b8e690f367ede657fa6227e49c6b9}{read\+U16} ()=0}\label{classjswf_1_1io_1_1_generic_reader_a548b8e690f367ede657fa6227e49c6b9}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned 16-\/bit unsigned integer (little endian) \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_a76a50b1e5706a02d044feff14cc3d16e}{virtual \hyperlink{namespacejswf_ae68dd480b6437e9a20db7b004283a466}{u32\+\_\+t} \hyperlink{classjswf_1_1io_1_1_generic_reader_a76a50b1e5706a02d044feff14cc3d16e}{read\+U32} ()=0}\label{classjswf_1_1io_1_1_generic_reader_a76a50b1e5706a02d044feff14cc3d16e}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned 32-\/bit unsigned integer (little endian) \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_a764f46418f5aff7ba3d79264d136479e}{virtual \hyperlink{namespacejswf_a75cd7aa1b422e7e8b2883bcececdc5a2}{s8\+\_\+t} \hyperlink{classjswf_1_1io_1_1_generic_reader_a764f46418f5aff7ba3d79264d136479e}{read\+S8} ()}\label{classjswf_1_1io_1_1_generic_reader_a764f46418f5aff7ba3d79264d136479e}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned 8-\/bit signed integer. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_a91f932a0cbe82712697b728d70f5d861}{virtual \hyperlink{namespacejswf_a229666eb55cfe287190dad8c25f58f02}{s16\+\_\+t} \hyperlink{classjswf_1_1io_1_1_generic_reader_a91f932a0cbe82712697b728d70f5d861}{read\+S16} ()}\label{classjswf_1_1io_1_1_generic_reader_a91f932a0cbe82712697b728d70f5d861}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned 16-\/bit signed integer (little endian) \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_a50b8f5f4aa979c196e6a7f3c34861617}{virtual \hyperlink{namespacejswf_a19b2a5980fe3b05994a2127a3c7e0521}{s32\+\_\+t} \hyperlink{classjswf_1_1io_1_1_generic_reader_a50b8f5f4aa979c196e6a7f3c34861617}{read\+S32} ()}\label{classjswf_1_1io_1_1_generic_reader_a50b8f5f4aa979c196e6a7f3c34861617}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned 32-\/bit signed integer (little endian) \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_aebaf827aa7ce24f1e5bf8f599938eda0}{virtual \hyperlink{namespacejswf_a755127d61081aa8af105eb800aa2c1ec}{string} \hyperlink{classjswf_1_1io_1_1_generic_reader_aebaf827aa7ce24f1e5bf8f599938eda0}{read\+String} ()=0}\label{classjswf_1_1io_1_1_generic_reader_aebaf827aa7ce24f1e5bf8f599938eda0}
+
+\begin{DoxyCompactList}\small\item\em Reads a N\+U\+L-\/terminated string (C-\/string) \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_acc4f05833b09bcaf2baec3ba46ec0477}{virtual \hyperlink{namespacejswf_a755127d61081aa8af105eb800aa2c1ec}{string} \hyperlink{classjswf_1_1io_1_1_generic_reader_acc4f05833b09bcaf2baec3ba46ec0477}{read\+String} (size\+\_\+t length)=0}\label{classjswf_1_1io_1_1_generic_reader_acc4f05833b09bcaf2baec3ba46ec0477}
+
+\begin{DoxyCompactList}\small\item\em Reads a string of a given length. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_aa1445404182efbda9c46b6c9b9ea9c74}{virtual \hyperlink{namespacejswf_a38f034ab4371db2c8aee66e1c92b5bc7}{ub\+\_\+t} \hyperlink{classjswf_1_1io_1_1_generic_reader_aa1445404182efbda9c46b6c9b9ea9c74}{read\+U\+B} (uint8\+\_\+t nbits)=0}\label{classjswf_1_1io_1_1_generic_reader_aa1445404182efbda9c46b6c9b9ea9c74}
+
+\begin{DoxyCompactList}\small\item\em Reads a unsigned bit-\/field of length {\ttfamily nbits} \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_ab969b53faac7ff67b4fe8144d6d27c78}{virtual \hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} \hyperlink{classjswf_1_1io_1_1_generic_reader_ab969b53faac7ff67b4fe8144d6d27c78}{read\+S\+B} (uint8\+\_\+t nbits)}\label{classjswf_1_1io_1_1_generic_reader_ab969b53faac7ff67b4fe8144d6d27c78}
+
+\begin{DoxyCompactList}\small\item\em Reads a signed bit-\/field of length {\ttfamily nbits}, sign-\/extends to fill {\ttfamily sb\+\_\+t} \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_a82a78364fdd97b6eff791e0a768e1d46}{virtual \hyperlink{namespacejswf_a419cb8aa8b625074e6753d189783b2f4}{fb\+\_\+t} \hyperlink{classjswf_1_1io_1_1_generic_reader_a82a78364fdd97b6eff791e0a768e1d46}{read\+F\+B} (uint8\+\_\+t nbits)}\label{classjswf_1_1io_1_1_generic_reader_a82a78364fdd97b6eff791e0a768e1d46}
+
+\begin{DoxyCompactList}\small\item\em Reads a F\+I\+X\+E\+D8.\+8. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_ab9e82ef9f3e31b2e9a4c7578fc005483}{virtual void \hyperlink{classjswf_1_1io_1_1_generic_reader_ab9e82ef9f3e31b2e9a4c7578fc005483}{align} (uint8\+\_\+t bytes)=0}\label{classjswf_1_1io_1_1_generic_reader_ab9e82ef9f3e31b2e9a4c7578fc005483}
+
+\begin{DoxyCompactList}\small\item\em Aligns the reader to a multiple of 'bytes', resets bit-\/position. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_a35ef3dad6e2c5b36a2a3214a9b0e4272}{virtual \hyperlink{namespacejswf_a755127d61081aa8af105eb800aa2c1ec}{string} \hyperlink{classjswf_1_1io_1_1_generic_reader_a35ef3dad6e2c5b36a2a3214a9b0e4272}{read\+Remaining} ()=0}\label{classjswf_1_1io_1_1_generic_reader_a35ef3dad6e2c5b36a2a3214a9b0e4272}
+
+\begin{DoxyCompactList}\small\item\em Reads all remaining bytes (bit-\/position rounded up) \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_a11588c67c62d3fa46690a024cb0405ff}{virtual bool \hyperlink{classjswf_1_1io_1_1_generic_reader_a11588c67c62d3fa46690a024cb0405ff}{eof} ()=0}\label{classjswf_1_1io_1_1_generic_reader_a11588c67c62d3fa46690a024cb0405ff}
+
+\begin{DoxyCompactList}\small\item\em Returns true if the end of stream is reached, false otherwise. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_ac09240cd1e70fe0e020a301217d4fb2b}{virtual \hyperlink{namespacejswf_a19b2a5980fe3b05994a2127a3c7e0521}{s32\+\_\+t} \hyperlink{classjswf_1_1io_1_1_generic_reader_ac09240cd1e70fe0e020a301217d4fb2b}{read\+S24} ()=0}\label{classjswf_1_1io_1_1_generic_reader_ac09240cd1e70fe0e020a301217d4fb2b}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned 24-\/bit unsigned integer (little endian) \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_ae93752df73846ca760e748f22612c88f}{virtual \hyperlink{namespacejswf_ae68dd480b6437e9a20db7b004283a466}{u32\+\_\+t} \hyperlink{classjswf_1_1io_1_1_generic_reader_ae93752df73846ca760e748f22612c88f}{read\+V\+U30} ()=0}\label{classjswf_1_1io_1_1_generic_reader_ae93752df73846ca760e748f22612c88f}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned, variable-\/length encoded 30-\/bit unsigned integer. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_ade48eb74c708f1611c74aaa787da2754}{virtual \hyperlink{namespacejswf_ae68dd480b6437e9a20db7b004283a466}{u32\+\_\+t} \hyperlink{classjswf_1_1io_1_1_generic_reader_ade48eb74c708f1611c74aaa787da2754}{read\+V\+U32} ()=0}\label{classjswf_1_1io_1_1_generic_reader_ade48eb74c708f1611c74aaa787da2754}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned, variable-\/length encoded 32-\/bit unsigned integer. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_abff66404e36d68224b1e222c6632115b}{virtual \hyperlink{namespacejswf_a19b2a5980fe3b05994a2127a3c7e0521}{s32\+\_\+t} \hyperlink{classjswf_1_1io_1_1_generic_reader_abff66404e36d68224b1e222c6632115b}{read\+V\+S32} ()=0}\label{classjswf_1_1io_1_1_generic_reader_abff66404e36d68224b1e222c6632115b}
+
+\begin{DoxyCompactList}\small\item\em Reads a byte-\/aligned, variable-\/length encoded 32-\/bit signed integer. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_a56ad5cbf914f67d3633318093dfcb0d3}{virtual \hyperlink{namespacejswf_acfbb3c7c9fbb807e233387995eb76a96}{d64\+\_\+t} \hyperlink{classjswf_1_1io_1_1_generic_reader_a56ad5cbf914f67d3633318093dfcb0d3}{read\+D64} ()=0}\label{classjswf_1_1io_1_1_generic_reader_a56ad5cbf914f67d3633318093dfcb0d3}
+
+\begin{DoxyCompactList}\small\item\em Reads a I\+E\+E-\/754 double-\/precision floating point number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \hyperlink{classjswf_1_1io_1_1_generic_reader_a29dcfa1317485ea04e6caef568e803ce}{pos} = 0
+\begin{DoxyCompactList}\small\item\em Our current byte position. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1io_1_1_generic_reader_ab877457369b0cc359c724547c757ec7b}{uint8\+\_\+t \hyperlink{classjswf_1_1io_1_1_generic_reader_ab877457369b0cc359c724547c757ec7b}{bitpos} = 0}\label{classjswf_1_1io_1_1_generic_reader_ab877457369b0cc359c724547c757ec7b}
+
+\begin{DoxyCompactList}\small\item\em Our current bit position \mbox{[}0;8) inside the byte position. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Servers as reader for primitive data-\/types like integers, doubles and strings. 
+
+\subsection{Member Data Documentation}
+\hypertarget{classjswf_1_1io_1_1_generic_reader_a29dcfa1317485ea04e6caef568e803ce}{\index{jswf\+::io\+::\+Generic\+Reader@{jswf\+::io\+::\+Generic\+Reader}!pos@{pos}}
+\index{pos@{pos}!jswf\+::io\+::\+Generic\+Reader@{jswf\+::io\+::\+Generic\+Reader}}
+\subsubsection[{pos}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t jswf\+::io\+::\+Generic\+Reader\+::pos = 0}}\label{classjswf_1_1io_1_1_generic_reader_a29dcfa1317485ea04e6caef568e803ce}
+
+
+Our current byte position. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000022}{Todo}]Protected with optional seek. \end{DoxyRefDesc}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+jswf/io/\hyperlink{_generic_reader_8h}{Generic\+Reader.\+h}\item 
+jswf/io/Generic\+Reader.\+cpp\end{DoxyCompactItemize}

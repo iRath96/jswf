@@ -1,0 +1,75 @@
+\hypertarget{classjswf_1_1avm2_1_1_verifier}{\section{jswf\+:\+:avm2\+:\+:Verifier Class Reference}
+\label{classjswf_1_1avm2_1_1_verifier}\index{jswf\+::avm2\+::\+Verifier@{jswf\+::avm2\+::\+Verifier}}
+}
+
+
+Verifies bytecode.  
+
+
+
+
+{\ttfamily \#include $<$Verifier.\+h$>$}
+
+Inheritance diagram for jswf\+:\+:avm2\+:\+:Verifier\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classjswf_1_1avm2_1_1_verifier}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_verifier_aff482abd981ac06b6c074fe2c3bea77d}{ast\+::\+Node\+Ptr {\bfseries get\+Pool\+Constant} (Constant\+Kind\+::\+Enum kind, \hyperlink{classjswf_1_1avm2_1_1_a_b_c_file}{A\+B\+C\+File} $\ast$file, \hyperlink{namespacejswf_aa10d9ddca2a6a5debdc261dfae3d1117}{u30\+\_\+t} index)}\label{classjswf_1_1avm2_1_1_verifier_aff482abd981ac06b6c074fe2c3bea77d}
+
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_verifier_ab61123b628a07640ac30c8148f95eeac}{ast\+::\+Node\+Ptr {\bfseries get\+Constant} (Constant\+Kind\+::\+Enum kind)}\label{classjswf_1_1avm2_1_1_verifier_ab61123b628a07640ac30c8148f95eeac}
+
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_verifier_a8dfb2a5589e0a7463c7c5338396b3679}{ast\+::\+Node\+Ptr {\bfseries get\+Immediate\+Constant} (Constant\+Kind\+::\+Enum kind, int32\+\_\+t imm)}\label{classjswf_1_1avm2_1_1_verifier_a8dfb2a5589e0a7463c7c5338396b3679}
+
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_verifier_afa371c071bdf448c7f9b9ef967b10785}{void {\bfseries analyze\+Block} (\hyperlink{structjswf_1_1avm2_1_1_block}{Block} \&block)}\label{classjswf_1_1avm2_1_1_verifier_afa371c071bdf448c7f9b9ef967b10785}
+
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_verifier_a6ce45eac703bd222fd5724574a51e382}{void {\bfseries analyze\+Stack\+Usage} (\hyperlink{structjswf_1_1avm2_1_1_block}{Block} \&block)}\label{classjswf_1_1avm2_1_1_verifier_a6ce45eac703bd222fd5724574a51e382}
+
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_verifier_ad516bbdfedd65364ea1c302552374f17}{std\+::string {\bfseries disassemble\+Block} (\hyperlink{structjswf_1_1avm2_1_1_block}{Block} \&block)}\label{classjswf_1_1avm2_1_1_verifier_ad516bbdfedd65364ea1c302552374f17}
+
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_verifier_a60866c2d640fc73de0b50d2730f75b87}{void {\bfseries decompile\+Block} (\hyperlink{structjswf_1_1avm2_1_1_block}{Block} \&block)}\label{classjswf_1_1avm2_1_1_verifier_a60866c2d640fc73de0b50d2730f75b87}
+
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_verifier_a60901d418cf1f77c4d5ef6401980999f}{void {\bfseries verify\+Bytecode} (const std\+::string bytecode)}\label{classjswf_1_1avm2_1_1_verifier_a60901d418cf1f77c4d5ef6401980999f}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_verifier_a5712df1674bf3a7d6fd2a840e3f60f0d}{\hyperlink{classjswf_1_1avm2_1_1_a_b_c_file}{A\+B\+C\+File} $\ast$ {\bfseries origin}}\label{classjswf_1_1avm2_1_1_verifier_a5712df1674bf3a7d6fd2a840e3f60f0d}
+
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_verifier_adc0ad7c8a8c7f2780eb6511328a30af7}{\hyperlink{classjswf_1_1io_1_1_string_reader}{io\+::\+String\+Reader} {\bfseries bc\+Reader}}\label{classjswf_1_1avm2_1_1_verifier_adc0ad7c8a8c7f2780eb6511328a30af7}
+
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_verifier_a729ab37a42f6f197e60a0ebf0e8fade0}{\hyperlink{structjswf_1_1avm2_1_1_block}{Block} $\ast$$\ast$ {\bfseries bc\+Map}}\label{classjswf_1_1avm2_1_1_verifier_a729ab37a42f6f197e60a0ebf0e8fade0}
+
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_verifier_ac590b9f5d00ff87e9462fa7df548b928}{std\+::vector$<$ \hyperlink{structjswf_1_1avm2_1_1_block}{Block} $\ast$ $>$ {\bfseries blocks}}\label{classjswf_1_1avm2_1_1_verifier_ac590b9f5d00ff87e9462fa7df548b928}
+
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_verifier_a90c1cc682baeb84e899fc2f9875dcfa8}{\hyperlink{classjswf_1_1avm2_1_1_a_b_c_file}{A\+B\+C\+File} $\ast$ {\bfseries file}}\label{classjswf_1_1avm2_1_1_verifier_a90c1cc682baeb84e899fc2f9875dcfa8}
+
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_verifier_ac46a2898ebbe1127765ef2a740159781}{\hyperlink{structjswf_1_1avm2_1_1_method_info}{Method\+Info} $\ast$ {\bfseries minfo}}\label{classjswf_1_1avm2_1_1_verifier_ac46a2898ebbe1127765ef2a740159781}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Verifies bytecode. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+jswf/avm2/\hyperlink{_verifier_8h}{Verifier.\+h}\item 
+jswf/avm2/Verifier.\+cpp\end{DoxyCompactItemize}

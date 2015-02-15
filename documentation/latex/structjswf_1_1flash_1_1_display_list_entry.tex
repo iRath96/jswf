@@ -1,0 +1,49 @@
+\hypertarget{structjswf_1_1flash_1_1_display_list_entry}{\section{jswf\+:\+:flash\+:\+:Display\+List\+Entry Struct Reference}
+\label{structjswf_1_1flash_1_1_display_list_entry}\index{jswf\+::flash\+::\+Display\+List\+Entry@{jswf\+::flash\+::\+Display\+List\+Entry}}
+}
+
+
+{\ttfamily \#include $<$Frame.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structjswf_1_1flash_1_1_display_list_entry_a8bae9b8a903b5dba94f5b6f82444ddb3}{uint16\+\_\+t {\bfseries character\+Id}}\label{structjswf_1_1flash_1_1_display_list_entry_a8bae9b8a903b5dba94f5b6f82444ddb3}
+
+\item 
+\hypertarget{structjswf_1_1flash_1_1_display_list_entry_a0ccf4f431308416dd030b69197865bfc}{avm2\+::\+Object\+Ptr {\bfseries avm2\+Object} = N\+U\+L\+L}\label{structjswf_1_1flash_1_1_display_list_entry_a0ccf4f431308416dd030b69197865bfc}
+
+\item 
+\hypertarget{structjswf_1_1flash_1_1_display_list_entry_a5b1eba4da61f771da0f058ec580ed5e6}{avm2\+::\+Object\+Ptr {\bfseries on\+Enter\+Frame} = N\+U\+L\+L}\label{structjswf_1_1flash_1_1_display_list_entry_a5b1eba4da61f771da0f058ec580ed5e6}
+
+\item 
+\hypertarget{structjswf_1_1flash_1_1_display_list_entry_af91ac80206f164a044f705737815f869}{bool \hyperlink{structjswf_1_1flash_1_1_display_list_entry_af91ac80206f164a044f705737815f869}{use\+Previous\+Matrix} = false}\label{structjswf_1_1flash_1_1_display_list_entry_af91ac80206f164a044f705737815f869}
+
+\begin{DoxyCompactList}\small\item\em Set to {\ttfamily true} if matrix was altered by a script and has to be kept. \end{DoxyCompactList}\item 
+\hypertarget{structjswf_1_1flash_1_1_display_list_entry_a32fdfad6013761553087b7cd94a2e208}{bool {\bfseries does\+Clip} = false}\label{structjswf_1_1flash_1_1_display_list_entry_a32fdfad6013761553087b7cd94a2e208}
+
+\item 
+\hypertarget{structjswf_1_1flash_1_1_display_list_entry_ae5eb13f0f96f4313c60f181d52fb329e}{uint16\+\_\+t {\bfseries clip\+Depth}}\label{structjswf_1_1flash_1_1_display_list_entry_ae5eb13f0f96f4313c60f181d52fb329e}
+
+\item 
+\hypertarget{structjswf_1_1flash_1_1_display_list_entry_a34005f670c4b2a3608ad54a084d71b3a}{bool {\bfseries sets\+Color\+Transform} = false}\label{structjswf_1_1flash_1_1_display_list_entry_a34005f670c4b2a3608ad54a084d71b3a}
+
+\item 
+\hypertarget{structjswf_1_1flash_1_1_display_list_entry_aafb3c754661465d530a59ed09334bc04}{\hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix} {\bfseries matrix}}\label{structjswf_1_1flash_1_1_display_list_entry_aafb3c754661465d530a59ed09334bc04}
+
+\item 
+\hypertarget{structjswf_1_1flash_1_1_display_list_entry_a868636e7c8d50e8d556c6b75a3fbae9d}{\hyperlink{structjswf_1_1flash_1_1_color_transform}{Color\+Transform} {\bfseries color\+Transform}}\label{structjswf_1_1flash_1_1_display_list_entry_a868636e7c8d50e8d556c6b75a3fbae9d}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000011}{Todo}]Should structures implement read/write themselves? 
+
+This structure is wrong. {\ttfamily use\+Previous\+Matrix} can be replaced with a {\ttfamily get\+Property}-\/test on our {\ttfamily avm2\+Object} with a fallback to {\ttfamily matrix}. Also, {\ttfamily avm2\+Object} will not properly work in nested environments (tree structures). Same thing with modifications by A\+V\+M2 (adding/removing Display\+Objects). \end{DoxyRefDesc}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+jswf/flash/Frame.\+h\end{DoxyCompactItemize}

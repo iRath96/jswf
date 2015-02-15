@@ -1,0 +1,67 @@
+\hypertarget{classjswf_1_1flash_1_1_document}{\section{jswf\+:\+:flash\+:\+:Document Class Reference}
+\label{classjswf_1_1flash_1_1_document}\index{jswf\+::flash\+::\+Document@{jswf\+::flash\+::\+Document}}
+}
+
+
+Parses and represents a {\ttfamily S\+W\+F file}.  
+
+
+
+
+{\ttfamily \#include $<$Document.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1flash_1_1_document_ab5cf654ae338ce454f48e5c972bad5e7}{{\bfseries Document} (std\+::shared\+\_\+ptr$<$ \hyperlink{classjswf_1_1io_1_1_generic_reader}{jswf\+::io\+::\+Generic\+Reader} $>$ \hyperlink{classjswf_1_1flash_1_1_document_abc03a4a547e56b1117423589edad89e4}{reader})}\label{classjswf_1_1flash_1_1_document_ab5cf654ae338ce454f48e5c972bad5e7}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1flash_1_1_document_ad72642b03597be4ad76a41d524d05913}{\hyperlink{structjswf_1_1flash_1_1_header}{Header} \hyperlink{classjswf_1_1flash_1_1_document_ad72642b03597be4ad76a41d524d05913}{header}}\label{classjswf_1_1flash_1_1_document_ad72642b03597be4ad76a41d524d05913}
+
+\begin{DoxyCompactList}\small\item\em The {\ttfamily H\+E\+A\+D\+E\+R} record for this document. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1flash_1_1_document_adaacad383fad582fe94a14c44782123f}{\hyperlink{classjswf_1_1avm2_1_1_v_m}{avm2\+::\+V\+M} {\bfseries avm2}}\label{classjswf_1_1flash_1_1_document_adaacad383fad582fe94a14c44782123f}
+
+\item 
+\hypertarget{classjswf_1_1flash_1_1_document_ac2c8471be7e7cde4660b4183c0f29bba}{std\+::vector$<$ std\+::shared\+\_\+ptr\\*
+$<$ \hyperlink{classjswf_1_1flash_1_1tags_1_1_tag}{tags\+::\+Tag} $>$ $>$ \hyperlink{classjswf_1_1flash_1_1_document_ac2c8471be7e7cde4660b4183c0f29bba}{tags}}\label{classjswf_1_1flash_1_1_document_ac2c8471be7e7cde4660b4183c0f29bba}
+
+\begin{DoxyCompactList}\small\item\em A {\ttfamily vector} of {\ttfamily shared\+\_\+ptr}s to the tags this document contains. \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1flash_1_1_document_aca1e9bbd368ff49f61d59a4fed7754a9}{std\+::map$<$ uint16\+\_\+t, \\*
+std\+::shared\+\_\+ptr$<$ \hyperlink{classjswf_1_1flash_1_1_character}{Character} $>$ $>$ \hyperlink{classjswf_1_1flash_1_1_document_aca1e9bbd368ff49f61d59a4fed7754a9}{dictionary}}\label{classjswf_1_1flash_1_1_document_aca1e9bbd368ff49f61d59a4fed7754a9}
+
+\begin{DoxyCompactList}\small\item\em The {\ttfamily D\+I\+C\+T\+I\+O\+N\+A\+R\+Y} of this document. \end{DoxyCompactList}\item 
+\hyperlink{classjswf_1_1flash_1_1_sprite}{Sprite} $\ast$ \hyperlink{classjswf_1_1flash_1_1_document_a2b85a878280ace8647cb05fdfd79e22a}{root\+Sprite}
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1flash_1_1_document_abc03a4a547e56b1117423589edad89e4}{\hyperlink{classjswf_1_1flash_1_1_reader}{Reader} \hyperlink{classjswf_1_1flash_1_1_document_abc03a4a547e56b1117423589edad89e4}{reader}}\label{classjswf_1_1flash_1_1_document_abc03a4a547e56b1117423589edad89e4}
+
+\begin{DoxyCompactList}\small\item\em The \hyperlink{classjswf_1_1flash_1_1_reader}{flash\+::\+Reader} used by this document. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Parses and represents a {\ttfamily S\+W\+F file}. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000009}{Todo}]\hyperlink{classjswf_1_1flash_1_1_document_ac2c8471be7e7cde4660b4183c0f29bba}{Document\+::tags} and Sprite\+::tags ? Somewhat redundant. \begin{DoxySeeAlso}{See also}
+I\+Tag\+For\+Document 
+\end{DoxySeeAlso}
+\end{DoxyRefDesc}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classjswf_1_1flash_1_1_document_a2b85a878280ace8647cb05fdfd79e22a}{\index{jswf\+::flash\+::\+Document@{jswf\+::flash\+::\+Document}!root\+Sprite@{root\+Sprite}}
+\index{root\+Sprite@{root\+Sprite}!jswf\+::flash\+::\+Document@{jswf\+::flash\+::\+Document}}
+\subsubsection[{root\+Sprite}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Sprite}$\ast$ jswf\+::flash\+::\+Document\+::root\+Sprite}}\label{classjswf_1_1flash_1_1_document_a2b85a878280ace8647cb05fdfd79e22a}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000010}{Todo}]This is the main\+\_\+timeline object! It can also be transformed! \end{DoxyRefDesc}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+jswf/flash/Document.\+h\item 
+jswf/flash/Document.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,42 @@
+\begin{theindex}
+
+  \item {Class\+Kind}
+    \subitem {jswf\+::avm2\+::\+Trait\+Info}, \hyperpage{102}
+  \item {Const\+Kind}
+    \subitem {jswf\+::avm2\+::\+Trait\+Info}, \hyperpage{102}
+
+  \indexspace
+
+  \item {Function\+Kind}
+    \subitem {jswf\+::avm2\+::\+Trait\+Info}, \hyperpage{102}
+
+  \indexspace
+
+  \item {Getter\+Kind}
+    \subitem {jswf\+::avm2\+::\+Trait\+Info}, \hyperpage{102}
+
+  \indexspace
+
+  \item {jswf}, \hyperpage{19}
+  \item {jswf\+::avm2\+::\+Trait\+Info}
+    \subitem {Class\+Kind}, \hyperpage{102}
+    \subitem {Const\+Kind}, \hyperpage{102}
+    \subitem {Function\+Kind}, \hyperpage{102}
+    \subitem {Getter\+Kind}, \hyperpage{102}
+    \subitem {Method\+Kind}, \hyperpage{102}
+    \subitem {Setter\+Kind}, \hyperpage{102}
+    \subitem {Slot\+Kind}, \hyperpage{102}
+
+  \indexspace
+
+  \item {Method\+Kind}
+    \subitem {jswf\+::avm2\+::\+Trait\+Info}, \hyperpage{102}
+
+  \indexspace
+
+  \item {Setter\+Kind}
+    \subitem {jswf\+::avm2\+::\+Trait\+Info}, \hyperpage{102}
+  \item {Slot\+Kind}
+    \subitem {jswf\+::avm2\+::\+Trait\+Info}, \hyperpage{102}
+
+\end{theindex}

@@ -1,0 +1,105 @@
+\hypertarget{main_8cpp}{\section{jswf/main.cpp File Reference}
+\label{main_8cpp}\index{jswf/main.\+cpp@{jswf/main.\+cpp}}
+}
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
+{\ttfamily \#include \char`\"{}String\+Reader.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Document.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Header.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Tags.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Render.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$S\+D\+L2/\+S\+D\+L.\+h$>$}\\*
+{\ttfamily \#include $<$Open\+G\+L/gl.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}A\+B\+C\+File.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{main_8cpp_a742ab100fe0a888624f9e16974ccc400}{P\+E\+N\+G\+U\+I\+N\+\_\+\+F\+I\+L\+E\+N\+A\+M\+E}~\char`\"{}/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/penguin.\+swf\char`\"{}
+\item 
+\#define \hyperlink{main_8cpp_a3acffbd305ee72dcd4593c0d8af64a4f}{M\+I\+N}(a, b)~((a) $>$ (b) ? (b) \+: (a))
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{main_8cpp_a9d7e8af417b6d543da691e9c0e2f6f9f}{clear\+Screen} ()
+\item 
+void \hyperlink{main_8cpp_a2bd30be6d607a2f563f198bde21efa6a}{render\+Current\+Frame} ()
+\item 
+void \hyperlink{main_8cpp_a94553a26aa9359147d68747c855d0a30}{render\+S\+W\+F} (std\+::string filename)
+\item 
+int \hyperlink{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \hyperlink{main_8cpp_aa377041fe214e05a139f8e03480357d0}{min\+Frame\+Count} = 0
+\item 
+uint16\+\_\+t \hyperlink{main_8cpp_a6757e694c4020d5a3b37b67a52c1c5c1}{current\+Frame} = 0
+\item 
+std\+::vector$<$ \hyperlink{classjswf_1_1flash_1_1_document}{flash\+::\+Document} $\ast$ $>$ \hyperlink{main_8cpp_ad9855639007b099bfa237b1b1fba77c6}{documents}
+\item 
+\hyperlink{structjswf_1_1render_1_1_context}{render\+::\+Context} \hyperlink{main_8cpp_a98a76e19afc8493706f1d5793bf5e104}{ctx}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{main_8cpp_a3acffbd305ee72dcd4593c0d8af64a4f}{\index{main.\+cpp@{main.\+cpp}!M\+I\+N@{M\+I\+N}}
+\index{M\+I\+N@{M\+I\+N}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{M\+I\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+I\+N(
+\begin{DoxyParamCaption}
+\item[{}]{a, }
+\item[{}]{b}
+\end{DoxyParamCaption}
+)~((a) $>$ (b) ? (b) \+: (a))}}\label{main_8cpp_a3acffbd305ee72dcd4593c0d8af64a4f}
+\hypertarget{main_8cpp_a742ab100fe0a888624f9e16974ccc400}{\index{main.\+cpp@{main.\+cpp}!P\+E\+N\+G\+U\+I\+N\+\_\+\+F\+I\+L\+E\+N\+A\+M\+E@{P\+E\+N\+G\+U\+I\+N\+\_\+\+F\+I\+L\+E\+N\+A\+M\+E}}
+\index{P\+E\+N\+G\+U\+I\+N\+\_\+\+F\+I\+L\+E\+N\+A\+M\+E@{P\+E\+N\+G\+U\+I\+N\+\_\+\+F\+I\+L\+E\+N\+A\+M\+E}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{P\+E\+N\+G\+U\+I\+N\+\_\+\+F\+I\+L\+E\+N\+A\+M\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+E\+N\+G\+U\+I\+N\+\_\+\+F\+I\+L\+E\+N\+A\+M\+E~\char`\"{}/Users/alex/Desktop/Desktop/pcl/swf2svg/swfs/penguin.\+swf\char`\"{}}}\label{main_8cpp_a742ab100fe0a888624f9e16974ccc400}
+
+
+\subsection{Function Documentation}
+\hypertarget{main_8cpp_a9d7e8af417b6d543da691e9c0e2f6f9f}{\index{main.\+cpp@{main.\+cpp}!clear\+Screen@{clear\+Screen}}
+\index{clear\+Screen@{clear\+Screen}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{clear\+Screen}]{\setlength{\rightskip}{0pt plus 5cm}void clear\+Screen (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{main_8cpp_a9d7e8af417b6d543da691e9c0e2f6f9f}
+\hypertarget{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{\index{main.\+cpp@{main.\+cpp}!main@{main}}
+\index{main@{main}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}
+\hypertarget{main_8cpp_a2bd30be6d607a2f563f198bde21efa6a}{\index{main.\+cpp@{main.\+cpp}!render\+Current\+Frame@{render\+Current\+Frame}}
+\index{render\+Current\+Frame@{render\+Current\+Frame}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{render\+Current\+Frame}]{\setlength{\rightskip}{0pt plus 5cm}void render\+Current\+Frame (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{main_8cpp_a2bd30be6d607a2f563f198bde21efa6a}
+\hypertarget{main_8cpp_a94553a26aa9359147d68747c855d0a30}{\index{main.\+cpp@{main.\+cpp}!render\+S\+W\+F@{render\+S\+W\+F}}
+\index{render\+S\+W\+F@{render\+S\+W\+F}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{render\+S\+W\+F}]{\setlength{\rightskip}{0pt plus 5cm}void render\+S\+W\+F (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{filename}
+\end{DoxyParamCaption}
+)}}\label{main_8cpp_a94553a26aa9359147d68747c855d0a30}
+
+
+\subsection{Variable Documentation}
+\hypertarget{main_8cpp_a98a76e19afc8493706f1d5793bf5e104}{\index{main.\+cpp@{main.\+cpp}!ctx@{ctx}}
+\index{ctx@{ctx}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{ctx}]{\setlength{\rightskip}{0pt plus 5cm}{\bf render\+::\+Context} ctx}}\label{main_8cpp_a98a76e19afc8493706f1d5793bf5e104}
+\hypertarget{main_8cpp_a6757e694c4020d5a3b37b67a52c1c5c1}{\index{main.\+cpp@{main.\+cpp}!current\+Frame@{current\+Frame}}
+\index{current\+Frame@{current\+Frame}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{current\+Frame}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t current\+Frame = 0}}\label{main_8cpp_a6757e694c4020d5a3b37b67a52c1c5c1}
+\hypertarget{main_8cpp_ad9855639007b099bfa237b1b1fba77c6}{\index{main.\+cpp@{main.\+cpp}!documents@{documents}}
+\index{documents@{documents}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{documents}]{\setlength{\rightskip}{0pt plus 5cm}std\+::vector$<${\bf flash\+::\+Document} $\ast$$>$ documents}}\label{main_8cpp_ad9855639007b099bfa237b1b1fba77c6}
+\hypertarget{main_8cpp_aa377041fe214e05a139f8e03480357d0}{\index{main.\+cpp@{main.\+cpp}!min\+Frame\+Count@{min\+Frame\+Count}}
+\index{min\+Frame\+Count@{min\+Frame\+Count}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{min\+Frame\+Count}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t min\+Frame\+Count = 0}}\label{main_8cpp_aa377041fe214e05a139f8e03480357d0}

@@ -1,0 +1,87 @@
+\hypertarget{classjswf_1_1avm2_1_1_void_object}{\section{jswf\+:\+:avm2\+:\+:Void\+Object Class Reference}
+\label{classjswf_1_1avm2_1_1_void_object}\index{jswf\+::avm2\+::\+Void\+Object@{jswf\+::avm2\+::\+Void\+Object}}
+}
+
+
+Represents both {\ttfamily undefined} and {\ttfamily null} (E\+C\+M\+A-\/262, section 8.\+1 and 8.\+2).  
+
+
+
+
+{\ttfamily \#include $<$Object.\+h$>$}
+
+Inheritance diagram for jswf\+:\+:avm2\+:\+:Void\+Object\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classjswf_1_1avm2_1_1_void_object}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_void_object_a221ab4b4f3b691e843ff79bd29e4f24d}{enum {\bfseries Kind} \{ {\bfseries Null\+Value} = 0, 
+{\bfseries Undefined\+Value}
+ \}}\label{classjswf_1_1avm2_1_1_void_object_a221ab4b4f3b691e843ff79bd29e4f24d}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_void_object_a05408d5ee05d4cae0d77147850592b2b}{{\bfseries Void\+Object} (\hyperlink{classjswf_1_1avm2_1_1_v_m}{V\+M} $\ast$vm, const Kind \&value)}\label{classjswf_1_1avm2_1_1_void_object_a05408d5ee05d4cae0d77147850592b2b}
+
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_void_object_a93119839707e760bec254e4d7c99d9e0}{bool {\bfseries operator==} (const \hyperlink{classjswf_1_1avm2_1_1_object}{Object} \&rhs) const }\label{classjswf_1_1avm2_1_1_void_object_a93119839707e760bec254e4d7c99d9e0}
+
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_void_object_a7a7d6f81c6f9d9b6c18b4cd68f30763d}{bool {\bfseries same\+Type\+Strict\+Equals} (const \hyperlink{classjswf_1_1avm2_1_1_object}{Object} \&rhs) const }\label{classjswf_1_1avm2_1_1_void_object_a7a7d6f81c6f9d9b6c18b4cd68f30763d}
+
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_void_object_a24dda33beeb086bd51b0a847e24d9116}{bool \hyperlink{classjswf_1_1avm2_1_1_void_object_a24dda33beeb086bd51b0a847e24d9116}{coerce\+\_\+b} () const }\label{classjswf_1_1avm2_1_1_void_object_a24dda33beeb086bd51b0a847e24d9116}
+
+\begin{DoxyCompactList}\small\item\em Converts to {\ttfamily bool} (E\+C\+M\+A-\/262, section 9.\+2 {\itshape To\+Boolean}) \end{DoxyCompactList}\item 
+std\+::string \hyperlink{classjswf_1_1avm2_1_1_void_object_a4aaf0973c931a1d8bd3be76f367bdd0f}{coerce\+\_\+s} () const 
+\begin{DoxyCompactList}\small\item\em Converts to {\ttfamily std\+::string} (E\+C\+M\+A-\/262, section 9.\+8 {\itshape To\+String}) \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1avm2_1_1_void_object_a12fdaa2a4666f25efe0cbf9d4126b3a6}{double \hyperlink{classjswf_1_1avm2_1_1_void_object_a12fdaa2a4666f25efe0cbf9d4126b3a6}{coerce\+\_\+d} () const }\label{classjswf_1_1avm2_1_1_void_object_a12fdaa2a4666f25efe0cbf9d4126b3a6}
+
+\begin{DoxyCompactList}\small\item\em Converts to {\ttfamily double} (E\+C\+M\+A-\/262, section 9.\+3 {\itshape To\+Number}) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_void_object_adbe93c9026ae943331164a8b078c111d}{Kind {\bfseries value}}\label{classjswf_1_1avm2_1_1_void_object_adbe93c9026ae943331164a8b078c111d}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Represents both {\ttfamily undefined} and {\ttfamily null} (E\+C\+M\+A-\/262, section 8.\+1 and 8.\+2). 
+
+\begin{DoxyNote}{Note}
+Flash treats (as opposed to the E\+C\+M\+A-\/262 standard) both {\ttfamily undefined} and {\ttfamily null} as objects of class {\itshape void}. 
+\end{DoxyNote}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classjswf_1_1avm2_1_1_void_object_a4aaf0973c931a1d8bd3be76f367bdd0f}{\index{jswf\+::avm2\+::\+Void\+Object@{jswf\+::avm2\+::\+Void\+Object}!coerce\+\_\+s@{coerce\+\_\+s}}
+\index{coerce\+\_\+s@{coerce\+\_\+s}!jswf\+::avm2\+::\+Void\+Object@{jswf\+::avm2\+::\+Void\+Object}}
+\subsubsection[{coerce\+\_\+s}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string jswf\+::avm2\+::\+Void\+Object\+::coerce\+\_\+s (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classjswf_1_1avm2_1_1_void_object_a4aaf0973c931a1d8bd3be76f367bdd0f}
+
+
+Converts to {\ttfamily std\+::string} (E\+C\+M\+A-\/262, section 9.\+8 {\itshape To\+String}) 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000007}{Todo}]Implement 9.\+8.\+1 \end{DoxyRefDesc}
+
+
+Reimplemented from \hyperlink{classjswf_1_1avm2_1_1_object_a69b39776062acaccd2cd2b5a1f937c9d}{jswf\+::avm2\+::\+Object}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+jswf/avm2/Object.\+h\item 
+jswf/avm2/Object.\+cpp\end{DoxyCompactItemize}

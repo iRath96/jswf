@@ -1,0 +1,77 @@
+\hypertarget{classjswf_1_1flash_1_1tags_1_1_define_shape2_tag}{\section{jswf\+:\+:flash\+:\+:tags\+:\+:Define\+Shape2\+Tag Class Reference}
+\label{classjswf_1_1flash_1_1tags_1_1_define_shape2_tag}\index{jswf\+::flash\+::tags\+::\+Define\+Shape2\+Tag@{jswf\+::flash\+::tags\+::\+Define\+Shape2\+Tag}}
+}
+
+
+Extends \hyperlink{classjswf_1_1flash_1_1tags_1_1_define_shape_tag}{Define\+Shape\+Tag} with support for up to 65534 (0xfffe) elements for {\ttfamily Fill\+Style\+Array} and {\ttfamily Line\+Style\+Array}.  
+
+
+
+
+{\ttfamily \#include $<$Define\+Shape2\+Tag.\+h$>$}
+
+Inheritance diagram for jswf\+:\+:flash\+:\+:tags\+:\+:Define\+Shape2\+Tag\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{classjswf_1_1flash_1_1tags_1_1_define_shape2_tag}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1flash_1_1tags_1_1_define_shape2_tag_a35e1656b28c806bc2d3486fa2023d60f}{{\bfseries Define\+Shape2\+Tag} (tag\+\_\+type\+\_\+t t, std\+::string \&p)}\label{classjswf_1_1flash_1_1tags_1_1_define_shape2_tag_a35e1656b28c806bc2d3486fa2023d60f}
+
+\item 
+\hypertarget{classjswf_1_1flash_1_1tags_1_1_define_shape2_tag_a742988a0442ec623d960070026f5ab22}{{\bfseries Define\+Shape2\+Tag} (tag\+\_\+type\+\_\+t t, std\+::string \&p, bool)}\label{classjswf_1_1flash_1_1tags_1_1_define_shape2_tag_a742988a0442ec623d960070026f5ab22}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1flash_1_1tags_1_1_define_shape2_tag_a6e952275a3ad934e55f4ea481fe2f8e5}{virtual void \hyperlink{classjswf_1_1flash_1_1tags_1_1_define_shape2_tag_a6e952275a3ad934e55f4ea481fe2f8e5}{read\+Between} ()}\label{classjswf_1_1flash_1_1tags_1_1_define_shape2_tag_a6e952275a3ad934e55f4ea481fe2f8e5}
+
+\begin{DoxyCompactList}\small\item\em Implemented by subclasses to perform reads between 'Bounds' and 'Fill\+Style\+Array'. \end{DoxyCompactList}\item 
+virtual uint16\+\_\+t \hyperlink{classjswf_1_1flash_1_1tags_1_1_define_shape2_tag_a1a6b796a542d30359ee662b68f13c208}{read\+Array\+Count} ()
+\begin{DoxyCompactList}\small\item\em Reads an array count from the payload stream. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Extends \hyperlink{classjswf_1_1flash_1_1tags_1_1_define_shape_tag}{Define\+Shape\+Tag} with support for up to 65534 (0xfffe) elements for {\ttfamily Fill\+Style\+Array} and {\ttfamily Line\+Style\+Array}. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classjswf_1_1flash_1_1tags_1_1_define_shape2_tag_a1a6b796a542d30359ee662b68f13c208}{\index{jswf\+::flash\+::tags\+::\+Define\+Shape2\+Tag@{jswf\+::flash\+::tags\+::\+Define\+Shape2\+Tag}!read\+Array\+Count@{read\+Array\+Count}}
+\index{read\+Array\+Count@{read\+Array\+Count}!jswf\+::flash\+::tags\+::\+Define\+Shape2\+Tag@{jswf\+::flash\+::tags\+::\+Define\+Shape2\+Tag}}
+\subsubsection[{read\+Array\+Count}]{\setlength{\rightskip}{0pt plus 5cm}virtual uint16\+\_\+t jswf\+::flash\+::tags\+::\+Define\+Shape2\+Tag\+::read\+Array\+Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classjswf_1_1flash_1_1tags_1_1_define_shape2_tag_a1a6b796a542d30359ee662b68f13c208}
+
+
+Reads an array count from the payload stream. 
+
+Subclasses can override this to add support for longer arrays. 
+\begin{DoxyExceptions}{Exceptions}
+{\em (\+T\+O\+D\+O)} & Exception\+Class when count == 0xff \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+The count in \mbox{[}0;0xff) 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classjswf_1_1flash_1_1tags_1_1_define_shape_tag_ab15f7758c79bbb08f1804eebcb7488da}{read\+Line\+Style\+Array} 
+
+\hyperlink{classjswf_1_1flash_1_1tags_1_1_define_shape_tag_a8688b9a3f2873e816a16e5450e4df167}{read\+Fill\+Style\+Array} 
+\end{DoxySeeAlso}
+$<$\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000015}{Todo}]\hyperlink{classjswf_1_1flash_1_1_document}{Document} this. Especially throw. \end{DoxyRefDesc}
+
+
+Reimplemented from \hyperlink{classjswf_1_1flash_1_1tags_1_1_define_shape_tag_a46f74909f7c7c63f5e9663a2465adc18}{jswf\+::flash\+::tags\+::\+Define\+Shape\+Tag}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+jswf/flash/tags/Define\+Shape2\+Tag.\+h\end{DoxyCompactItemize}

@@ -1,0 +1,70 @@
+\hypertarget{classjswf_1_1avm2_1_1_method_object}{\section{jswf\+:\+:avm2\+:\+:Method\+Object Class Reference}
+\label{classjswf_1_1avm2_1_1_method_object}\index{jswf\+::avm2\+::\+Method\+Object@{jswf\+::avm2\+::\+Method\+Object}}
+}
+
+
+Represents a method that was created as a trait of an instance or a class.  
+
+
+
+
+{\ttfamily \#include $<$Object.\+h$>$}
+
+Inheritance diagram for jswf\+:\+:avm2\+:\+:Method\+Object\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classjswf_1_1avm2_1_1_method_object}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_method_object_aaed0d33e8acaa53786d16df44b97e8af}{{\bfseries Method\+Object} (\hyperlink{classjswf_1_1avm2_1_1_v_m}{V\+M} $\ast$vm, const Object\+Ptr \&recv, \hyperlink{structjswf_1_1avm2_1_1_method_info}{Method\+Info} $\ast$value)}\label{classjswf_1_1avm2_1_1_method_object_aaed0d33e8acaa53786d16df44b97e8af}
+
+\item 
+std\+::string \hyperlink{classjswf_1_1avm2_1_1_method_object_a166c823f400cdc125e21794f31d25d3d}{coerce\+\_\+s} () const 
+\begin{DoxyCompactList}\small\item\em Converts to {\ttfamily std\+::string} (E\+C\+M\+A-\/262, section 9.\+8 {\itshape To\+String}) \end{DoxyCompactList}\item 
+\hypertarget{classjswf_1_1avm2_1_1_method_object_ab4985a2c40310dca67ad070ab9b3aefa}{Object\+Ptr {\bfseries ecma\+Call} (\hyperlink{classjswf_1_1avm2_1_1_v_m}{V\+M} \&vm, std\+::vector$<$ Object\+Ptr $>$ \&args) const }\label{classjswf_1_1avm2_1_1_method_object_ab4985a2c40310dca67ad070ab9b3aefa}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_method_object_aaf875ea341bb147e53d4b66827d9b0be}{Object\+Ptr {\bfseries receiver}}\label{classjswf_1_1avm2_1_1_method_object_aaf875ea341bb147e53d4b66827d9b0be}
+
+\item 
+\hypertarget{classjswf_1_1avm2_1_1_method_object_acf598d163383a3aa2bff25e93fb0dfd9}{\hyperlink{structjswf_1_1avm2_1_1_method_info}{Method\+Info} $\ast$ {\bfseries value}}\label{classjswf_1_1avm2_1_1_method_object_acf598d163383a3aa2bff25e93fb0dfd9}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Represents a method that was created as a trait of an instance or a class. 
+
+Note that executing {\ttfamily \mbox{[}\mbox{[}Call\mbox{]}\mbox{]}} on a \hyperlink{classjswf_1_1avm2_1_1_method_object}{Method\+Object} will always override the implicit (receiver) argument. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classjswf_1_1avm2_1_1_method_object_a166c823f400cdc125e21794f31d25d3d}{\index{jswf\+::avm2\+::\+Method\+Object@{jswf\+::avm2\+::\+Method\+Object}!coerce\+\_\+s@{coerce\+\_\+s}}
+\index{coerce\+\_\+s@{coerce\+\_\+s}!jswf\+::avm2\+::\+Method\+Object@{jswf\+::avm2\+::\+Method\+Object}}
+\subsubsection[{coerce\+\_\+s}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string jswf\+::avm2\+::\+Method\+Object\+::coerce\+\_\+s (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classjswf_1_1avm2_1_1_method_object_a166c823f400cdc125e21794f31d25d3d}
+
+
+Converts to {\ttfamily std\+::string} (E\+C\+M\+A-\/262, section 9.\+8 {\itshape To\+String}) 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000007}{Todo}]Implement 9.\+8.\+1 \end{DoxyRefDesc}
+
+
+Reimplemented from \hyperlink{classjswf_1_1avm2_1_1_object_a69b39776062acaccd2cd2b5a1f937c9d}{jswf\+::avm2\+::\+Object}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+jswf/avm2/Object.\+h\item 
+jswf/avm2/Object.\+cpp\end{DoxyCompactItemize}

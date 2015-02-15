@@ -1,0 +1,53 @@
+\hypertarget{_shape_8h}{\section{jswf/flash/\+Shape.h File Reference}
+\label{_shape_8h}\index{jswf/flash/\+Shape.\+h@{jswf/flash/\+Shape.\+h}}
+}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Header.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Styles.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Character.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$map$>$}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structjswf_1_1flash_1_1_segment}{jswf\+::flash\+::\+Segment}
+\begin{DoxyCompactList}\small\item\em Represents a segment as drawn by a {\ttfamily S\+H\+A\+P\+E\+W\+I\+T\+H\+S\+T\+Y\+L\+E} record {\ttfamily line}/{\ttfamily qline} action. \end{DoxyCompactList}\item 
+struct \hyperlink{structjswf_1_1flash_1_1_point}{jswf\+::flash\+::\+Point}
+\begin{DoxyCompactList}\small\item\em Represents a two-\/dimensional point. \end{DoxyCompactList}\item 
+struct \hyperlink{structjswf_1_1flash_1_1_edge}{jswf\+::flash\+::\+Edge}
+\begin{DoxyCompactList}\small\item\em Represents an edge between two \hyperlink{structjswf_1_1flash_1_1_point}{Points} . \end{DoxyCompactList}\item 
+struct \hyperlink{structjswf_1_1flash_1_1_polygon}{jswf\+::flash\+::\+Polygon}
+\begin{DoxyCompactList}\small\item\em Represents a collection of \hyperlink{structjswf_1_1flash_1_1_edge}{Edges} that form a closed polygon. \end{DoxyCompactList}\item 
+class \hyperlink{classjswf_1_1flash_1_1_shape}{jswf\+::flash\+::\+Shape}
+\begin{DoxyCompactList}\small\item\em Represents a {\ttfamily S\+H\+A\+P\+E} character. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacejswf}{jswf}
+\item 
+ \hyperlink{namespacejswf_1_1flash}{jswf\+::flash}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_shape_8h_ae45556a8bc1b299126e246d6d112cb34}{S\+U\+B\+B\+E\+Z\+I\+E\+R}~16
+\item 
+\#define \hyperlink{_shape_8h_ae01228537900e02f4c2d08cef348058c}{M\+O\+R\+P\+H}(a, b, t)~(a + (b -\/ a) $\ast$ t)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{_shape_8h_ae01228537900e02f4c2d08cef348058c}{\index{Shape.\+h@{Shape.\+h}!M\+O\+R\+P\+H@{M\+O\+R\+P\+H}}
+\index{M\+O\+R\+P\+H@{M\+O\+R\+P\+H}!Shape.\+h@{Shape.\+h}}
+\subsubsection[{M\+O\+R\+P\+H}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+O\+R\+P\+H(
+\begin{DoxyParamCaption}
+\item[{}]{a, }
+\item[{}]{b, }
+\item[{}]{t}
+\end{DoxyParamCaption}
+)~(a + (b -\/ a) $\ast$ t)}}\label{_shape_8h_ae01228537900e02f4c2d08cef348058c}
+\hypertarget{_shape_8h_ae45556a8bc1b299126e246d6d112cb34}{\index{Shape.\+h@{Shape.\+h}!S\+U\+B\+B\+E\+Z\+I\+E\+R@{S\+U\+B\+B\+E\+Z\+I\+E\+R}}
+\index{S\+U\+B\+B\+E\+Z\+I\+E\+R@{S\+U\+B\+B\+E\+Z\+I\+E\+R}!Shape.\+h@{Shape.\+h}}
+\subsubsection[{S\+U\+B\+B\+E\+Z\+I\+E\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+U\+B\+B\+E\+Z\+I\+E\+R~16}}\label{_shape_8h_ae45556a8bc1b299126e246d6d112cb34}

@@ -1,0 +1,23 @@
+\form#0:$x' = x * sx + y * r1 + tx$
+\form#1:$y' = y * sy + x * r0 + ty$
+\form#2:$v$
+\form#3:${r,g,b,a}$
+\form#4:$v'$
+\form#5:$v' = max(0, min((v * vM / 256) + vA, 255))$
+\form#6:$x' = x \cdot sx + y * r1 + tx$
+\form#7:$x' = x \cdot sx + y \cdot r1 + tx$
+\form#8:$y' = y \cdot sy + x \cdot r0 + ty$
+\form#9:$v' = max(0, min((v \cdot vM \cdot \frac{1}{256}) + vA, 255))$
+\form#10:$ \begin{bmatrix} s_x & r_1 & t_x \\ r_0 & s_y & t_y \end{bmatrix} \begin{pmatrix}x\\y\\1\end{pmatrix} = \begin{pmatrix} x \cdot s_x + y \cdot r_1 + t_x \\ y \cdot s_y + x \cdot r_0 + t_y \end{pmatrix} $
+\form#11:$ \begin{bmatrix} s_x & r_1 & t_x \\ r_0 & s_y & t_y \\ 0 & 0 & 1 \end{bmatrix} \begin{pmatrix}x\\y\\1\end{pmatrix} = \begin{pmatrix} x \cdot s_x + y \cdot r_1 + t_x \\ y \cdot s_y + x \cdot r_0 + t_y \\ 1 \end{pmatrix} $
+\form#12:$a, b, c \in \mathbb{R}^{3 \times 3}$
+\form#13:$a \left( b \begin{pmatrix}x\\y\\1\end{pmatrix} \right) = c \begin{pmatrix}x\\y\\1\end{pmatrix}$
+\form#14:$ c = a \times b = \begin{bmatrix} s_{x_a}s_{x_b} + r_{1_a}r_{0_b} & s_{x_a}r_{1_b} + r_{1_a}s_{y_b} & s_{x_a}t_{x_b} + r_{1_a}t_{y_b} + t_{x_a} \\ s_{y_a}r_{0_b} + r_{0_a}s_{x_b} & s_{y_a}s_{y_b} + r_{0_a}r_{1_b} & s_{y_a}t_{y_b} + r_{0_a}t_{x_b} + t_{y_a} \\ 0 & 0 & 1 \end{bmatrix} $
+\form#15:$ \begin{bmatrix} s_x & r_1 & t_x \\ r_0 & s_y & t_y \\ 0 & 0 & 1 \end{bmatrix} $
+\form#16:$ \begin{bmatrix} s_x & r_1 & t_x \\ r_0 & s_y & t_y \\ 0 & 0 & 1 \end{bmatrix}^{-1} = \frac{1}{s_x s_y - r_0 r_1} \begin{bmatrix} s_y & -r_1 & t_y r_1 - t_x s_y \\ -r_0 & s_x & t_x r_0 - t_y s_x \\ 0 & 0 & 1 \end{bmatrix} $
+\form#17:$s_x s_y - r_0 r_1$
+\form#18:\[ \begin{bmatrix} s_x & r_1 & t_x \\ r_0 & s_y & t_y \\ 0 & 0 & 1 \end{bmatrix} \]
+\form#19:\[a \left( b \begin{pmatrix}x\\y\\1\end{pmatrix} \right) = c \begin{pmatrix}x\\y\\1\end{pmatrix}\]
+\form#20:\[ c = a \times b = \begin{bmatrix} s_{x_a}s_{x_b} + r_{1_a}r_{0_b} & s_{x_a}r_{1_b} + r_{1_a}s_{y_b} & s_{x_a}t_{x_b} + r_{1_a}t_{y_b} + t_{x_a} \\ s_{y_a}r_{0_b} + r_{0_a}s_{x_b} & s_{y_a}s_{y_b} + r_{0_a}r_{1_b} & s_{y_a}t_{y_b} + r_{0_a}t_{x_b} + t_{y_a} \\ 0 & 0 & 1 \end{bmatrix} \]
+\form#21:\[ \begin{bmatrix} s_x & r_1 & t_x \\ r_0 & s_y & t_y \\ 0 & 0 & 1 \end{bmatrix} \begin{pmatrix}x\\y\\1\end{pmatrix} = \begin{pmatrix} x \cdot s_x + y \cdot r_1 + t_x \\ y \cdot s_y + x \cdot r_0 + t_y \\ 1 \end{pmatrix} \]
+\form#22:\[ \begin{bmatrix} s_x & r_1 & t_x \\ r_0 & s_y & t_y \\ 0 & 0 & 1 \end{bmatrix}^{-1} = \frac{1}{s_x s_y - r_0 r_1} \begin{bmatrix} s_y & -r_1 & t_y r_1 - t_x s_y \\ -r_0 & s_x & t_x r_0 - t_y s_x \\ 0 & 0 & 1 \end{bmatrix} \]

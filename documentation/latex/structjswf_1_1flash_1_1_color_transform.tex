@@ -1,0 +1,50 @@
+\hypertarget{structjswf_1_1flash_1_1_color_transform}{\section{jswf\+:\+:flash\+:\+:Color\+Transform Struct Reference}
+\label{structjswf_1_1flash_1_1_color_transform}\index{jswf\+::flash\+::\+Color\+Transform@{jswf\+::flash\+::\+Color\+Transform}}
+}
+
+
+Represents {\ttfamily C\+X\+F\+O\+R\+M} and {\ttfamily C\+X\+F\+O\+R\+M\+W\+I\+T\+H\+A\+L\+P\+H\+A} records.  
+
+
+
+
+{\ttfamily \#include $<$Structs.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structjswf_1_1flash_1_1_color_transform_ad0ecdb45c70244fd39e5619c5c72334a}{\hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} {\bfseries r\+M} = 256}\label{structjswf_1_1flash_1_1_color_transform_ad0ecdb45c70244fd39e5619c5c72334a}
+
+\item 
+\hypertarget{structjswf_1_1flash_1_1_color_transform_a16f99356e12912f517a05ad94aebe9d9}{\hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} {\bfseries r\+A} = 0}\label{structjswf_1_1flash_1_1_color_transform_a16f99356e12912f517a05ad94aebe9d9}
+
+\item 
+\hypertarget{structjswf_1_1flash_1_1_color_transform_aa4996da50294d5d429d1344c9e110c48}{\hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} {\bfseries g\+M} = 256}\label{structjswf_1_1flash_1_1_color_transform_aa4996da50294d5d429d1344c9e110c48}
+
+\item 
+\hypertarget{structjswf_1_1flash_1_1_color_transform_a4d81df4e3fb8c403451eb01d048823c3}{\hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} {\bfseries g\+A} = 0}\label{structjswf_1_1flash_1_1_color_transform_a4d81df4e3fb8c403451eb01d048823c3}
+
+\item 
+\hypertarget{structjswf_1_1flash_1_1_color_transform_ab3638b378433233e20e2ea9ab4ae7fbe}{\hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} {\bfseries b\+M} = 256}\label{structjswf_1_1flash_1_1_color_transform_ab3638b378433233e20e2ea9ab4ae7fbe}
+
+\item 
+\hypertarget{structjswf_1_1flash_1_1_color_transform_aeb73b91261e6bd9d4b7631d95b8b8057}{\hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} {\bfseries b\+A} = 0}\label{structjswf_1_1flash_1_1_color_transform_aeb73b91261e6bd9d4b7631d95b8b8057}
+
+\item 
+\hypertarget{structjswf_1_1flash_1_1_color_transform_a1cee972b5afae94dc1ef3c9c3cadaa01}{\hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} {\bfseries a\+M} = 256}\label{structjswf_1_1flash_1_1_color_transform_a1cee972b5afae94dc1ef3c9c3cadaa01}
+
+\item 
+\hypertarget{structjswf_1_1flash_1_1_color_transform_a812d5db124ac1ec24b796be1798b03b7}{\hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} {\bfseries a\+A} = 0}\label{structjswf_1_1flash_1_1_color_transform_a812d5db124ac1ec24b796be1798b03b7}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents {\ttfamily C\+X\+F\+O\+R\+M} and {\ttfamily C\+X\+F\+O\+R\+M\+W\+I\+T\+H\+A\+L\+P\+H\+A} records. 
+
+For each channel $v$ from ${r,g,b,a}$, the transformed value $v'$ can be computed as follows\+:~\newline
+ $v' = max(0, min((v \cdot vM \cdot \frac{1}{256}) + vA, 255))$ 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+jswf/flash/\hyperlink{_structs_8h}{Structs.\+h}\end{DoxyCompactItemize}

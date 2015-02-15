@@ -1,0 +1,116 @@
+\hypertarget{structjswf_1_1flash_1_1_matrix}{\section{jswf\+:\+:flash\+:\+:Matrix Struct Reference}
+\label{structjswf_1_1flash_1_1_matrix}\index{jswf\+::flash\+::\+Matrix@{jswf\+::flash\+::\+Matrix}}
+}
+
+
+Represents {\ttfamily M\+A\+T\+R\+I\+X} records.  
+
+
+
+
+{\ttfamily \#include $<$Structs.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{structjswf_1_1flash_1_1_matrix_ae8dfa5d146be75927027d747d63cb327}{transform} (\hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} \&x, \hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} \&y) const 
+\begin{DoxyCompactList}\small\item\em Transforms a point using this \hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix}. \end{DoxyCompactList}\item 
+bool \hyperlink{structjswf_1_1flash_1_1_matrix_adbd0725baff1dff4b83f8ee959c0ea73}{inverse} (\hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix} \&result) const 
+\begin{DoxyCompactList}\small\item\em Calculates the inverse of this \hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{structjswf_1_1flash_1_1_matrix_a29e96996ccb5f7dba395bfda3c0aa45a}{product} (\hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix} \&result, const \hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix} \&a, const \hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix} \&b)
+\begin{DoxyCompactList}\small\item\em Calculates the product of two instances of \hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structjswf_1_1flash_1_1_matrix_a9cd4ef0a19f1559a57e777790ff1b22c}{\hyperlink{namespacejswf_a419cb8aa8b625074e6753d189783b2f4}{fb\+\_\+t} \hyperlink{structjswf_1_1flash_1_1_matrix_a9cd4ef0a19f1559a57e777790ff1b22c}{sx} = 1}\label{structjswf_1_1flash_1_1_matrix_a9cd4ef0a19f1559a57e777790ff1b22c}
+
+\begin{DoxyCompactList}\small\item\em Scale of the x-\/coordinate. \end{DoxyCompactList}\item 
+\hypertarget{structjswf_1_1flash_1_1_matrix_a96f5b9292d1354f1b87a950692aa328e}{\hyperlink{namespacejswf_a419cb8aa8b625074e6753d189783b2f4}{fb\+\_\+t} \hyperlink{structjswf_1_1flash_1_1_matrix_a96f5b9292d1354f1b87a950692aa328e}{sy} = 1}\label{structjswf_1_1flash_1_1_matrix_a96f5b9292d1354f1b87a950692aa328e}
+
+\begin{DoxyCompactList}\small\item\em Scale of the y-\/coordinate. \end{DoxyCompactList}\item 
+\hypertarget{structjswf_1_1flash_1_1_matrix_a23cb93894dfbdd1986815751c10edb2e}{\hyperlink{namespacejswf_a419cb8aa8b625074e6753d189783b2f4}{fb\+\_\+t} \hyperlink{structjswf_1_1flash_1_1_matrix_a23cb93894dfbdd1986815751c10edb2e}{r0} = 0}\label{structjswf_1_1flash_1_1_matrix_a23cb93894dfbdd1986815751c10edb2e}
+
+\begin{DoxyCompactList}\small\item\em Rotation-\/skew (y =$>$ x') \end{DoxyCompactList}\item 
+\hypertarget{structjswf_1_1flash_1_1_matrix_aa641e22c17d8ffc429975889c440eb7a}{\hyperlink{namespacejswf_a419cb8aa8b625074e6753d189783b2f4}{fb\+\_\+t} \hyperlink{structjswf_1_1flash_1_1_matrix_aa641e22c17d8ffc429975889c440eb7a}{r1} = 0}\label{structjswf_1_1flash_1_1_matrix_aa641e22c17d8ffc429975889c440eb7a}
+
+\begin{DoxyCompactList}\small\item\em Rotation-\/skew (x =$>$ y') \end{DoxyCompactList}\item 
+\hypertarget{structjswf_1_1flash_1_1_matrix_aafcf9abe180ac3e6097b9b030709f2eb}{\hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} \hyperlink{structjswf_1_1flash_1_1_matrix_aafcf9abe180ac3e6097b9b030709f2eb}{tx} = 0}\label{structjswf_1_1flash_1_1_matrix_aafcf9abe180ac3e6097b9b030709f2eb}
+
+\begin{DoxyCompactList}\small\item\em Translation of the x-\/coordinate. \end{DoxyCompactList}\item 
+\hypertarget{structjswf_1_1flash_1_1_matrix_acec2419f445aa5a0e5a39ab321ad8805}{\hyperlink{namespacejswf_aa56b2b764590a9e19a5e66693364aceb}{sb\+\_\+t} \hyperlink{structjswf_1_1flash_1_1_matrix_acec2419f445aa5a0e5a39ab321ad8805}{ty} = 0}\label{structjswf_1_1flash_1_1_matrix_acec2419f445aa5a0e5a39ab321ad8805}
+
+\begin{DoxyCompactList}\small\item\em Translation of the y-\/coordinate. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents {\ttfamily M\+A\+T\+R\+I\+X} records. 
+
+\[ \begin{bmatrix} s_x & r_1 & t_x \\ r_0 & s_y & t_y \\ 0 & 0 & 1 \end{bmatrix} \] \begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000013}{Todo}]These structures are in the wrong file. \end{DoxyRefDesc}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structjswf_1_1flash_1_1_matrix_adbd0725baff1dff4b83f8ee959c0ea73}{\index{jswf\+::flash\+::\+Matrix@{jswf\+::flash\+::\+Matrix}!inverse@{inverse}}
+\index{inverse@{inverse}!jswf\+::flash\+::\+Matrix@{jswf\+::flash\+::\+Matrix}}
+\subsubsection[{inverse}]{\setlength{\rightskip}{0pt plus 5cm}bool jswf\+::flash\+::\+Matrix\+::inverse (
+\begin{DoxyParamCaption}
+\item[{{\bf Matrix} \&}]{result}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{structjswf_1_1flash_1_1_matrix_adbd0725baff1dff4b83f8ee959c0ea73}
+
+
+Calculates the inverse of this \hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix}. 
+
+\[ \begin{bmatrix} s_x & r_1 & t_x \\ r_0 & s_y & t_y \\ 0 & 0 & 1 \end{bmatrix}^{-1} = \frac{1}{s_x s_y - r_0 r_1} \begin{bmatrix} s_y & -r_1 & t_y r_1 - t_x s_y \\ -r_0 & s_x & t_x r_0 - t_y s_x \\ 0 & 0 & 1 \end{bmatrix} \] 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em result} & A reference to the \hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix} to store the result in. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if the operation was successful, {\ttfamily false} if the \hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix} cannot be inversed 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+This will fail if the determinant of this \hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix} ( $s_x s_y - r_0 r_1$) equals zero. In that case the given \hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix} cannot be inversed and no write to result occurs. 
+\end{DoxyWarning}
+\hypertarget{structjswf_1_1flash_1_1_matrix_a29e96996ccb5f7dba395bfda3c0aa45a}{\index{jswf\+::flash\+::\+Matrix@{jswf\+::flash\+::\+Matrix}!product@{product}}
+\index{product@{product}!jswf\+::flash\+::\+Matrix@{jswf\+::flash\+::\+Matrix}}
+\subsubsection[{product}]{\setlength{\rightskip}{0pt plus 5cm}static void jswf\+::flash\+::\+Matrix\+::product (
+\begin{DoxyParamCaption}
+\item[{{\bf Matrix} \&}]{result, }
+\item[{const {\bf Matrix} \&}]{a, }
+\item[{const {\bf Matrix} \&}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{structjswf_1_1flash_1_1_matrix_a29e96996ccb5f7dba395bfda3c0aa45a}
+
+
+Calculates the product of two instances of \hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix}. 
+
+given $a, b, c \in \mathbb{R}^{3 \times 3}$~\newline
+ \[a \left( b \begin{pmatrix}x\\y\\1\end{pmatrix} \right) = c \begin{pmatrix}x\\y\\1\end{pmatrix}\]~\newline
+ \[ c = a \times b = \begin{bmatrix} s_{x_a}s_{x_b} + r_{1_a}r_{0_b} & s_{x_a}r_{1_b} + r_{1_a}s_{y_b} & s_{x_a}t_{x_b} + r_{1_a}t_{y_b} + t_{x_a} \\ s_{y_a}r_{0_b} + r_{0_a}s_{x_b} & s_{y_a}s_{y_b} + r_{0_a}r_{1_b} & s_{y_a}t_{y_b} + r_{0_a}t_{x_b} + t_{y_a} \\ 0 & 0 & 1 \end{bmatrix} \] 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em result} & A reference to the \hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix} to store the result in. \\
+\hline
+\mbox{\tt in}  & {\em a,b} & The operands. \\
+\hline
+\end{DoxyParams}
+\hypertarget{structjswf_1_1flash_1_1_matrix_ae8dfa5d146be75927027d747d63cb327}{\index{jswf\+::flash\+::\+Matrix@{jswf\+::flash\+::\+Matrix}!transform@{transform}}
+\index{transform@{transform}!jswf\+::flash\+::\+Matrix@{jswf\+::flash\+::\+Matrix}}
+\subsubsection[{transform}]{\setlength{\rightskip}{0pt plus 5cm}void jswf\+::flash\+::\+Matrix\+::transform (
+\begin{DoxyParamCaption}
+\item[{{\bf sb\+\_\+t} \&}]{x, }
+\item[{{\bf sb\+\_\+t} \&}]{y}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{structjswf_1_1flash_1_1_matrix_ae8dfa5d146be75927027d747d63cb327}
+
+
+Transforms a point using this \hyperlink{structjswf_1_1flash_1_1_matrix}{Matrix}. 
+
+\[ \begin{bmatrix} s_x & r_1 & t_x \\ r_0 & s_y & t_y \\ 0 & 0 & 1 \end{bmatrix} \begin{pmatrix}x\\y\\1\end{pmatrix} = \begin{pmatrix} x \cdot s_x + y \cdot r_1 + t_x \\ y \cdot s_y + x \cdot r_0 + t_y \\ 1 \end{pmatrix} \] 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+jswf/flash/\hyperlink{_structs_8h}{Structs.\+h}\end{DoxyCompactItemize}
